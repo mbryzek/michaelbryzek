@@ -8,28 +8,8 @@ import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick)
 import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
+import Posts.Common exposing (Post, allBlogPosts)
 import Urls
-
-
-type alias Post =
-    { title : String
-    , date : String
-    , url : String
-    }
-
-
-posts : List Post
-posts =
-    [ { title = "State Management in Elm"
-      , date = "February 2025"
-      , url = Urls.blogPost "state-management-in-elm"
-      }
-    , { title = "Motivation for True Acumen"
-      , date = "January 2025"
-      , url =  Urls.blogPostMotivationForTrueAcumen
-      }
-    ]
-
 
 type Msg
     = RedirectTo String
@@ -49,7 +29,7 @@ view { msgMap } shellProps =
 
 contents : Html Msg
 contents =
-    div [ Attr.class "grid gap-6" ] (List.map viewBlogPost posts)
+    div [ Attr.class "grid gap-6" ] (List.map viewBlogPost allBlogPosts)
 
 
 viewBlogPost : Post -> Html Msg
@@ -58,7 +38,7 @@ viewBlogPost post =
         [ Attr.class "bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-750 transition-colors" ]
         [ div
             [ Attr.class "space-y-2" ]
-            [ h2 (localLink post.url post.title)
+            [ localLink (Urls.blogPost post.slug) post.title)
             , p (text post.date)
             ]
         ]
