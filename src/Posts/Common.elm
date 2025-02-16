@@ -1,8 +1,11 @@
 module Posts.Common exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, div, text)
+import Html.Attributes exposing (class)
 import Posts.MotivationForTrueAcumen as MotivationForTrueAcumen
 import Posts.Style exposing (blogH1)
+import Ui.Elements exposing (textColor)
+import Ui.Elements exposing (textColor)
 
 
 type alias Post =
@@ -23,7 +26,9 @@ getContents post =
 renderPost : Post -> List (Html msg) -> Html msg
 renderPost post contents =
     div [] (List.concat [
-        [ blogH1 post.title ]
+        [ blogH1 post.title
+        , div [class textColor, class "mt-2 italic"] [text post.date]
+        ]
         , contents
     ])
 
