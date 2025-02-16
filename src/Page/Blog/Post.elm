@@ -3,12 +3,11 @@ module Page.Blog.Post exposing (Model, Msg, init, update, view)
 import Browser
 import Browser.Navigation as Nav
 import Global exposing (GlobalState, MainViewProps)
-import Html exposing (Html, article, button, div, text, h1, h2, p, ul, li, a)
-import Html.Attributes exposing (class, href)
+import Html
+import NotFound
+import Posts.Common exposing (Post, findBlogPost, getContents)
 import Templates.Shell as Shell
 import Urls
-import Posts.Common exposing (Post, findBlogPost, getContents)
-import NotFound as NotFound
 
 
 type alias Model =
@@ -38,6 +37,7 @@ view { msgMap } shellProps model =
             case getContents post of
                 Just contents ->
                     Shell.render shellProps Nothing [ contents |> Html.map msgMap ]
+
                 Nothing ->
                     NotFound.view
 
