@@ -1,6 +1,5 @@
 module Urls exposing (..)
 
-
 index : String
 index =
     "/"
@@ -10,15 +9,13 @@ blog : String
 blog =
     "/blog"
 
-
-blogPost : String -> String
-blogPost slug =
-    "/blog/p/" ++ slug
+type alias BlogPostParams =
+    { slug : String }
 
 
-blogPostMotivationForTrueAcumen : String
-blogPostMotivationForTrueAcumen =
-    blogPost "motivation-for-true-acumen"
+blogPost : BlogPostParams -> String
+blogPost params =
+    "/blog/" ++ params.slug
 
 
 projects : String

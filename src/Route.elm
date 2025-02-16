@@ -2,12 +2,14 @@ module Route exposing (Route(..), fromUrl)
 
 import Url exposing (Url)
 import Url.Parser exposing (..)
+import Urls
 
 
 type Route
     = RouteIndex
     | RouteProjects
-    | RouteBlog
+    | RouteBlogIndex
+    | RouteBlogPost Urls.BlogPostParams
     | RouteTalks
 
 
@@ -21,6 +23,7 @@ matchRoute =
     oneOf
         [ map RouteIndex top
         , map RouteProjects (s "projects")
-        , map RouteBlog (s "blog")
+        , map RouteBlogIndex (s "blog")
+        , map (\slug -> RouteBlogPost { slug = slug }) (s "blog" </> string)
         , map RouteTalks (s "talks")
         ]
