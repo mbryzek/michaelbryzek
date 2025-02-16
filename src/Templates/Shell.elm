@@ -41,7 +41,7 @@ allSections =
 topNavSections : Url.Url -> Html Msg
 topNavSections currentUrl =
     div
-        [ class "flex ml-4"]
+        [ class "flex ml-2 mr-2"]
         (List.map (navLink currentUrl) allSections)
 
 
@@ -60,7 +60,7 @@ navLink currentUrl section =
     button
         [ onClick (RedirectTo section.href)
         , class <|
-            "rounded-md px-4 py-2 text-sm font-medium "
+            "rounded-md px-2 py-2 text-sm font-medium "
                 ++ (if isActive then
                         "bg-gray-900 text-white"
 
