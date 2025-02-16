@@ -1,7 +1,6 @@
 module Posts.MotivationForTrueAcumen exposing (render)
 
-import Html exposing (Html, div, text, ul, li)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, text)
 import Ui.Elements exposing (externalLink)
 import Posts.Style exposing (blogH1, blogH2, blogP, blogListWithTitles)
 
@@ -34,15 +33,25 @@ render title =
         , blogP [ text "And so, I started building True Acumen. The first version was a simple React app that our family used during COVID. It was a prototype, but for the first time, I had a complete, accurate picture of our finances. That was a game-changer."]
         , blogP [ text "Then, an unexpected roadblock hit. Chase Bank changed its policies, and Plaid—the service I was using to fetch transactions—required an enterprise account with a security review. Our prototype was dead."]
         , blogH2 [ text "A New Beginning in 2024" ]
-        , ul [ class "list-disc pl-6 text-gray-600" ]
-            [ li [] [ text "Plaid reopened access to Chase transactions - I could again retrieve our financial data."]
-            , li [] [ text "I had sold my business, Flow Commerce - After launching with our partner Shopify and spending a few years growing the product, I had transitioned out of the company and now had a lot of free time." ]
-            , li [] [ text "I discovered the Elm Language - Just like with React in 2020, I was interested in learning this new language and needed a project to experiment with it." ]
+        , blogListWithTitles [
+            { title = "Plaid reopened access to Chase transactions"
+              , content = "I could again retrieve our financial data."
+              }
+            , { title = "I had sold my business, Flow Commerce"
+              , content = "After launching with our partner Shopify and spending a few years growing the product, I had transitioned out of the company and now had a lot of free time."
+              }
+            , { title = "I discovered the Elm Language"
+              , content = "Just like with React in 2020, I was interested in learning this new language and needed a project to experiment with it."
+              }
             ]
         , blogP [ text "So, I got to work rewriting True Acumen in Elm. Just as I had everything back up and running for our family, two more unexpected events happened:"]
-        , ul [ class "list-disc pl-6 text-gray-600" ]
-            [ li [] [ text "Cameron started using True Acumen. My oldest had been diligently managing his expenses in a spreadsheet for years. When he told me that True Acumen had matured enough to replace his spreadsheet, I knew I was onto something."]
-            , li [] [ text "I had a sports accident and needed surgery. Suddenly, I was off my feet for 3–6 months and had a lot more unexpected time to focus on True Acumen."]
+        , blogListWithTitles [
+            { title = "Cameron started using True Acumen"
+              , content = "My oldest had been diligently managing his expenses in a spreadsheet for years. When he told me that True Acumen had matured enough to replace his spreadsheet, I knew I was onto something."
+              }
+            , { title = "I had a sports accident"
+              , content = "Suddenly, I was off my feet for 3–6 months and had a lot more unexpected time to focus on True Acumen."
+              }
             ]
         , blogP [ text "At that point, I started to wonder: If True Acumen was helping our family so much, could it help others too?"]
         , blogH2 [ text "Today: Sharing True Acumen" ]
