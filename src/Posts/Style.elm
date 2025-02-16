@@ -28,6 +28,8 @@ blogListWithTitles items =
 renderItem : ItemWithTitle -> Html msg
 renderItem item =
     li [class "mt-4"] [
-        span [class "font-bold"] [text (item.title ++ ":")]
-        , span [class "ml-2"] [text item.content]
+        div [class "flex flex-col gap-y-2"] [
+            div [class "font-bold"] [text item.title]
+        , div [] [text item.content]
+        ]
     ]
