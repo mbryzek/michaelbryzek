@@ -1,7 +1,9 @@
 module Posts.Common exposing (..)
 
-import Html exposing (Html)
+import Html exposing (Html, div)
 import Posts.MotivationForTrueAcumen as MotivationForTrueAcumen
+import Posts.Style exposing (blogH1)
+
 
 type alias Post =
     { title : String
@@ -12,11 +14,19 @@ type alias Post =
 getContents : Post -> Maybe (Html msg)
 getContents post =
     case post.slug of
-        "motivation-for-true-acumen" ->
-            Just (MotivationForTrueAcumen.render post.title)
+        "motivation-for-true-acumen" -> -- motivationForTrueAcumenSlug
+            Just (renderPost post MotivationForTrueAcumen.contents)
 
         _ ->
             Nothing
+
+renderPost : Post -> List (Html msg) -> Html msg
+renderPost post contents =
+    div [] (List.concat [
+        [ blogH1 post.title ]
+        , contents
+    ])
+
 
 allBlogPosts : List Post
 allBlogPosts =
