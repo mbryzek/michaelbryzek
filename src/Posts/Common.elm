@@ -9,14 +9,14 @@ type alias Post =
     , slug: String
     }
 
-getContents : Post -> Html msg
+getContents : Post -> Maybe (Html msg)
 getContents post =
     case post.slug of
         "motivation-for-true-acumen" ->
-            MotivationForTrueAcumen.render
+            Just MotivationForTrueAcumen.render
 
         _ ->
-            Html.text "TODO"
+            Nothing
 
 allBlogPosts : List Post
 allBlogPosts =
