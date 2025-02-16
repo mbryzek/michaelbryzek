@@ -22,16 +22,16 @@ externalLink attributes url contents =
 
 p : List (Attribute msg) -> List (Html msg) -> Html msg
 p attributes content =
-    Html.p (finalAttributes attributes [ class "leading-relaxed mb-2" ]) content
+    Html.p (finalAttributes attributes [ class "leading-relaxed" ]) content
 
 h1 : List (Attribute msg) -> List (Html msg) -> Html msg
 h1 attributes content =
-    Html.h2 (finalAttributes attributes [ class "text-3xl font-bold text-gray-100 mb-2" ]) content
+    Html.h2 (finalAttributes attributes [ class "text-3xl font-bold text-gray-100" ]) content
 
 
 h2 : List (Attribute msg) -> List (Html msg) -> Html msg
 h2 attributes content =
-    Html.h2 (finalAttributes attributes [ class "text-xl font-semibold text-gray-100 mb-2" ]) content
+    Html.h2 (finalAttributes attributes [ class "text-xl font-semibold text-gray-100" ]) content
 
 finalAttributes : List (Attribute msg) -> List (Attribute msg) -> List (Attribute msg)
 finalAttributes attributes1 attributes2 =
