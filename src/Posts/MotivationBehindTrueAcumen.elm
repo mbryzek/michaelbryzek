@@ -9,7 +9,7 @@ contents : List (Html msg)
 contents =
     [ blogP [ text "True Acumen has been a long-standing journey and a deeply personal passion project." ]
     , blogP [ text "The story begins in 2020, during the early months of the COVID-19 pandemic. One evening at the dinner table, I suggested that since we were all working and schooling from home, with more free time than usual, each of us should take on a personal project." ]
-    , blogP [ text "My wife, Lisa, and I have two children who were still young at the time—Cameron, 14, and Julien, 11. Cameron was the first to respond, sharing that he was writing a novel. Julien thought for a moment before deciding to build an online game. Lisa, on the other hand, quickly declared, “I’m not doing that.” We all laughed. Then my kids turned the question back to me: “What’s your project going to be?”" ]
+    , blogP [ text "My wife, Lisa, and I have two children who were still young at the time—Cameron, 14, and Julien, 11. Cameron was the first to respond, sharing that they were writing a novel. Julien thought for a moment before deciding to build an online game. Lisa, on the other hand, quickly declared, “I’m not doing that.” We all laughed. Then my kids turned the question back to me: “What’s your project going to be?”" ]
     , blogH2 [ text "Finding the Right Project" ]
     , blogP [ text "That was a good question. At work, we were in the early stages of discovery for a potential new product and were diving deep into the React library. I was interested to learn more about the technology and figured the best way to do that was by building something myself." ]
     , blogP [ text "At the same time, I realized that my interest in this project was also shaped by my background. My parents came to the U.S. as refugees in 1979 with just $300 to their name. I was two years old. It took time for them to get settled, and I remember what it was like growing up with very little. My mother carefully clipped coupons, never overspent on groceries, and we slept on the floor because we couldn’t afford furniture. Those early years had a lasting impact on me." ]
@@ -45,7 +45,7 @@ contents =
     , blogP [ text "So, I got to work rewriting True Acumen in Elm. Just as I had everything back up and running for our family, two more unexpected events happened:"]
     , blogListWithTitles [
         { title = "Cameron started using True Acumen"
-            , content = "My oldest had been diligently managing his expenses in a spreadsheet for years. When he told me that True Acumen had matured enough to replace his spreadsheet, I knew I was onto something."
+            , content = "My oldest had been diligently managing their expenses in a spreadsheet for years. When they told me that True Acumen had matured enough to replace their spreadsheet, I knew I was onto something."
             }
         , { title = "I had a sports accident"
             , content = "Suddenly, I was off my feet for 3–6 months and had a lot more unexpected time to focus on True Acumen."

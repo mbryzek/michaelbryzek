@@ -24,7 +24,7 @@ projects =
     [ { name = "True Acumen"
       , description =
             [ "Simple, accurate expense and budget management."
-            , "I recently have become really obsessed with making it easy to track family expenses and and to make a simple budget."
+            , "I recently have become really obsessed with making it easy to track family expenses and to make a simple budget."
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.trueacumen.com"
@@ -34,7 +34,7 @@ projects =
       , description =
             [ "Simple, Comprehensive Tooling for Modern APIs."
             , "A project we started at Gilt when we needed to build client SDKs to access our APIs from multiple languages, including Ruby, Java, Scala, Swift, Object C, Kotlin, etc."
-            , "We also built Flow Commerce on the back of API Builder - helping us build a high quality, broad API Platform"
+            , "We also built Flow Commerce on the back of API Builder - helping us build a high quality, broad API Platform."
             ]
       , githubUrl = Just "https://github.com/apicollective/apibuilder"
       , projectUrl = Just "https://www.apibuilder.io"
@@ -52,7 +52,7 @@ projects =
       }
     , { name = "Bergen Tech Hackathon"
       , description =
-            [ "We run an annual Hackathon at our local high school encouraging and introducing students to the passion we share for computer science"
+            [ "We run an annual Hackathon at our local high school encouraging and introducing students to the passion we share for computer science. "
             , "This competition website is built in Elm and open source as an example for the students."
             ]
       , githubUrl = Just "https://github.com/mbryzek/hackathon"
@@ -68,9 +68,9 @@ projects =
       , projectUrl = Just "https://www.hemlockpoint.net"
       , blogUrl = Nothing
       }
-    , { name = "Personal website"
+    , { name = "Personal Website"
       , description =
-            [ "This is the source code for this website, built with Elm"
+            [ "This is the source code for this website, built with Elm."
             ]
       , githubUrl = Just "https://github.com/mbryzek/michaelbryzek"
       , projectUrl = Nothing
