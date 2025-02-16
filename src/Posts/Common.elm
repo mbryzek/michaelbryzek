@@ -69,7 +69,7 @@ slugToString : Slug -> String
 slugToString slug =
     case slug of
         MotivationBehindTrueAcumenSlug ->
-            "motivation-for-true-acumen"
+            "motivation-behind-true-acumen"
 
         StateManagementInElmSlug ->
             "state-management-in-elm"
