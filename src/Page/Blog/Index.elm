@@ -38,7 +38,7 @@ viewBlogPost post =
         [ Attr.class "bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-750 transition-colors" ]
         [ div
             [ Attr.class "space-y-2" ]
-            [ localLink (Urls.blogPost post.slug) post.title)
+            [ localLink (Urls.blogPost post.slug) post.title
             , p (text post.date)
             ]
         ]

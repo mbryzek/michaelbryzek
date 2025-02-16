@@ -15,6 +15,11 @@ allBlogPosts =
       }
     , { title = "Motivation for True Acumen"
       , date = "January 2025"
-      , slug = "motivation-for-true-acumen"
+      , slug = motivationForTrueAcumenSlug
       }
     ]
+
+motivationForTrueAcumenSlug : String
+motivationForTrueAcumenSlug =
+    "motivation-for-true-acumen"
+

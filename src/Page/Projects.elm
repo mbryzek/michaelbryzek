@@ -7,6 +7,7 @@ import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
 import Ui.Svgs exposing (..)
 import Util exposing (externalLink)
+import Posts.Common exposing (motivationForTrueAcumenSlug)
 import Urls
 
 
@@ -28,7 +29,7 @@ projects =
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.trueacumen.com"
-      , blogUrl = Just Urls.blogPostMotivationForTrueAcumen
+      , blogUrl = Just (Urls.blogPost motivationForTrueAcumenSlug)
       }
     , { name = "API Builder"
       , description =
