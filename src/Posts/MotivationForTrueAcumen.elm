@@ -2,14 +2,14 @@ module Posts.MotivationForTrueAcumen exposing (render)
 
 import Html exposing (Html, div, text, ul, li)
 import Html.Attributes exposing (class)
-import Ui.Elements exposing (h1, externalLink)
-import Posts.Style exposing (blogH2, blogP)
+import Ui.Elements exposing (externalLink)
+import Posts.Style exposing (blogH1, blogH2, blogP)
 
 
-render : Html msg
-render =
-    div [ class "" ]
-        [ h1 [] [ text "The Journey to True Acumen: A Personal Passion Project" ]
+render : String -> Html msg
+render title =
+    div []
+        [ blogH1 title
         , blogP [ text "True Acumen has been a long-standing journey and a deeply personal passion project." ]
         , blogP [ text "The story begins in 2020, during the early months of the COVID-19 pandemic. One evening at the dinner table, I suggested that since we were all working and schooling from home, each of us should take on a personal project." ]
         , blogP [ text "My wife, Lisa, and I have two children who were still young at the time—Cameron, 14, and Julien, 11. Cameron was the first to respond, sharing that he was writing a novel. Julien thought for a moment before deciding to build an online game. Lisa, on the other hand, quickly declared, “I’m not doing that.” We all laughed. Then my kids turned the question back to me: “What’s your project going to be?”" ]

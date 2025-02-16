@@ -13,7 +13,7 @@ getContents : Post -> Maybe (Html msg)
 getContents post =
     case post.slug of
         "motivation-for-true-acumen" ->
-            Just MotivationForTrueAcumen.render
+            Just (MotivationForTrueAcumen.render post.title)
 
         _ ->
             Nothing
