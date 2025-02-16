@@ -10,6 +10,7 @@ import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
 import Urls
 import Posts.Common exposing (Post, findBlogPost)
+import NotFound as NotFound
 
 
 type alias Model =
@@ -32,11 +33,16 @@ update global msg =
             Nav.pushUrl global.navKey url
 
 
-view : MainViewProps Msg mainMsg -> Shell.ViewProps mainMsg -> Browser.Document mainMsg
-view { msgMap } shellProps =
-    Shell.render shellProps Nothing [ contents |> Html.map msgMap ]
+view : MainViewProps Msg mainMsg -> Shell.ViewProps mainMsg -> Model -> Browser.Document mainMsg
+view { msgMap } shellProps model =
+    case model.post of
+        Just post ->
+            Shell.render shellProps Nothing [ contents post |> Html.map msgMap ]
+
+        Nothing ->
+            NotFound.view
 
 
-contents : Html Msg
-contents =
-    div [] []
+contents : Post -> Html mainMsg
+contents post =
+    div [] [ text post.title ]

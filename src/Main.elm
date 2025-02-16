@@ -203,8 +203,8 @@ viewReady model =
         PageBlogIndex ->
             PageBlogIndex.view (mainViewProps model.global PageBlogIndexMsg) (shellViewProps model)
 
-        PageBlogPost _ ->
-            PageBlogPost.view (mainViewProps model.global PageBlogPostMsg) (shellViewProps model)
+        PageBlogPost pageModel ->
+            PageBlogPost.view (mainViewProps model.global PageBlogPostMsg) (shellViewProps model) pageModel
 
         PageIndex ->
             PageIndex.view (shellViewProps model)
