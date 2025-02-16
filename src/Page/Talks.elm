@@ -29,8 +29,7 @@ talks =
       , date = "September 2018"
       , description =
             div []
-                [ text "A deep dive into how we designed and built the microservice architecture at Flow Commerce, based on the lessons we learned at Gilt Groupe. This talk has over 700k views as of 2025 and got a nice mention on the "
-                , externalLink [] "https://news.ycombinator.com/item?id=18740939" [text "2018 best talks thread in hacker news"]
+                [ text "A deep dive into how we designed and built the microservice architecture at Flow Commerce, based on the lessons we learned at Gilt Groupe. This talk has over 700k views as of early 2025."
                 ]
       , videoUrl = "https://www.youtube.com/watch?v=j6ow-UemzBc"
       }

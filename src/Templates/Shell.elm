@@ -41,7 +41,7 @@ allSections =
 topNavSections : Url.Url -> Html Msg
 topNavSections currentUrl =
     div
-        [ class "flex"]
+        [ class "flex ml-4"]
         (List.map (navLink currentUrl) allSections)
 
 
