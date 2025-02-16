@@ -1,8 +1,9 @@
 module Posts.MotivationForTrueAcumen exposing (render)
 
-import Html exposing (Html, div, text, ul, li, a)
-import Html.Attributes exposing (class, href)
-import Ui.Elements exposing (h1, h2, p)
+import Html exposing (Html, div, text, ul, li)
+import Html.Attributes exposing (class)
+import Ui.Elements exposing (h1, h2, p, externalLink)
+import Urls
 
 render : Html msg
 render =
@@ -40,5 +41,5 @@ render =
         , h2 [] [ text "Today: Sharing True Acumen" ]
         , p [] [ text "And that brings us to today. I’m excited to share True Acumen as an alpha release with close friends and family. My goal is to learn how others find value in it and refine the product based on real-world feedback." ]
         , p [] [ text "If you’re interested in trying out True Acumen, I’d love for you to join our waitlist!" ]
-        , a [ class "text-blue-500 underline", href "#" ] [ text "Join the Waitlist" ]
+        , externalLink [] "https://www.trueacumen.com/waitlist" [ text "Join the Waitlist" ]
         ]
