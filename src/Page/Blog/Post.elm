@@ -1,4 +1,4 @@
-module Page.Blog.Post exposing (Msg, init, update, view)
+module Page.Blog.Post exposing (Model, Msg, init, update, view)
 
 import Browser
 import Browser.Navigation as Nav

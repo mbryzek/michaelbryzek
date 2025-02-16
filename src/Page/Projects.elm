@@ -29,7 +29,7 @@ projects =
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.trueacumen.com"
-      , blogUrl = Just (Urls.blogPost motivationForTrueAcumenSlug)
+      , blogUrl = Just (Urls.blogPost { slug = motivationForTrueAcumenSlug })
       }
     , { name = "API Builder"
       , description =
