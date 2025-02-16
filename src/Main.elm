@@ -226,10 +226,9 @@ updatePage model msg =
             PageBlogIndex.update model.global pageMsg
                 |> \c -> (model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c)
 
-        ( PageBlogPost pageModel, PageBlogPostMsg pageMsg ) ->
+        ( PageBlogPost _, PageBlogPostMsg pageMsg ) ->
             PageBlogPost.update model.global pageMsg
-                |> Tuple.mapFirst PageBlogPost
-                |> Tuple.mapSecond (Cmd.map (ReadyMsg << ChangedPage << PageBlogPostMsg))
+                |> (\c -> (model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogPostMsg) c))
 
         ( page, _ ) ->
             ( page, Cmd.none )
