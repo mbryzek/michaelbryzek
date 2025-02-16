@@ -1,4 +1,4 @@
-module Ui.Elements exposing (p, h1, h2, externalLink)
+module Ui.Elements exposing (p, h1, h2, externalLink, textColor)
 
 import Html exposing (Html, Attribute, a)
 import Html.Attributes exposing (class, href, target, rel)

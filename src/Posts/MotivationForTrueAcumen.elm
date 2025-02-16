@@ -3,7 +3,7 @@ module Posts.MotivationForTrueAcumen exposing (render)
 import Html exposing (Html, div, text, ul, li)
 import Html.Attributes exposing (class)
 import Ui.Elements exposing (externalLink)
-import Posts.Style exposing (blogH1, blogH2, blogP)
+import Posts.Style exposing (blogH1, blogH2, blogP, blogListWithTitles)
 
 
 render : String -> Html msg
@@ -20,10 +20,16 @@ render title =
         , blogH2 [ text "The Birth of True Acumen" ]
         , blogP [ text "Back at the dinner table, I shared my idea: I’m going to create a personal expense and budgeting app for our family." ]
         , blogP [ text "By this time, I had tried at least 20 different budgeting tools—everything from Mint to QuickBooks—but nothing worked the way I needed it to. I didn’t think our needs were that unique, but there were a few things that were critical to me:" ]
-        , ul [ class "list-disc pl-6 text-gray-600" ]
-            [ li [] [ text "Minimal Effort, Maximum Clarity – I dislike setting aside time for big, tedious financial reviews. Instead of doing a major review at the end of the month, I wanted to spend just 30–60 seconds per day maintaining our expenses" ]
-            , li [] [ text "Accurate Categorization – Almost every existing tool automatically categorizes transactions, but they all make mistakes. If you can’t trust the data, then any analysis built on top of it is flawed. I needed a system where I could tag every transaction myself—quickly and efficiently." ]
-            , li [] [ text "Smart Delegation – Since my wife and I share a few accounts, I needed a way to delegate transaction categorization to her when necessary, but without making it a burden." ]
+        , blogListWithTitles [
+            { title = "Minimal Effort, Maximum Clarity"
+              , content = "I dislike setting aside time for big, tedious financial reviews. Instead of doing a major review at the end of the month, I wanted to spend just 30–60 seconds per day maintaining our expenses"
+              }
+            , { title = "Accurate Categorization"
+              , content = "Almost every existing tool automatically categorizes transactions, but they all make mistakes. If you can’t trust the data, then any analysis built on top of it is flawed. I needed a system where I could tag every transaction myself—quickly and efficiently."
+              }
+            , { title = "Smart Delegation"
+              , content = "Since my wife and I share a few accounts, I needed a way to delegate transaction categorization to her when necessary, but without making it a burden."
+              }
             ]
         , blogP [ text "And so, I started building True Acumen. The first version was a simple React app that our family used during COVID. It was a prototype, but for the first time, I had a complete, accurate picture of our finances. That was a game-changer."]
         , blogP [ text "Then, an unexpected roadblock hit. Chase Bank changed its policies, and Plaid—the service I was using to fetch transactions—required an enterprise account with a security review. Our prototype was dead."]
