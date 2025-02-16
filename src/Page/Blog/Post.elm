@@ -24,11 +24,11 @@ init params =
     { slug = params.slug }
 
 
-update : MainViewProps Msg mainMsg -> Msg -> Cmd mainMsg
-update { global, msgMap } msg =
+update : GlobalState -> Msg -> Cmd mainMsg
+update global msg =
     case msg of
         RedirectTo url ->
-            Nav.pushUrl global.navKey url |> Cmd.map msgMap
+            Nav.pushUrl global.navKey url
 
 
 view : MainViewProps Msg mainMsg -> Shell.ViewProps mainMsg -> Browser.Document mainMsg
