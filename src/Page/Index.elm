@@ -18,7 +18,7 @@ contents =
         [ p (text "My name is Michael Bryzek and I'm a developer living in New Jersey. ")
         , p (text "I’m a serial entrepreneur, best known for founding Gilt Groupe in 2007 and Flow Commerce in 2015, which now powers international commerce inside Shopify.")
         , Html.div []
-            [ p (text "Recently I've been spending most of my time improving personal expense and budget management and have been working on the app ")
+            [ p (text "Recently I'm spending most my time building True Acumen, a personal expense and budget management application.")
             , externalLinkToAcumen
             ]
         ]

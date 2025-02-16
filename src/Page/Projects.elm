@@ -53,6 +53,13 @@ projects =
       , githubUrl = Nothing
       , projectUrl = Just "https://www.hemlockpoint.net"
       }
+    , { name = "Personal website"
+      , description =
+            [ "This is the source code for this website, built with Elm"
+            ]
+      , githubUrl = Just "https://github.com/mbryzek/michaelbryzek"
+      , projectUrl = Nothing
+      }
     ]
 
 

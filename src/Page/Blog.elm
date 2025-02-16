@@ -19,16 +19,14 @@ type alias Post =
 
 posts : List Post
 posts =
-    [ { title = "Building Type-Safe APIs with TypeScript"
-      , date = "March 15, 2024"
-      , slug = "foo"
+    [ { title = "State Management in Elm"
+      , date = "February 2025"
+      , slug = "state-management-in-elm"
       }
-    , { title = "The Journey to Event Sourcing"
-      , date = "February 1, 2024"
-      , slug = "bar"
+    , { title = "Motivation for True Acumen"
+      , date = "January 2025"
+      , slug = "motivation-for-true-acumen"
       }
-
-    -- Add more blog posts here
     ]
 
 
