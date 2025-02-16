@@ -1,4 +1,4 @@
-module Posts.MotivationForTrueAcumen exposing (contents)
+module Posts.MotivationBehindTrueAcumen exposing (contents)
 
 import Html exposing (Html, text)
 import Ui.Elements exposing (externalLink)

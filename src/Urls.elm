@@ -15,7 +15,7 @@ type alias BlogPostParams =
 
 blogPost : BlogPostParams -> String
 blogPost params =
-    "/blog/" ++ params.slug
+    "/blog/" ++ params.slug -- TODO Query encode
 
 
 projects : String

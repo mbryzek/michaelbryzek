@@ -1,10 +1,10 @@
 module Page.Blog.Post exposing (Model, init, view)
 
 import Browser
-import NotFound
-import Posts.Common exposing (Post, findBlogPost, getContents)
+import Posts.Common exposing (Post, findBlogPost, getContents, slugFromString)
 import Templates.Shell as Shell
 import Urls
+import NotFound
 
 
 type alias Model =
@@ -13,19 +13,14 @@ type alias Model =
 
 init : Urls.BlogPostParams -> Model
 init params =
-    { post = findBlogPost params.slug }
+    { post = slugFromString params.slug |> Maybe.map findBlogPost }
 
 
 view : Shell.ViewProps mainMsg -> Model -> Browser.Document mainMsg
 view shellProps model =
     case model.post of
         Just post ->
-            case getContents post of
-                Just contents ->
-                    Shell.render shellProps Nothing [ contents ]
-
-                Nothing ->
-                    NotFound.view
+            Shell.render shellProps Nothing [ getContents post ]
 
         Nothing ->
             NotFound.view

@@ -8,7 +8,7 @@ import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick)
 import Templates.Shell as Shell
 import Ui.Elements exposing (p)
-import Posts.Common exposing (Post, allBlogPosts)
+import Posts.Common exposing (Post, allBlogPosts, slugToString)
 import Urls
 
 type Msg
@@ -38,7 +38,7 @@ viewBlogPost post =
         [ Attr.class "bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-750 transition-colors" ]
         [ div
             [ Attr.class "space-y-2" ]
-            [ localLink (Urls.blogPost { slug = post.slug }) post.title
+            [ localLink (Urls.blogPost { slug = slugToString post.slug }) post.title
             , p [] [ text post.date ]
             ]
         ]

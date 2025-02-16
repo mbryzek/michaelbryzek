@@ -6,7 +6,7 @@ import Html.Attributes as Attr
 import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p, externalLink)
 import Ui.Svgs exposing (..)
-import Posts.Common exposing (motivationForTrueAcumenSlug)
+import Posts.Common exposing (Slug(..), slugToString)
 import Urls
 
 
@@ -28,7 +28,7 @@ projects =
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.trueacumen.com"
-      , blogUrl = Just (Urls.blogPost { slug = motivationForTrueAcumenSlug })
+      , blogUrl = Just (Urls.blogPost { slug = slugToString MotivationBehindTrueAcumenSlug })
       }
     , { name = "API Builder"
       , description =

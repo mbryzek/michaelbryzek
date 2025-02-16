@@ -2,7 +2,8 @@ module Posts.Common exposing (..)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
-import Posts.MotivationForTrueAcumen as MotivationForTrueAcumen
+import Posts.MotivationBehindTrueAcumen as MotivationBehindTrueAcumen
+import Posts.StateManagementInElm as StateManagementInElm
 import Posts.Style exposing (blogH1)
 import Ui.Elements exposing (textColor)
 
@@ -10,20 +11,18 @@ import Ui.Elements exposing (textColor)
 type alias Post =
     { title : String
     , date : String
-    , slug : String
+    , slug : Slug
     }
 
 
-getContents : Post -> Maybe (Html msg)
+getContents : Post ->Html msg
 getContents post =
     case post.slug of
-        "motivation-for-true-acumen" ->
-            -- motivationForTrueAcumenSlug
-            Just (renderPost post MotivationForTrueAcumen.contents)
+        MotivationBehindTrueAcumenSlug ->
+            renderPost post MotivationBehindTrueAcumen.contents
 
-        _ ->
-            Nothing
-
+        StateManagementInElmSlug ->
+            renderPost post StateManagementInElm.contents
 
 renderPost : Post -> List (Html msg) -> Html msg
 renderPost post contents =
@@ -39,23 +38,45 @@ renderPost post contents =
 
 allBlogPosts : List Post
 allBlogPosts =
-    [ { title = "State Management in Elm"
-      , date = "February 2025"
-      , slug = "state-management-in-elm"
-      }
-    , { title = "Motivation for True Acumen"
-      , date = "January 2025"
-      , slug = motivationForTrueAcumenSlug
-      }
+    List.map findBlogPost allSlugs
+
+findBlogPost : Slug -> Post
+findBlogPost slug =
+    case slug of
+        MotivationBehindTrueAcumenSlug ->
+            { title = "Motivation for True Acumen"
+            , date = "January 2025"
+            , slug = slug
+            }
+
+        StateManagementInElmSlug ->
+            { title = "State Management in Elm"
+            , date = "February 2025"
+            , slug = slug
+            }
+
+type Slug =
+    MotivationBehindTrueAcumenSlug
+    | StateManagementInElmSlug
+
+allSlugs : List Slug
+allSlugs =
+    [ StateManagementInElmSlug
+    , MotivationBehindTrueAcumenSlug
     ]
 
+slugToString : Slug -> String
+slugToString slug =
+    case slug of
+        MotivationBehindTrueAcumenSlug ->
+            "motivation-for-true-acumen"
 
-findBlogPost : String -> Maybe Post
-findBlogPost slug =
-    List.filter (\post -> post.slug == slug) allBlogPosts
-        |> List.head
+        StateManagementInElmSlug ->
+            "state-management-in-elm"
 
 
-motivationForTrueAcumenSlug : String
-motivationForTrueAcumenSlug =
-    "motivation-for-true-acumen"
+slugFromString : String -> Maybe Slug
+slugFromString slug =
+    List.filter (\s -> slugToString s == slug) allSlugs
+    |> List.head
+
