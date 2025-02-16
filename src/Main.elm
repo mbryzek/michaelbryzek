@@ -4,13 +4,13 @@ import Browser
 import Browser.Navigation as Nav
 import Global exposing (GlobalState, MainViewProps)
 import NotFound
-import Page.Blog as PageBlog
-import Page.Index as PageIndex
-import Page.Projects as PageProjects
-import Page.Talks as PageTalks
 import Route exposing (Route)
 import Templates.Shell as Shell
 import Url
+import Page.Blog.Index as PageBlogIndex
+import Page.Index as PageIndex
+import Page.Projects as PageProjects
+import Page.Talks as PageTalks
 
 
 main : Program () Model Msg
@@ -159,15 +159,13 @@ subscriptions _ =
 
 -- Organized so the below can be code generated
 -- CODEGEN START
-
-
 pageSubscriptions : Sub PageMsg
 pageSubscriptions =
     Sub.none
 
 
 type Page
-    = PageBlog
+    = PageBlogIndex
     | PageIndex
     | PageProjects
     | PageTalks
@@ -175,21 +173,18 @@ type Page
 
 
 type PageMsg
-    = PageBlogMsg PageBlog.Msg
+    = PageBlogIndexMsg PageBlogIndex.Msg
 
 
 getPageFromRoute : Maybe Route -> ( Page, Cmd PageMsg )
 getPageFromRoute maybeRoute =
     case maybeRoute of
-        Just Route.RouteBlog ->
-            ( PageBlog, Cmd.none )
-
+        Just Route.RouteBlogIndex ->
+            ( PageBlogIndex, Cmd.none )
         Just Route.RouteIndex ->
             ( PageIndex, Cmd.none )
-
         Just Route.RouteProjects ->
             ( PageProjects, Cmd.none )
-
         Just Route.RouteTalks ->
             ( PageTalks, Cmd.none )
 
@@ -200,8 +195,8 @@ getPageFromRoute maybeRoute =
 viewReady : ReadyModel -> Browser.Document Msg
 viewReady model =
     case model.page of
-        PageBlog ->
-            PageBlog.view (mainViewProps model.global PageBlogMsg) (shellViewProps model)
+        PageBlogIndex ->
+            PageBlogIndex.view (mainViewProps model.global PageBlogIndexMsg) (shellViewProps model)
 
         PageIndex ->
             PageIndex.view (shellViewProps model)
@@ -219,9 +214,9 @@ viewReady model =
 updatePage : ReadyModel -> PageMsg -> ( Page, Cmd Msg )
 updatePage model msg =
     case ( model.page, msg ) of
-        ( PageBlog, PageBlogMsg pageMsg ) ->
-            PageBlog.update model.global pageMsg
-                |> (\c -> ( model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogMsg) c ))
+        ( PageBlogIndex, PageBlogIndexMsg pageMsg ) ->
+            PageBlogIndex.update model.global pageMsg
+                |> \c -> (model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c)
 
         ( page, _ ) ->
             ( page, Cmd.none )

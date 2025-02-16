@@ -1,4 +1,4 @@
-module Page.Blog exposing (Msg, update, view)
+module Page.Blog.Index exposing (Msg, update, view)
 
 import Browser
 import Browser.Navigation as Nav

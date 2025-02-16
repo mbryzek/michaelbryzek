@@ -7,7 +7,7 @@ import Url.Parser exposing (..)
 type Route
     = RouteIndex
     | RouteProjects
-    | RouteBlog
+    | RouteBlogIndex
     | RouteTalks
 
 
@@ -21,6 +21,6 @@ matchRoute =
     oneOf
         [ map RouteIndex top
         , map RouteProjects (s "projects")
-        , map RouteBlog (s "blog")
+        , map RouteBlogIndex (s "blog")
         , map RouteTalks (s "talks")
         ]
