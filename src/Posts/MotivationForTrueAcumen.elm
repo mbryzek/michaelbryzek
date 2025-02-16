@@ -1,31 +1,10 @@
-module Page.Blog.Posts.MotivationForTrueAcumen exposing (main)
+module Posts.MotivationForTrueAcumen exposing (render)
 
-import Browser
 import Html exposing (Html, div, h1, h2, p, text, ul, li, a)
 import Html.Attributes exposing (class, href)
 
-main : Program () Model Msg
-main =
-    Browser.sandbox { init = init, update = update, view = view }
-
--- MODEL
-
-type alias Model = {}
-
-init : Model
-init = {}
-
--- UPDATE
-
-type Msg = NoOp
-
-update : Msg -> Model -> Model
-update _ model = model
-
--- VIEW
-
-view : Model -> Html Msg
-view _ =
+render : Html msg
+render =
     div [ class "max-w-2xl mx-auto p-6 space-y-6" ]
         [ h1 [ class "text-3xl font-bold text-gray-800" ] [ text "The Journey to True Acumen: A Personal Passion Project" ]
         , p [ class "text-gray-600" ] [ text "True Acumen has been a long-standing journey and a deeply personal passion project." ]

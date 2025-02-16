@@ -1,11 +1,22 @@
 module Posts.Common exposing (..)
 
+import Html exposing (Html)
+import Posts.MotivationForTrueAcumen as MotivationForTrueAcumen
+
 type alias Post =
     { title : String
     , date : String
     , slug: String
     }
 
+getContents : Post -> Html msg
+getContents post =
+    case post.slug of
+        "motivation-for-true-acumen" ->
+            MotivationForTrueAcumen.render
+
+        _ ->
+            Html.text "TODO"
 
 allBlogPosts : List Post
 allBlogPosts =

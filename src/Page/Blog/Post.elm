@@ -7,7 +7,7 @@ import Html exposing (Html, article, button, div, text, h1, h2, p, ul, li, a)
 import Html.Attributes exposing (class, href)
 import Templates.Shell as Shell
 import Urls
-import Posts.Common exposing (Post, findBlogPost)
+import Posts.Common exposing (Post, findBlogPost, getContents)
 import NotFound as NotFound
 
 
@@ -35,7 +35,11 @@ view : MainViewProps Msg mainMsg -> Shell.ViewProps mainMsg -> Model -> Browser.
 view { msgMap } shellProps model =
     case model.post of
         Just post ->
-            Shell.render shellProps Nothing [ contents post |> Html.map msgMap ]
+            case getContents post of
+                Just contents ->
+                    Shell.render shellProps Nothing [ contents |> Html.map msgMap ]
+                Nothing ->
+                    NotFound.view
 
         Nothing ->
             NotFound.view
