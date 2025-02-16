@@ -8,7 +8,7 @@ import Posts.Style exposing (blogH2, blogP, blogListWithTitles)
 contents : List (Html msg)
 contents =
     [ blogP [ text "True Acumen has been a long-standing journey and a deeply personal passion project." ]
-    , blogP [ text "The story begins in 2020, during the early months of the COVID-19 pandemic. One evening at the dinner table, I suggested that since we were all working and schooling from home, each of us should take on a personal project." ]
+    , blogP [ text "The story begins in 2020, during the early months of the COVID-19 pandemic. One evening at the dinner table, I suggested that since we were all working and schooling from home, with more free time than usual, each of us should take on a personal project." ]
     , blogP [ text "My wife, Lisa, and I have two children who were still young at the time—Cameron, 14, and Julien, 11. Cameron was the first to respond, sharing that he was writing a novel. Julien thought for a moment before deciding to build an online game. Lisa, on the other hand, quickly declared, “I’m not doing that.” We all laughed. Then my kids turned the question back to me: “What’s your project going to be?”" ]
     , blogH2 [ text "Finding the Right Project" ]
     , blogP [ text "That was a good question. At work, we were in the early stages of discovery for a potential new product and were diving deep into the React library. I was interested to learn more about the technology and figured the best way to do that was by building something myself." ]
