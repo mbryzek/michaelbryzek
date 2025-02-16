@@ -7,6 +7,7 @@ import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
 import Ui.Svgs exposing (..)
 import Util exposing (externalLink)
+import Urls
 
 
 type alias Project =
@@ -14,12 +15,22 @@ type alias Project =
     , description : List String
     , githubUrl : Maybe String
     , projectUrl : Maybe String
+    , blogUrl : Maybe String
     }
 
 
 projects : List Project
 projects =
-    [ { name = "API Builder"
+    [ { name = "True Acumen"
+      , description =
+            [ "Simple, accurate expense and budget management."
+            , "I recently have become really obsessed with making it easy to track family expenses and and to make a simple budget."
+            ]
+      , githubUrl = Nothing
+      , projectUrl = Just "https://www.trueacumen.com"
+      , blogUrl = Just Urls.blogPostMotivationForTrueAcumen
+      }
+    , { name = "API Builder"
       , description =
             [ "Simple, Comprehensive Tooling for Modern APIs."
             , "A project we started at Gilt when we needed to build client SDKs to access our APIs from multiple languages, including Ruby, Java, Scala, Swift, Object C, Kotlin, etc."
@@ -27,6 +38,7 @@ projects =
             ]
       , githubUrl = Just "https://github.com/apicollective/apibuilder"
       , projectUrl = Just "https://www.apibuilder.io"
+      , blogUrl = Nothing
       }
     , { name = "Schema Evolution Manager"
       , description =
@@ -36,6 +48,7 @@ projects =
             ]
       , githubUrl = Just "https://github.com/mbryzek/schema-evolution-manager"
       , projectUrl = Nothing
+      , blogUrl = Nothing
       }
     , { name = "Bergen Tech Hackathon"
       , description =
@@ -44,6 +57,7 @@ projects =
             ]
       , githubUrl = Just "https://github.com/mbryzek/hackathon"
       , projectUrl = Just "https://www.bthackathon.com"
+      , blogUrl = Nothing
       }
     , { name = "Home Owners Association Management Platform"
       , description =
@@ -52,6 +66,15 @@ projects =
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.hemlockpoint.net"
+      , blogUrl = Nothing
+      }
+    , { name = "Personal website"
+      , description =
+            [ "This is the source code for this website, built with Elm"
+            ]
+      , githubUrl = Just "https://github.com/mbryzek/michaelbryzek"
+      , projectUrl = Nothing
+      , blogUrl = Nothing
       }
     ]
 
@@ -82,6 +105,7 @@ projectCard project =
                     [ Attr.class "flex gap-x-4" ]
                     [ link websiteIcon project.projectUrl
                     , link githubIcon project.githubUrl
+                    , link blogIcon project.blogUrl
                     ]
                 ]
             ]

@@ -8,27 +8,26 @@ import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick)
 import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
+import Urls
 
 
 type alias Post =
     { title : String
     , date : String
-    , slug : String
+    , url : String
     }
 
 
 posts : List Post
 posts =
-    [ { title = "Building Type-Safe APIs with TypeScript"
-      , date = "March 15, 2024"
-      , slug = "foo"
+    [ { title = "State Management in Elm"
+      , date = "February 2025"
+      , url = Urls.blogPost "state-management-in-elm"
       }
-    , { title = "The Journey to Event Sourcing"
-      , date = "February 1, 2024"
-      , slug = "bar"
+    , { title = "Motivation for True Acumen"
+      , date = "January 2025"
+      , url =  Urls.blogPostMotivationForTrueAcumen
       }
-
-    -- Add more blog posts here
     ]
 
 
@@ -59,16 +58,16 @@ viewBlogPost post =
         [ Attr.class "bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-750 transition-colors" ]
         [ div
             [ Attr.class "space-y-2" ]
-            [ h2 (localLink post.slug post.title)
+            [ h2 (localLink post.url post.title)
             , p (text post.date)
             ]
         ]
 
 
 localLink : String -> String -> Html Msg
-localLink slug label =
+localLink url label =
     button
-        [ onClick (RedirectTo ("/posts/" ++ slug))
+        [ onClick (RedirectTo url)
         , class "underline hover:no-underline"
         ]
         [ text label ]
