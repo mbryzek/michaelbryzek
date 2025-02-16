@@ -9,10 +9,13 @@ blog : String
 blog =
     "/blog"
 
+type alias BlogPostParams =
+    { slug : String }
 
-blogPost : String -> String
-blogPost slug =
-    "/blog/p/" ++ slug
+
+blogPost : BlogPostParams -> String
+blogPost params =
+    "/blog/p/" ++ params.slug
 
 
 projects : String

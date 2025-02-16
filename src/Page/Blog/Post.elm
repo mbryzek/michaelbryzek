@@ -1,4 +1,4 @@
-module Page.Blog.Post exposing (Msg, update, view)
+module Page.Blog.Post exposing (Msg, init, update, view)
 
 import Browser
 import Browser.Navigation as Nav
@@ -11,30 +11,24 @@ import Ui.Elements exposing (h2, p)
 import Urls
 
 
-
-
-posts : List Post
-posts =
-    [ { title = "State Management in Elm"
-      , date = "February 2025"
-      , url = Urls.blogPost "state-management-in-elm"
-      }
-    , { title = "Motivation for True Acumen"
-      , date = "January 2025"
-      , url =  Urls.blogPostMotivationForTrueAcumen
-      }
-    ]
+type alias Model =
+    { slug : String }
 
 
 type Msg
     = RedirectTo String
 
 
-update : GlobalState -> Msg -> Cmd Msg
-update global msg =
+init : Urls.BlogPostParams -> Model
+init params =
+    { slug = params.slug }
+
+
+update : MainViewProps Msg mainMsg -> Msg -> Cmd mainMsg
+update { global, msgMap } msg =
     case msg of
         RedirectTo url ->
-            Nav.pushUrl global.navKey url
+            Nav.pushUrl global.navKey url |> Cmd.map msgMap
 
 
 view : MainViewProps Msg mainMsg -> Shell.ViewProps mainMsg -> Browser.Document mainMsg
