@@ -5,32 +5,36 @@ import Html.Attributes exposing (class)
 import Posts.MotivationForTrueAcumen as MotivationForTrueAcumen
 import Posts.Style exposing (blogH1)
 import Ui.Elements exposing (textColor)
-import Ui.Elements exposing (textColor)
 
 
 type alias Post =
     { title : String
     , date : String
-    , slug: String
+    , slug : String
     }
+
 
 getContents : Post -> Maybe (Html msg)
 getContents post =
     case post.slug of
-        "motivation-for-true-acumen" -> -- motivationForTrueAcumenSlug
+        "motivation-for-true-acumen" ->
+            -- motivationForTrueAcumenSlug
             Just (renderPost post MotivationForTrueAcumen.contents)
 
         _ ->
             Nothing
 
+
 renderPost : Post -> List (Html msg) -> Html msg
 renderPost post contents =
-    div [] (List.concat [
-        [ blogH1 post.title
-        , div [class textColor, class "mt-2 italic"] [text post.date]
-        ]
-        , contents
-    ])
+    div []
+        (List.concat
+            [ [ blogH1 post.title
+              , div [ class textColor, class "mt-2 italic" ] [ text post.date ]
+              ]
+            , contents
+            ]
+        )
 
 
 allBlogPosts : List Post
@@ -55,4 +59,3 @@ findBlogPost slug =
 motivationForTrueAcumenSlug : String
 motivationForTrueAcumenSlug =
     "motivation-for-true-acumen"
-
