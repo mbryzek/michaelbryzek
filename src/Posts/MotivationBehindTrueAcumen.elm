@@ -15,7 +15,7 @@ contents =
     , blogP [ text "At the same time, I realized that my interest in this project was also shaped by my background. My parents came to the U.S. as refugees in 1979 with just $300 to their name. I was two years old. It took time for them to get settled, and I remember what it was like growing up with very little. My mother carefully clipped coupons, never overspent on groceries, and we slept on the floor because we couldn’t afford furniture. Those early years had a lasting impact on me." ]
     , blogP [ text "I also vividly remember the weekend my wife and I ran out of money. Raising two kids on a single income outside of New York City was challenging, and we reached a point where we couldn’t pay our bills. Fortunately, we recovered quickly—but the experience stuck with me." ]
     , blogH2 [ text "The Birth of True Acumen" ]
-    , blogP [ text "Back at the dinner table, I shared my idea: I’m going to create a personal expense and budgeting app for our family." ]
+    , blogP [ text "Back at the dinner table, I shared my idea: to create a personal expense and budgeting app for our family." ]
     , blogP [ text "By this time, I had tried at least 20 different budgeting tools—everything from Mint to QuickBooks—but nothing worked the way I needed it to. I didn’t think our needs were that unique, but there were a few things that were critical to me:" ]
     , blogListWithTitles [
         { title = "Minimal Effort, Maximum Clarity"
