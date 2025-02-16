@@ -4,8 +4,7 @@ import Browser
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Templates.Shell as Shell
-import Ui.Elements exposing (h2)
-import Util exposing (externalLink)
+import Ui.Elements exposing (h2, externalLink)
 
 
 type alias Talk msg =
@@ -31,7 +30,7 @@ talks =
       , description =
             div []
                 [ text "A deep dive into how we designed and built the microservice architecture at Flow Commerce, based on the lessons we learned at Gilt Groupe. This talk has over 700k views as of 2025 and got a nice mention on the "
-                , externalLink "https://news.ycombinator.com/item?id=18740939" (text "2018 best talks thread in hacker news")
+                , externalLink [] "https://news.ycombinator.com/item?id=18740939" [text "2018 best talks thread in hacker news"]
                 ]
       , videoUrl = "https://www.youtube.com/watch?v=j6ow-UemzBc"
       }
@@ -62,7 +61,7 @@ viewTalk talk =
             [ class "flex items-start justify-between mb-2" ]
             [ div
                 []
-                [ h2 (externalLink talk.videoUrl (text talk.title))
+                [ h2 [] [ externalLink [] talk.videoUrl [ text talk.title ] ]
                 , Html.p
                     [ class "text-gray-300 leading-relaxed italic" ]
                     [ text (talk.event ++ " • " ++ talk.date) ]

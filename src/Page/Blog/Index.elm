@@ -7,7 +7,7 @@ import Html exposing (Html, article, button, div, text)
 import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick)
 import Templates.Shell as Shell
-import Ui.Elements exposing (h2, p)
+import Ui.Elements exposing (p)
 import Posts.Common exposing (Post, allBlogPosts)
 import Urls
 
@@ -39,7 +39,7 @@ viewBlogPost post =
         [ div
             [ Attr.class "space-y-2" ]
             [ localLink (Urls.blogPost { slug = post.slug }) post.title
-            , p (text post.date)
+            , p [] [ text post.date ]
             ]
         ]
 

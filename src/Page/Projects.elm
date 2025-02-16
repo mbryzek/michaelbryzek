@@ -4,9 +4,8 @@ import Browser
 import Html exposing (Html, div, text)
 import Html.Attributes as Attr
 import Templates.Shell as Shell
-import Ui.Elements exposing (h2, p)
+import Ui.Elements exposing (h2, p, externalLink)
 import Ui.Svgs exposing (..)
-import Util exposing (externalLink)
 import Posts.Common exposing (motivationForTrueAcumenSlug)
 import Urls
 
@@ -101,7 +100,7 @@ projectCard project =
         (List.append
             [ div
                 [ Attr.class "flex items-start justify-between mb-4" ]
-                [ h2 (text project.name)
+                [ h2 [] [ text project.name ]
                 , div
                     [ Attr.class "flex gap-x-4" ]
                     [ link websiteIcon project.projectUrl
@@ -110,7 +109,7 @@ projectCard project =
                     ]
                 ]
             ]
-            (List.map (\t -> p (text t)) project.description)
+            (List.map (\t -> p [] [ text t ]) project.description)
         )
 
 
@@ -118,7 +117,7 @@ link : Html msg -> Maybe String -> Html msg
 link icon url =
     case url of
         Just u ->
-            externalLink u icon
+            externalLink [] u [ icon ]
 
         Nothing ->
             text ""
