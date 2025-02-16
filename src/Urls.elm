@@ -15,7 +15,7 @@ type alias BlogPostParams =
 
 blogPost : BlogPostParams -> String
 blogPost params =
-    "/blog/p/" ++ params.slug
+    "/blog/" ++ params.slug
 
 
 projects : String

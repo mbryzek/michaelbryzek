@@ -9,10 +9,11 @@ import Html.Events exposing (onClick)
 import Templates.Shell as Shell
 import Ui.Elements exposing (h2, p)
 import Urls
+import Posts.Common exposing (Post, findBlogPost)
 
 
 type alias Model =
-    { slug : String }
+    { post : Maybe Post }
 
 
 type Msg
@@ -21,7 +22,7 @@ type Msg
 
 init : Urls.BlogPostParams -> Model
 init params =
-    { slug = params.slug }
+    { post = findBlogPost params.slug }
 
 
 update : GlobalState -> Msg -> Cmd mainMsg

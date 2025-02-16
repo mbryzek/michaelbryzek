@@ -19,6 +19,13 @@ allBlogPosts =
       }
     ]
 
+
+findBlogPost : String -> Maybe Post
+findBlogPost slug =
+    List.filter (\post -> post.slug == slug) allBlogPosts
+        |> List.head
+
+
 motivationForTrueAcumenSlug : String
 motivationForTrueAcumenSlug =
     "motivation-for-true-acumen"
