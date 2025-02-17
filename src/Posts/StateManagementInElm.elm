@@ -30,4 +30,5 @@ contents =
     Hope you find this useful and if you have any suggestions, improvements or questions please do share!
     """ ]
     , blogExternalLink "https://github.com/mbryzek/state-management-in-elm" "View the code on GitHub"
+    , blogExternalLink "https://monkfish-app-eiejy.ondigitalocean.app/" "View the live app"
     ]
