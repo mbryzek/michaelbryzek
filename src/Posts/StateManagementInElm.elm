@@ -15,13 +15,14 @@ contents =
     """ ]
     , blogP [ text """
     I thought it'd be helpful to share the approach I've so far standardized on - 
-    and to do so I've build a very simple, plain web application demonstrating the
+    and to do so I've built a simple, plain web application demonstrating the
     various places where state is managed including:
     """ ]
     , blogList [
         "Simple pages that don't need a model nor any commands"
         , "Stateful pages"
         , "A global template that itself has state"
+        , "Session authentication and update"
     ]
     , blogP [ text """
     In this application, we also demonstrate how to implement Login, Logout and profile updates
