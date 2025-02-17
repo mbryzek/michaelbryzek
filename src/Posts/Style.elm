@@ -2,7 +2,7 @@ module Posts.Style exposing (..)
 
 import Html exposing (Html, div, li, text, ul)
 import Html.Attributes exposing (class)
-import Ui.Elements exposing (h1, h2, p, textColor)
+import Ui.Elements exposing (externalLink, h1, h2, p, textColor)
 
 
 blogH1 : String -> Html msg
@@ -30,6 +30,10 @@ blogListWithTitles : List ItemWithTitle -> Html msg
 blogListWithTitles items =
     ul [ class ("mt-4 list-disc pl-8 " ++ textColor) ] (List.map (\item -> renderItem item) items)
 
+blogList : List String -> Html msg
+blogList items =
+    ul [ class ("mt-4 list-disc pl-8 " ++ textColor) ] (List.map (\item -> li [ class "mt-4" ] [ text item ]) items)
+
 
 renderItem : ItemWithTitle -> Html msg
 renderItem item =
@@ -39,3 +43,7 @@ renderItem item =
             , div [] [ text item.content ]
             ]
         ]
+
+blogExternalLink : String -> String -> Html msg
+blogExternalLink url label =
+    div [ class "mt-4" ] [ externalLink [] url [ text label ] ]
