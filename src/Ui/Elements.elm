@@ -1,4 +1,4 @@
-module Ui.Elements exposing (p, h1, h2, externalLink, textColor)
+module Ui.Elements exposing (p, h1, h2, externalLink, textColor, button)
 
 import Html exposing (Html, Attribute, a)
 import Html.Attributes exposing (class, href, target, rel)
@@ -40,3 +40,7 @@ finalAttributes attributes1 attributes2 =
         , attributes2
         , [ class textColor ]
     ]
+
+button : List (Attribute msg) -> List (Html msg) -> Html msg
+button attributes content =
+    Html.button (finalAttributes attributes [ class "bg-white hover:bg-gray-100 text-gray-900 border border-gray-300 px-4 py-2 rounded-lg transition-colors shadow-sm" ]) content

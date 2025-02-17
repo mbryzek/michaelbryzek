@@ -1,7 +1,7 @@
 module Posts.Style exposing (..)
 
-import Html exposing (Html, div, li, text, ul)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, li, text, ul, a)
+import Html.Attributes exposing (class, href)
 import Ui.Elements exposing (externalLink, h1, h2, p, textColor)
 
 
@@ -47,3 +47,12 @@ renderItem item =
 blogExternalLink : String -> String -> Html msg
 blogExternalLink url label =
     div [ class "mt-4" ] [ externalLink [] url [ text label ] ]
+
+
+anchorButton : String -> List (Html msg) -> Html msg
+anchorButton url content =
+    a
+        [ class "inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 border border-gray-300 px-4 py-2 rounded-lg transition-colors shadow-sm"
+        , href url  
+        ] 
+        content
