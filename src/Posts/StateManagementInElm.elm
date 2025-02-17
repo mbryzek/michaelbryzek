@@ -8,6 +8,11 @@ import Ui.Svgs exposing (githubIcon)
 
 contents : List (Html msg)
 contents =
+    intro
+
+
+intro : List (Html msg)
+intro =
     [ blogP [ text """
     Managing state in an Elm single-page application (SPA) requires careful structuring.
     Over time, I've refined an approach that balances simplicity and scalability.
