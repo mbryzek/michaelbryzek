@@ -31,13 +31,13 @@ contents =
     , blogP [ text """
     Hope you find this useful and if you have any suggestions, improvements or questions please do share!
     """ ]
-    , a 
-            [ class "inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 border border-gray-300 px-4 py-2 rounded-lg transition-colors shadow-sm"
-            , href "https://github.com/mbryzek/state-management-in-elm"
-            ] 
-            [ githubIcon
-            , text "View the code on GitHub"
-            ]
-
-    , blogExternalLink "https://monkfish-app-eiejy.ondigitalocean.app/" "View the live app"
+    , div [class "flex mt-4 gap-x-4"] [
+        blogButton "https://github.com/mbryzek/state-management-in-elm" [
+            githubIcon
+            , text "Source code"
+        ]
+        , blogButton "https://monkfish-app-eiejy.ondigitalocean.app/" [
+            text "Live app"
+        ]
+    ]
     ]
