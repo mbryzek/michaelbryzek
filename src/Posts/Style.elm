@@ -1,8 +1,9 @@
 module Posts.Style exposing (..)
 
-import Html exposing (Html, div, li, text, ul, a)
+import Html exposing (Html, div, li, text, ul, a, pre, code)
 import Html.Attributes exposing (class, href, target, rel)
 import Ui.Elements exposing (externalLink, h1, h2, p, textColor)
+import String
 
 
 blogH1 : String -> Html msg
@@ -58,3 +59,11 @@ blogButton url content =
         , rel "noopener noreferrer"
         ]
         content
+
+blogCode : String -> Html msg
+blogCode content =
+    div [ class "my-6 overflow-x-auto" ]
+        [ pre [ class "bg-gray-900 p-4 rounded-lg border border-gray-200 font-mono" ]
+            [ code [] [ text (String.trim content) ]
+            ]
+        ]

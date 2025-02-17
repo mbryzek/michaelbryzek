@@ -8,7 +8,10 @@ import Ui.Svgs exposing (githubIcon)
 
 contents : List (Html msg)
 contents =
-    intro
+    List.concat [
+        intro
+        , authentication
+    ]
 
 
 intro : List (Html msg)
@@ -46,4 +49,30 @@ intro =
             text "Live app"
         ]
     ]
+    ]
+
+authentication : List (Html msg)
+authentication =
+    [ blogH2 [ text "Authentication" ]
+    , blogP [ text """
+    I've found that it has been helpful to handle most of Authentication in Main.elm. My approach has been to define a type "GlobalState" which tracks authentication status:
+    """ ]
+    , blogCode """
+type GlobalState
+    = GlobalStateAnonymous GlobalStateAnonymousData
+    | GlobalStateAuthenticated GlobalStateAuthenticatedData
+
+
+type alias GlobalStateAnonymousData =
+    { navKey : Nav.Key
+    , currentUrl : Url
+    }
+
+
+type alias GlobalStateAuthenticatedData =
+    { navKey : Nav.Key
+    , currentUrl : Url
+    , session : Session
+    }
+    """
     ]
