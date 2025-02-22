@@ -42,7 +42,7 @@ update : ViewProps msg -> Msg -> (Model, Cmd Msg)
 update { shellModel, global } msg =
     case msg of
         RedirectTo url ->
-            ( { shellModel | posix = Nothing }, Nav.pushUrl global.navKey url )
+            ( shellModel, Nav.pushUrl global.navKey url )
 
         CurrentTime posix ->
             ( { shellModel | posix = Just posix }, Cmd.none )
