@@ -33,6 +33,7 @@ type Model
 type alias ReadyModel =
     { global : GlobalState
     , page : Page
+    , shellModel : Shell.Model
     }
 
 
@@ -44,6 +45,9 @@ init _ url key =
 initWithGlobal : GlobalState -> ( Model, Cmd Msg )
 initWithGlobal global =
     let
+        ( shellModel, shellCmd ) =
+            Shell.init
+
         ( page, cmd ) =
             Route.fromUrl global.url
                 |> getPageFromRoute
@@ -51,8 +55,12 @@ initWithGlobal global =
     ( Ready
         { global = global
         , page = page
+        , shellModel = shellModel
         }
-    , Cmd.map (ReadyMsg << ChangedPage) cmd
+    , Cmd.batch [
+        Cmd.map (ReadyMsg << ChangedPage) cmd
+        , Cmd.map (ReadyMsg << ChangedInternal << ShellMsg) shellCmd
+    ]
     )
 
 
@@ -128,12 +136,19 @@ updateInternal : InternalMsg -> ReadyModel -> ( ReadyModel, Cmd Msg )
 updateInternal msg model =
     case msg of
         ShellMsg shellMsg ->
-            ( model, Shell.update (shellViewProps model) shellMsg )
+            let
+                ( shellModel, shellCmd ) =
+                    Shell.update (shellViewProps model) shellMsg
+            in
+            ( { model | shellModel = shellModel }
+              , Cmd.map (ReadyMsg << ChangedInternal << ShellMsg) shellCmd
+            )
 
 
 shellViewProps : ReadyModel -> Shell.ViewProps Msg
 shellViewProps model =
     { global = model.global
+    , shellModel = model.shellModel
     , onShellMsg = ReadyMsg << ChangedInternal << ShellMsg
     }
 

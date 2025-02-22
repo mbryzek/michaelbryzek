@@ -1,4 +1,4 @@
-module Templates.Shell exposing (ViewProps, Msg, Section, update, render, renderSimple)
+module Templates.Shell exposing (ViewProps, Msg, Section, Model, init, update, render, renderSimple)
 
 import Browser
 import Browser.Navigation as Nav
@@ -6,12 +6,23 @@ import Global exposing (GlobalState)
 import Html exposing (Html, div, h1, button, main_, nav, text, a, span)
 import Html.Attributes exposing (class, target, rel, href)
 import Html.Events exposing (onClick)
+import Task
+import Time
 import Url
 import Urls
 import Ui.Svgs exposing (..)
+import Date
+
+type alias Model =
+    { posix : Maybe Time.Posix }
+
+emptyModel : Model
+emptyModel =
+    { posix = Nothing }
 
 type alias ViewProps a =
     { global : GlobalState
+    , shellModel : Model
     , onShellMsg : Msg -> a
     }
 
@@ -20,13 +31,21 @@ type alias Section =
 
 type Msg =
     RedirectTo String
+    | CurrentTime Time.Posix
+
+init : (Model, Cmd Msg)
+init =
+    (emptyModel, Task.perform CurrentTime Time.now)
 
 
-update : ViewProps mainMsg -> Msg -> Cmd mainMsg
-update props msg =
+update : ViewProps msg -> Msg -> (Model, Cmd Msg)
+update { shellModel, global } msg =
     case msg of
         RedirectTo url ->
-            Nav.pushUrl props.global.navKey url
+            ( shellModel, Nav.pushUrl global.navKey url )
+
+        CurrentTime posix ->
+            ( { shellModel | posix = Just posix }, Cmd.none )
 
 
 allSections : List Section
@@ -72,15 +91,15 @@ navLink currentUrl section =
 
 
 render : (ViewProps mainMsg) -> Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
-render props title contents =
+render { shellModel, global, onShellMsg } title contents =
     { title = title |> Maybe.withDefault "Michael Bryzek"
-    , body = [ renderBody title (renderNav props.global |> Html.map props.onShellMsg) contents ]
+    , body = [ renderBody shellModel title (renderNav global |> Html.map onShellMsg) contents ]
     }
 
 renderSimple : Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
 renderSimple title contents =
     { title = title |> Maybe.withDefault "Michael Bryzek"
-    , body = [ renderBody title (Html.text "")contents ]
+    , body = [ renderBody emptyModel title (Html.text "")contents ]
     }
 
 renderNav : GlobalState -> Html Msg
@@ -105,8 +124,8 @@ renderNav global =
         ]
 
 
-renderBody : Maybe String -> Html msg -> List (Html msg) -> Html msg
-renderBody title nav contents =
+renderBody : Model -> Maybe String -> Html msg -> List (Html msg) -> Html msg
+renderBody model title nav contents =
     div
         [ class "min-h-screen bg-gray-800 text-gray-200"
         ]
@@ -116,7 +135,7 @@ renderBody title nav contents =
             [ renderTitle title
             , div [class "mt-6"] contents
             ]
-        , footer
+        , footer model
         ]
 
 renderTitle : Maybe String -> Html msg
@@ -130,8 +149,16 @@ renderTitle title =
         Nothing ->
             text ""
 
-footer : Html msg
-footer =
+footer : Model -> Html msg
+footer model =
+    let
+        year : String
+        year =
+            model.posix
+                |> Maybe.map (Date.year << Date.fromPosix Time.utc)
+                |> Maybe.map (\y -> " " ++ String.fromInt y)
+                |> Maybe.withDefault ""
+    in
     div
         [ class "mt-4 bg-gray-800 border-t border-gray-700"
         ]
@@ -141,7 +168,7 @@ footer =
                 [ class "flex items-center justify-between gap-x-4 px-2" ]
                 [ div 
                     [ class "text-sm text-gray-500" ]
-                    [ text "© 2025 Michael Bryzek" ]
+                    [ text ("©" ++ year ++ " Michael Bryzek") ]
                 , div [] [ renderIcons ]
                 ]
             ]
