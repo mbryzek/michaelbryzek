@@ -1,4 +1,4 @@
-module Templates.Shell exposing (ViewProps, Msg, Section, update, render, renderSimple)
+module Templates.Shell exposing (ViewProps, Msg, Section, Model, init, update, render, renderSimple)
 
 import Browser
 import Browser.Navigation as Nav
@@ -6,9 +6,15 @@ import Global exposing (GlobalState)
 import Html exposing (Html, div, h1, button, main_, nav, text, a, span)
 import Html.Attributes exposing (class, target, rel, href)
 import Html.Events exposing (onClick)
+import Task
+import Time
 import Url
 import Urls
 import Ui.Svgs exposing (..)
+import Date
+
+type alias Model =
+    { posix : Maybe Time.Posix }
 
 type alias ViewProps a =
     { global : GlobalState
@@ -20,13 +26,21 @@ type alias Section =
 
 type Msg =
     RedirectTo String
+    | CurrentTime Time.Posix
+
+init : Cmd Msg
+init =
+    Task.perform CurrentTime Time.now
 
 
-update : ViewProps mainMsg -> Msg -> Cmd mainMsg
-update props msg =
+update : ViewProps mainMsg -> Msg -> Model -> (Model, Cmd mainMsg)
+update props msg model =
     case msg of
         RedirectTo url ->
-            Nav.pushUrl props.global.navKey url
+            ( model, Nav.pushUrl props.global.navKey url )
+
+        CurrentTime posix ->
+            ( { model | posix = Just posix }, Cmd.none )
 
 
 allSections : List Section
@@ -130,8 +144,16 @@ renderTitle title =
         Nothing ->
             text ""
 
-footer : Html msg
-footer =
+footer : Model -> Html msg
+footer model =
+    let
+        year : String
+        year =
+            model.posix
+                |> Maybe.map (Date.year << Date.fromPosix Time.utc)
+                |> Maybe.map (\y -> " " ++ String.fromInt y)
+                |> Maybe.withDefault ""
+    in
     div
         [ class "mt-4 bg-gray-800 border-t border-gray-700"
         ]
@@ -141,7 +163,7 @@ footer =
                 [ class "flex items-center justify-between gap-x-4 px-2" ]
                 [ div 
                     [ class "text-sm text-gray-500" ]
-                    [ text "© 2025 Michael Bryzek" ]
+                    [ text ("© " ++ String.fromInt year ++ " Michael Bryzek") ]
                 , div [] [ renderIcons ]
                 ]
             ]
