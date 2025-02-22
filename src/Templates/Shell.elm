@@ -91,9 +91,9 @@ navLink currentUrl section =
 
 
 render : (ViewProps mainMsg) -> Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
-render props title contents =
+render { shellModel, global, onShellMsg } title contents =
     { title = title |> Maybe.withDefault "Michael Bryzek"
-    , body = [ renderBody props.shellModel title (renderNav props.global |> Html.map props.onShellMsg) contents ]
+    , body = [ renderBody shellModel title (renderNav global |> Html.map onShellMsg) contents ]
     }
 
 renderSimple : Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
