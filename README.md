@@ -2,4 +2,4 @@
 
 This repository hosts my personal website
 
-https://bryzek.org
+https://bryzek.com
