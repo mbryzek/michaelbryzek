@@ -16,8 +16,13 @@ import Date
 type alias Model =
     { posix : Maybe Time.Posix }
 
+emptyModel : Model
+emptyModel =
+    { posix = Nothing }
+
 type alias ViewProps a =
     { global : GlobalState
+    , shellModel : Model
     , onShellMsg : Msg -> a
     }
 
@@ -28,19 +33,19 @@ type Msg =
     RedirectTo String
     | CurrentTime Time.Posix
 
-init : Cmd Msg
+init : (Model, Cmd Msg)
 init =
-    Task.perform CurrentTime Time.now
+    (emptyModel, Task.perform CurrentTime Time.now)
 
 
-update : ViewProps mainMsg -> Msg -> Model -> (Model, Cmd mainMsg)
-update props msg model =
+update : ViewProps msg -> Msg -> (Model, Cmd Msg)
+update { shellModel, global } msg =
     case msg of
         RedirectTo url ->
-            ( model, Nav.pushUrl props.global.navKey url )
+            ( { shellModel | posix = Nothing }, Nav.pushUrl global.navKey url )
 
         CurrentTime posix ->
-            ( { model | posix = Just posix }, Cmd.none )
+            ( { shellModel | posix = Just posix }, Cmd.none )
 
 
 allSections : List Section
@@ -88,13 +93,13 @@ navLink currentUrl section =
 render : (ViewProps mainMsg) -> Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
 render props title contents =
     { title = title |> Maybe.withDefault "Michael Bryzek"
-    , body = [ renderBody title (renderNav props.global |> Html.map props.onShellMsg) contents ]
+    , body = [ renderBody props.shellModel title (renderNav props.global |> Html.map props.onShellMsg) contents ]
     }
 
 renderSimple : Maybe String -> List (Html mainMsg) -> Browser.Document mainMsg
 renderSimple title contents =
     { title = title |> Maybe.withDefault "Michael Bryzek"
-    , body = [ renderBody title (Html.text "")contents ]
+    , body = [ renderBody emptyModel title (Html.text "")contents ]
     }
 
 renderNav : GlobalState -> Html Msg
@@ -119,8 +124,8 @@ renderNav global =
         ]
 
 
-renderBody : Maybe String -> Html msg -> List (Html msg) -> Html msg
-renderBody title nav contents =
+renderBody : Model -> Maybe String -> Html msg -> List (Html msg) -> Html msg
+renderBody model title nav contents =
     div
         [ class "min-h-screen bg-gray-800 text-gray-200"
         ]
@@ -130,7 +135,7 @@ renderBody title nav contents =
             [ renderTitle title
             , div [class "mt-6"] contents
             ]
-        , footer
+        , footer model
         ]
 
 renderTitle : Maybe String -> Html msg
@@ -163,7 +168,7 @@ footer model =
                 [ class "flex items-center justify-between gap-x-4 px-2" ]
                 [ div 
                     [ class "text-sm text-gray-500" ]
-                    [ text ("© " ++ String.fromInt year ++ " Michael Bryzek") ]
+                    [ text ("©" ++ year ++ " Michael Bryzek") ]
                 , div [] [ renderIcons ]
                 ]
             ]
