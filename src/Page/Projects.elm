@@ -33,7 +33,7 @@ projects =
     , { name = "API Builder"
       , description =
             [ "Simple, Comprehensive Tooling for Modern APIs."
-            , "A project we started at Gilt when we needed to build client SDKs to access our APIs from multiple languages, including Ruby, Java, Scala, Swift, Object C, Kotlin, etc."
+            , "A project we started at Gilt when we needed to build client SDKs to access our APIs from multiple languages, including Ruby, Java, Scala, Swift, Objective C, Kotlin, etc."
             , "We also built Flow Commerce on the back of API Builder - helping us build a high quality, broad API Platform."
             ]
       , githubUrl = Just "https://github.com/apicollective/apibuilder"
