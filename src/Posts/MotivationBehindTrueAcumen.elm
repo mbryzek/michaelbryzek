@@ -31,12 +31,13 @@ contents =
     , blogP [ text "And so, I started building True Acumen. The first version was a simple React app that our family used during COVID. It was a prototype, but for the first time, I had a complete, accurate picture of our finances. That was a game-changer."]
     , blogP [ text "Then, an unexpected roadblock hit. Chase Bank changed its policies, and Plaid—the service I was using to fetch transactions—required an enterprise account with a security review. Our prototype was dead."]
     , blogH2 [ text "A New Beginning in 2024" ]
+    , blogP [ text "In Summer 2024, a few things happened that brought me back to the idea of simple financial management" ]
     , blogListWithTitles [
         { title = "Plaid reopened access to Chase transactions"
             , content = "I could again retrieve our financial data."
             }
         , { title = "I had sold my business, Flow Commerce"
-            , content = "After launching with our partner Shopify and spending a few years growing the product, I had transitioned out of the company and now had a lot of free time."
+            , content = "After launching with our partner Shopify and spending a few years growing the product, I had transitioned out of the company and found myself with a lot more free time."
             }
         , { title = "I discovered the Elm Language"
             , content = "Just like with React in 2020, I was interested in learning this new language and needed a project to experiment with it."
@@ -54,6 +55,8 @@ contents =
     , blogP [ text "At that point, I started to wonder: If True Acumen was helping our family so much, could it help others too?"]
     , blogH2 [ text "Today: Sharing True Acumen" ]
     , blogP [ text "And that brings us to today. I’m excited to share True Acumen as an alpha release with close friends and family. My goal is to learn how others find value in it and refine the product based on real-world feedback." ]
-    , blogP [ text "If you’re interested in trying out True Acumen, I’d love for you to join our waitlist!" ]
-    , externalLink [] "https://www.trueacumen.com/waitlist" [ text "Join the Waitlist" ]
+    , blogP [
+        text "If you’re interested in trying out True Acumen, I’d love for you to "
+        , externalLink [] "https://www.trueacumen.com/waitlist" [ text "join our watlist" ]
+      ]
     ]
