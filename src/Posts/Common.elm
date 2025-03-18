@@ -3,7 +3,7 @@ module Posts.Common exposing (..)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Posts.MotivationBehindTrueAcumen as MotivationBehindTrueAcumen
-import Posts.StateManagementInElm as StateManagementInElm
+import Posts.ManagingStateInElmSinglePageApps as ManagingStateInElmSinglePageApps
 import Posts.Style exposing (blogH1)
 import Ui.Elements exposing (textColor)
 
@@ -21,8 +21,8 @@ getContents post =
         SlugMotivationBehindTrueAcumen ->
             renderPost post MotivationBehindTrueAcumen.contents
 
-        SlugStateManagementInElm ->
-            renderPost post StateManagementInElm.contents
+        SlugManagingStateInElmSinglePageApps ->
+            renderPost post ManagingStateInElmSinglePageApps.contents
 
 renderPost : Post -> List (Html msg) -> Html msg
 renderPost post contents =
@@ -49,7 +49,7 @@ findBlogPost slug =
             , slug = slug
             }
 
-        SlugStateManagementInElm ->
+        SlugManagingStateInElmSinglePageApps ->
             { title = "State Management in Elm"
             , date = "March 2025"
             , slug = slug
@@ -57,12 +57,12 @@ findBlogPost slug =
 
 type Slug =
     SlugMotivationBehindTrueAcumen
-    | SlugStateManagementInElm
+    | SlugManagingStateInElmSinglePageApps
 
 allSlugs : List Slug
 allSlugs =
-    [ SlugStateManagementInElm
-    , SlugMotivationBehindTrueAcumen
+    [ SlugMotivationBehindTrueAcumen
+      , SlugManagingStateInElmSinglePageApps
     ]
 
 slugToString : Slug -> String
@@ -71,8 +71,8 @@ slugToString slug =
         SlugMotivationBehindTrueAcumen ->
             "motivation-behind-true-acumen"
 
-        SlugStateManagementInElm ->
-            "state-management-in-elm"
+        SlugManagingStateInElmSinglePageApps ->
+            "Managing State in Elm Single Page Applications"
 
 
 slugFromString : String -> Maybe Slug
