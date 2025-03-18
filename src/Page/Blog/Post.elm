@@ -1,3 +1,4 @@
+-- codegen.global.state: GlobalStateAnonymousData
 module Page.Blog.Post exposing (Model, init, view)
 
 import Browser
