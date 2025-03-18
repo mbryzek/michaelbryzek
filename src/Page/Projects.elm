@@ -28,7 +28,7 @@ projects =
             ]
       , githubUrl = Nothing
       , projectUrl = Just "https://www.trueacumen.com"
-      , blogUrl = Just (Urls.blogPost { slug = slugToString MotivationBehindTrueAcumenSlug })
+      , blogUrl = Just (Urls.blogPost { slug = slugToString SlugMotivationBehindTrueAcumen })
       }
     , { name = "API Builder"
       , description =

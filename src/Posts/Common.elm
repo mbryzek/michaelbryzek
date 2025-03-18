@@ -18,10 +18,10 @@ type alias Post =
 getContents : Post ->Html msg
 getContents post =
     case post.slug of
-        MotivationBehindTrueAcumenSlug ->
+        SlugMotivationBehindTrueAcumen ->
             renderPost post MotivationBehindTrueAcumen.contents
 
-        StateManagementInElmSlug ->
+        SlugStateManagementInElm ->
             renderPost post StateManagementInElm.contents
 
 renderPost : Post -> List (Html msg) -> Html msg
@@ -43,35 +43,35 @@ allBlogPosts =
 findBlogPost : Slug -> Post
 findBlogPost slug =
     case slug of
-        MotivationBehindTrueAcumenSlug ->
+        SlugMotivationBehindTrueAcumen ->
             { title = "Motivation for True Acumen"
             , date = "January 2025"
             , slug = slug
             }
 
-        StateManagementInElmSlug ->
+        SlugStateManagementInElm ->
             { title = "State Management in Elm"
-            , date = "February 2025"
+            , date = "March 2025"
             , slug = slug
             }
 
 type Slug =
-    MotivationBehindTrueAcumenSlug
-    | StateManagementInElmSlug
+    SlugMotivationBehindTrueAcumen
+    | SlugStateManagementInElm
 
 allSlugs : List Slug
 allSlugs =
-    [ StateManagementInElmSlug
-    , MotivationBehindTrueAcumenSlug
+    [ SlugStateManagementInElm
+    , SlugMotivationBehindTrueAcumen
     ]
 
 slugToString : Slug -> String
 slugToString slug =
     case slug of
-        MotivationBehindTrueAcumenSlug ->
+        SlugMotivationBehindTrueAcumen ->
             "motivation-behind-true-acumen"
 
-        StateManagementInElmSlug ->
+        SlugStateManagementInElm ->
             "state-management-in-elm"
 
 
