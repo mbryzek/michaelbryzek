@@ -50,7 +50,7 @@ findBlogPost slug =
             }
 
         SlugManagingStateInElmSinglePageApps ->
-            { title = "State Management in Elm"
+            { title = "Managing State in Elm Single Page Applications"
             , date = "March 2025"
             , slug = slug
             }
@@ -59,10 +59,11 @@ type Slug =
     SlugMotivationBehindTrueAcumen
     | SlugManagingStateInElmSinglePageApps
 
+-- this is the order of the posts on the blog page
 allSlugs : List Slug
 allSlugs =
-    [ SlugMotivationBehindTrueAcumen
-      , SlugManagingStateInElmSinglePageApps
+    [ SlugManagingStateInElmSinglePageApps
+      , SlugMotivationBehindTrueAcumen
     ]
 
 slugToString : Slug -> String
@@ -72,7 +73,7 @@ slugToString slug =
             "motivation-behind-true-acumen"
 
         SlugManagingStateInElmSinglePageApps ->
-            "Managing State in Elm Single Page Applications"
+            "managing-state-in-elm-single-page-applications"
 
 
 slugFromString : String -> Maybe Slug
