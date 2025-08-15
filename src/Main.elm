@@ -4,15 +4,15 @@ import Browser
 import Browser.Navigation as Nav
 import Global exposing (GlobalState, MainViewProps)
 import NotFound
+import Route exposing (Route)
+import Templates.Shell as Shell
+import Url
 import Page.Blog.Index as PageBlogIndex
 import Page.Blog.Post as PageBlogPost
 import Page.Index as PageIndex
 import Page.PbWaiver as PagePbWaiver
 import Page.Projects as PageProjects
 import Page.Talks as PageTalks
-import Route exposing (Route)
-import Templates.Shell as Shell
-import Url
 
 
 main : Program () Model Msg
@@ -176,8 +176,6 @@ subscriptions _ =
 
 -- Organized so the below can be code generated
 -- CODEGEN START
-
-
 pageSubscriptions : Sub PageMsg
 pageSubscriptions =
     Sub.none
@@ -201,23 +199,19 @@ type PageMsg
 getPageFromRoute : Maybe Route -> ( Page, Cmd PageMsg )
 getPageFromRoute maybeRoute =
     case maybeRoute of
-        Just (Route.RouteBlogPost params) ->
-            ( PageBlogPost.init params |> PageBlogPost, Cmd.none )
+        Just (Route.RouteBlogPost params)->
+            ( PageBlogPost.init params |> PageBlogPost, Cmd.none)
 
         Just Route.RoutePbWaiver ->
             PagePbWaiver.init
                 |> Tuple.mapFirst PagePbWaiver
                 |> Tuple.mapSecond (Cmd.map PagePbWaiverMsg)
-
         Just Route.RouteBlogIndex ->
             ( PageBlogIndex, Cmd.none )
-
         Just Route.RouteIndex ->
             ( PageIndex, Cmd.none )
-
         Just Route.RouteProjects ->
             ( PageProjects, Cmd.none )
-
         Just Route.RouteTalks ->
             ( PageTalks, Cmd.none )
 
@@ -238,7 +232,7 @@ viewReady model =
             PageIndex.view (shellViewProps model)
 
         PagePbWaiver _ ->
-            PagePbWaiver.view
+            PagePbWaiver.view (mainViewProps model.global PagePbWaiverMsg)
 
         PageProjects ->
             PageProjects.view (shellViewProps model)
@@ -255,7 +249,7 @@ updatePage model msg =
     case ( model.page, msg ) of
         ( PageBlogIndex, PageBlogIndexMsg pageMsg ) ->
             PageBlogIndex.update model.global pageMsg
-                |> (\c -> ( model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c ))
+                |> \c -> (model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c)
 
         ( PagePbWaiver pageModel, PagePbWaiverMsg pageMsg ) ->
             PagePbWaiver.update pageMsg pageModel
