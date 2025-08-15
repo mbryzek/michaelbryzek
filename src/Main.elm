@@ -4,14 +4,15 @@ import Browser
 import Browser.Navigation as Nav
 import Global exposing (GlobalState, MainViewProps)
 import NotFound
-import Route exposing (Route)
-import Templates.Shell as Shell
-import Url
 import Page.Blog.Index as PageBlogIndex
 import Page.Blog.Post as PageBlogPost
 import Page.Index as PageIndex
+import Page.PbWaiver as PagePbWaiver
 import Page.Projects as PageProjects
 import Page.Talks as PageTalks
+import Route exposing (Route)
+import Templates.Shell as Shell
+import Url
 
 
 main : Program () Model Msg
@@ -57,10 +58,10 @@ initWithGlobal global =
         , page = page
         , shellModel = shellModel
         }
-    , Cmd.batch [
-        Cmd.map (ReadyMsg << ChangedPage) cmd
+    , Cmd.batch
+        [ Cmd.map (ReadyMsg << ChangedPage) cmd
         , Cmd.map (ReadyMsg << ChangedInternal << ShellMsg) shellCmd
-    ]
+        ]
     )
 
 
@@ -141,7 +142,7 @@ updateInternal msg model =
                     Shell.update (shellViewProps model) shellMsg
             in
             ( { model | shellModel = shellModel }
-              , Cmd.map (ReadyMsg << ChangedInternal << ShellMsg) shellCmd
+            , Cmd.map (ReadyMsg << ChangedInternal << ShellMsg) shellCmd
             )
 
 
@@ -175,6 +176,8 @@ subscriptions _ =
 
 -- Organized so the below can be code generated
 -- CODEGEN START
+
+
 pageSubscriptions : Sub PageMsg
 pageSubscriptions =
     Sub.none
@@ -184,6 +187,7 @@ type Page
     = PageBlogIndex
     | PageBlogPost PageBlogPost.Model
     | PageIndex
+    | PagePbWaiver PagePbWaiver.Model
     | PageProjects
     | PageTalks
     | PageNotFound
@@ -191,19 +195,29 @@ type Page
 
 type PageMsg
     = PageBlogIndexMsg PageBlogIndex.Msg
+    | PagePbWaiverMsg PagePbWaiver.Msg
 
 
 getPageFromRoute : Maybe Route -> ( Page, Cmd PageMsg )
 getPageFromRoute maybeRoute =
     case maybeRoute of
-        Just (Route.RouteBlogPost params)->
-            ( PageBlogPost.init params |> PageBlogPost, Cmd.none)
+        Just (Route.RouteBlogPost params) ->
+            ( PageBlogPost.init params |> PageBlogPost, Cmd.none )
+
+        Just Route.RoutePbWaiver ->
+            PagePbWaiver.init
+                |> Tuple.mapFirst PagePbWaiver
+                |> Tuple.mapSecond (Cmd.map PagePbWaiverMsg)
+
         Just Route.RouteBlogIndex ->
             ( PageBlogIndex, Cmd.none )
+
         Just Route.RouteIndex ->
             ( PageIndex, Cmd.none )
+
         Just Route.RouteProjects ->
             ( PageProjects, Cmd.none )
+
         Just Route.RouteTalks ->
             ( PageTalks, Cmd.none )
 
@@ -223,6 +237,9 @@ viewReady model =
         PageIndex ->
             PageIndex.view (shellViewProps model)
 
+        PagePbWaiver _ ->
+            PagePbWaiver.view
+
         PageProjects ->
             PageProjects.view (shellViewProps model)
 
@@ -238,7 +255,12 @@ updatePage model msg =
     case ( model.page, msg ) of
         ( PageBlogIndex, PageBlogIndexMsg pageMsg ) ->
             PageBlogIndex.update model.global pageMsg
-                |> \c -> (model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c)
+                |> (\c -> ( model.page, Cmd.map (ReadyMsg << ChangedPage << PageBlogIndexMsg) c ))
+
+        ( PagePbWaiver pageModel, PagePbWaiverMsg pageMsg ) ->
+            PagePbWaiver.update pageMsg pageModel
+                |> Tuple.mapFirst PagePbWaiver
+                |> Tuple.mapSecond (Cmd.map (ReadyMsg << ChangedPage << PagePbWaiverMsg))
 
         ( page, _ ) ->
             ( page, Cmd.none )
