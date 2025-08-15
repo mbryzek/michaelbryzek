@@ -16,6 +16,11 @@
         node: document.getElementById("elm"),
         version: "0.0.1"
     });
+
+    // Handle redirect port
+    app.ports.redirectToUrl.subscribe(function(url) {
+        window.location.href = url;
+    });
   </script>
 
 </body>
