@@ -12,6 +12,7 @@ type Route
     | RouteBlogPost Urls.BlogPostParams
     | RouteTalks
     | RoutePbWaiver
+    | RouteCourts
 
 
 fromUrl : Url -> Maybe Route
@@ -28,4 +29,5 @@ matchRoute =
         , map (\slug -> RouteBlogPost { slug = slug }) (s "blog" </> string)
         , map RouteTalks (s "talks")
         , map RoutePbWaiver (s "pb" </> s "waiver")
+        , map RouteCourts (s "courts")
         ]

@@ -9,6 +9,7 @@ import Templates.Shell as Shell
 import Url
 import Page.Blog.Index as PageBlogIndex
 import Page.Blog.Post as PageBlogPost
+import Page.Courts as PageCourts
 import Page.Index as PageIndex
 import Page.PbWaiver as PagePbWaiver
 import Page.Projects as PageProjects
@@ -184,6 +185,7 @@ pageSubscriptions =
 type Page
     = PageBlogIndex
     | PageBlogPost PageBlogPost.Model
+    | PageCourts
     | PageIndex
     | PagePbWaiver PagePbWaiver.Model
     | PageProjects
@@ -208,6 +210,8 @@ getPageFromRoute maybeRoute =
                 |> Tuple.mapSecond (Cmd.map PagePbWaiverMsg)
         Just Route.RouteBlogIndex ->
             ( PageBlogIndex, Cmd.none )
+        Just Route.RouteCourts ->
+            ( PageCourts, Cmd.none )
         Just Route.RouteIndex ->
             ( PageIndex, Cmd.none )
         Just Route.RouteProjects ->
@@ -227,6 +231,9 @@ viewReady model =
 
         PageBlogPost pageModel ->
             PageBlogPost.view (shellViewProps model) pageModel
+
+        PageCourts ->
+            PageCourts.view (shellViewProps model)
 
         PageIndex ->
             PageIndex.view (shellViewProps model)
