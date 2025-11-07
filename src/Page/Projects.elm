@@ -22,7 +22,15 @@ type alias Project =
 
 projects : List Project
 projects =
-    [ { name = "True Acumen"
+    [ { name = "Private Dinkers"
+      , description =
+            [ "AI-powered pickleball game scheduling application making it easy to schedule great games with your favorite players."
+            ]
+      , githubUrl = Nothing
+      , projectUrl = Just "https://privatedinkers.com"
+      , blogUrl = Nothing
+      }
+    , { name = "True Acumen"
       , description =
             [ "Simple, accurate expense and budget management."
             , "I recently have become really obsessed with making it easy to track family expenses and to make a simple budget."
