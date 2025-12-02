@@ -17,7 +17,6 @@ contents =
     , blogP [ text "Hope you find this useful and if you have any suggestions, improvements or questions please do share!" ]
     , blogH2 [ text "Source Code & Live Demo" ]
     , blogP [ text "Source Code: ", externalLink [] "https://github.com/mbryzek/state-management-in-elm" [text "GitHub Repo"]]
-    , blogP [ text "Live Example: ", externalLink [] "https://monkfish-app-eiejy.ondigitalocean.app" [text "Demo App"]]
     , blogH2 [ text "Authentication" ]
     , blogP [ text "I've found that it has been helpful to handle authentication in Main.elm as this provides a single place to check state and enables us to create pages that document whether or not they require a user to be logged in." ]
     , blogP [ text "My approach has been to define a type 'GlobalState' type which tracks authentication status:" ]
