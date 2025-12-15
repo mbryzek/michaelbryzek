@@ -11,6 +11,7 @@ type Route
     | RouteBlogIndex
     | RouteBlogPost Urls.BlogPostParams
     | RouteTalks
+    | RouteLinks
     | RoutePbWaiver
 
 
@@ -27,5 +28,6 @@ matchRoute =
         , map RouteBlogIndex (s "blog")
         , map (\slug -> RouteBlogPost { slug = slug }) (s "blog" </> string)
         , map RouteTalks (s "talks")
+        , map RouteLinks (s "links")
         , map RoutePbWaiver (s "pb" </> s "waiver")
         ]

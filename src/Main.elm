@@ -10,6 +10,7 @@ import Url
 import Page.Blog.Index as PageBlogIndex
 import Page.Blog.Post as PageBlogPost
 import Page.Index as PageIndex
+import Page.Links as PageLinks
 import Page.PbWaiver as PagePbWaiver
 import Page.Projects as PageProjects
 import Page.Talks as PageTalks
@@ -185,6 +186,7 @@ type Page
     = PageBlogIndex
     | PageBlogPost PageBlogPost.Model
     | PageIndex
+    | PageLinks
     | PagePbWaiver PagePbWaiver.Model
     | PageProjects
     | PageTalks
@@ -210,6 +212,8 @@ getPageFromRoute maybeRoute =
             ( PageBlogIndex, Cmd.none )
         Just Route.RouteIndex ->
             ( PageIndex, Cmd.none )
+        Just Route.RouteLinks ->
+            ( PageLinks, Cmd.none )
         Just Route.RouteProjects ->
             ( PageProjects, Cmd.none )
         Just Route.RouteTalks ->
@@ -230,6 +234,9 @@ viewReady model =
 
         PageIndex ->
             PageIndex.view (shellViewProps model)
+
+        PageLinks ->
+            PageLinks.view (shellViewProps model)
 
         PagePbWaiver _ ->
             PagePbWaiver.view (mainViewProps model.global PagePbWaiverMsg)

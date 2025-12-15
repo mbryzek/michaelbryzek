@@ -54,6 +54,7 @@ allSections =
     , { href = Urls.blog, name = "Blog" }
     , { href = Urls.projects, name = "Projects" }
     , { href = Urls.talks, name = "Talks" }
+    , { href = Urls.links, name = "Links" }
     ]
 
 
