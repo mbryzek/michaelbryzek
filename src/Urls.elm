@@ -26,3 +26,8 @@ projects =
 talks : String
 talks =
     "/talks"
+
+
+links : String
+links =
+    "/links"

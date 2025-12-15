@@ -53,6 +53,7 @@ allSections =
     [ { href = Urls.index, name = "About" }
     , { href = Urls.blog, name = "Blog" }
     , { href = Urls.projects, name = "Projects" }
+    , { href = Urls.links, name = "Links" }
     , { href = Urls.talks, name = "Talks" }
     ]
 
