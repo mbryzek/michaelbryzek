@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme {
+	--color-blue: #5b7ff6;
+}
