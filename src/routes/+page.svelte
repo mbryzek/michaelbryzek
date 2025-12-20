@@ -10,7 +10,7 @@
 		>My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.</P
 	>
 	<P class="mt-4"
-		>I'm best known for founding <a href={urls.companies.gilt} class="text-blue-400 hover:text-blue-300">Gilt Groupe</a> in 2007 and <a href={urls.companies.flow} class="text-blue-400 hover:text-blue-300">Flow Commerce</a> in 2015, which now powers
+		>I'm best known for founding <a href={urls.companies.gilt} class="underline hover:no-underline">Gilt Groupe</a> in 2007 and <a href={urls.companies.flow} class="underline hover:no-underline">Flow Commerce</a> in 2015, which now powers
 		international commerce inside Shopify.</P
 	>
 	<P class="mt-4">
