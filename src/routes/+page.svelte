@@ -2,6 +2,7 @@
 	import Shell from '$lib/components/Shell.svelte';
 	import P from '$lib/components/ui/P.svelte';
 	import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
+	import { urls } from '$lib/urls';
 </script>
 
 <Shell>
@@ -9,7 +10,7 @@
 		>My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.</P
 	>
 	<P class="mt-4"
-		>I'm best known for founding Gilt Groupe in 2007 and Flow Commerce in 2015, which now powers
+		>I'm best known for founding <a href={urls.companies.gilt} class="text-blue-400 hover:text-blue-300">Gilt Groupe</a> in 2007 and <a href={urls.companies.flow} class="text-blue-400 hover:text-blue-300">Flow Commerce</a> in 2015, which now powers
 		international commerce inside Shopify.</P
 	>
 	<P class="mt-4">

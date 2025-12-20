@@ -4,5 +4,9 @@ export const urls = {
 	blogPost: (slug: string) => `/blog/${slug}`,
 	projects: '/projects',
 	talks: '/talks',
-	links: '/links'
+	links: '/links',
+	companies: {
+		gilt: '/companies/gilt',
+		flow: '/companies/flow'
+	}
 };
