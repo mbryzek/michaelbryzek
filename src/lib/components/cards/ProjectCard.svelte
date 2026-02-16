@@ -13,14 +13,21 @@
 	let { project }: Props = $props();
 
 	// Determine primary link (priority: projectUrl > githubUrl > blogUrl)
-	const primaryUrl = project.projectUrl || project.githubUrl || project.blogUrl || '#';
-	const isPrimaryProject = !!project.projectUrl;
-	const isPrimaryGithub = !project.projectUrl && !!project.githubUrl;
-	const isPrimaryBlog = !project.projectUrl && !project.githubUrl && !!project.blogUrl;
+	let primaryUrl = $derived(project.projectUrl || project.githubUrl || project.blogUrl || '#');
+	let isPrimaryProject = $derived(!!project.projectUrl);
+	let isPrimaryGithub = $derived(!project.projectUrl && !!project.githubUrl);
+	let isPrimaryBlog = $derived(!project.projectUrl && !project.githubUrl && !!project.blogUrl);
 </script>
 
 {#if primaryUrl !== '#'}
-	<a href={primaryUrl} target="_blank" rel="noopener noreferrer" class="block group focus:outline-none h-full">
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div
+		class="block group focus:outline-none h-full cursor-pointer"
+		tabindex="0"
+		role="link"
+		onclick={() => window.open(primaryUrl, '_blank', 'noopener,noreferrer')}
+		onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.open(primaryUrl, '_blank', 'noopener,noreferrer'); } }}
+	>
 		<div
 			class="h-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-all duration-200 group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)] flex flex-col"
 		>
@@ -76,7 +83,7 @@
 				{/each}
 			</div>
 		</div>
-	</a>
+	</div>
 {:else}
 	<!-- Fallback if no links available -->
 	<div
