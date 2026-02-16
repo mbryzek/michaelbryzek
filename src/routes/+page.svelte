@@ -15,7 +15,7 @@
 		</p>
 		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
 			Recently, I spend most of my time building <ExternalLink
-				href="https://privatedinkers.com">Private Dinkers</ExternalLink
+				href="https://rallyd.net">Rallyd</ExternalLink
 			>, an AI-powered pickleball game scheduling application.
 		</p>
 	</div>

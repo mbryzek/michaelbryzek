@@ -3,12 +3,12 @@ import { urls } from '$lib/urls';
 
 export const projects: Project[] = [
 	{
-		name: 'Private Dinkers',
+		name: 'Rallyd',
 		description: [
 			'AI-powered pickleball game scheduling application making it easy to schedule great games with your favorite players.'
 		],
 		githubUrl: undefined,
-		projectUrl: 'https://privatedinkers.com',
+		projectUrl: 'https://rallyd.net',
 		blogUrl: undefined
 	},
 	{
