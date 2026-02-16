@@ -91,11 +91,13 @@
 	</nav>
 
 	<!-- Mobile Menu Overlay -->
-	<div
+	<button
 		class="mobile-menu-overlay md:hidden"
 		class:open={mobileMenuOpen}
 		onclick={closeMobileMenu}
-	></div>
+		aria-label="Close menu"
+		tabindex="-1"
+	></button>
 
 	<!-- Mobile Menu Side Panel -->
 	<div class="mobile-menu md:hidden" class:open={mobileMenuOpen}>
