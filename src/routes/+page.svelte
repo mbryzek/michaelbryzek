@@ -5,16 +5,18 @@
 </script>
 
 <Shell>
-	<P
-		>My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.</P
-	>
-	<P class="mt-4"
-		>I'm best known for founding Gilt Groupe in 2007 and Flow Commerce in 2015, which now powers
-		international commerce inside Shopify.</P
-	>
-	<P class="mt-4">
-		Recently, I spend most of my time building <ExternalLink href="https://privatedinkers.com"
-			>Private Dinkers</ExternalLink
-		>, an AI-powered pickleball game scheduling application.
-	</P>
+	<div class="max-w-2xl mx-auto space-y-6">
+		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
+			My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.
+		</p>
+		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
+			I'm best known for founding Gilt Groupe in 2007 and Flow Commerce in 2015, which now powers
+			international commerce inside Shopify.
+		</p>
+		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
+			Recently, I spend most of my time building <ExternalLink
+				href="https://privatedinkers.com">Private Dinkers</ExternalLink
+			>, an AI-powered pickleball game scheduling application.
+		</p>
+	</div>
 </Shell>

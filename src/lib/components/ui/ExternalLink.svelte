@@ -12,7 +12,7 @@
 	{href}
 	target="_blank"
 	rel="noopener noreferrer"
-	class="underline hover:no-underline {className}"
+	class="text-[var(--primary)] hover:text-[var(--secondary)] transition-colors duration-200 {className}"
 >
 	{@render children()}
 </a>

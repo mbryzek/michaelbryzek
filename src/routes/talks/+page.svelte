@@ -4,8 +4,8 @@
 	import { talks } from '$lib/data/talks';
 </script>
 
-<Shell>
-	<div class="grid">
+<Shell title="Talks">
+	<div class="space-y-6">
 		{#each talks as talk}
 			<TalkCard {talk} />
 		{/each}

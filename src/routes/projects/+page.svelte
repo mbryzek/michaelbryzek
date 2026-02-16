@@ -4,7 +4,7 @@
 	import { projects } from '$lib/data/projects';
 </script>
 
-<Shell>
+<Shell title="Projects">
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 		{#each projects as project}
 			<ProjectCard {project} />

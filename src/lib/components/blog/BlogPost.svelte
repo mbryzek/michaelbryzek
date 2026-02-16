@@ -10,8 +10,12 @@
 	let { title, date, children }: Props = $props();
 </script>
 
-<div>
-	<H1>{title}</H1>
-	<div class="mt-2 italic text-gray-100">{date}</div>
-	{@render children()}
-</div>
+<article class="max-w-3xl">
+	<header class="mb-8">
+		<H1>{title}</H1>
+		<div class="mt-3 text-[var(--text-tertiary)] text-sm">{date}</div>
+	</header>
+	<div class="prose prose-invert">
+		{@render children()}
+	</div>
+</article>

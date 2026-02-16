@@ -139,7 +139,7 @@
 	</BlogP>
 	<BlogP>
 		If you're interested in trying out True Acumen, I'd love for you to <ExternalLink
-			href="https://www.trueacumen.com/waitlist">join our watlist</ExternalLink
-		>
+			href="https://www.trueacumen.com/waitlist">join our waitlist</ExternalLink
+		>.
 	</BlogP>
 </BlogPost>

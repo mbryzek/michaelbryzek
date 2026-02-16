@@ -7,6 +7,6 @@
 	let { children, class: className = '' }: Props = $props();
 </script>
 
-<h1 class="text-3xl font-bold text-gray-100 {className}">
+<h1 class="text-3xl font-bold text-[var(--text-primary)] {className}">
 	{@render children()}
 </h1>

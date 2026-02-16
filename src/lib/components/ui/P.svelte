@@ -7,6 +7,6 @@
 	let { children, class: className = '' }: Props = $props();
 </script>
 
-<p class="leading-relaxed text-gray-100 {className}">
+<p class="text-[var(--text-secondary)] leading-relaxed text-[15px] {className}">
 	{@render children()}
 </p>

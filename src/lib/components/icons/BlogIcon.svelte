@@ -1,5 +1,5 @@
 <svg
-	class="fill-current text-gray-400 hover:opacity-80 h-[18px] w-[18px]"
+	class="fill-current h-[18px] w-[18px]"
 	viewBox="0 0 24 24"
 >
 	<path
