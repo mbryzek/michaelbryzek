@@ -38,6 +38,29 @@
 	function closeMobileMenu() {
 		mobileMenuOpen = false;
 	}
+
+	function handleMobileMenuKeydown(e: KeyboardEvent) {
+		if (e.key === 'Escape') {
+			closeMobileMenu();
+			return;
+		}
+		if (e.key !== 'Tab') return;
+
+		const menu = e.currentTarget as HTMLElement;
+		const focusable = menu.querySelectorAll<HTMLElement>('a, button, [tabindex]:not([tabindex="-1"])');
+		if (focusable.length === 0) return;
+
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+
+		if (e.shiftKey && document.activeElement === first) {
+			e.preventDefault();
+			last.focus();
+		} else if (!e.shiftKey && document.activeElement === last) {
+			e.preventDefault();
+			first.focus();
+		}
+	}
 </script>
 
 <div class="min-h-screen flex flex-col bg-[var(--bg-base)] text-[var(--text-primary)]">
@@ -58,7 +81,7 @@
 						{#each sections as section}
 							<a
 								href={section.href}
-								class="rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 {isSectionActive(
+								class="rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 {isSectionActive(
 									section.href
 								)
 									? 'text-[var(--primary)]'
@@ -76,7 +99,7 @@
 					<ThemeToggle />
 					<button
 						onclick={toggleMobileMenu}
-						class="mobile-menu-button p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all duration-200 z-[1001] relative"
+						class="mobile-menu-button p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors duration-200 z-[1001] relative"
 						class:active={mobileMenuOpen}
 						aria-label="Toggle menu"
 						aria-expanded={mobileMenuOpen}
@@ -100,13 +123,14 @@
 	></button>
 
 	<!-- Mobile Menu Side Panel -->
-	<div class="mobile-menu md:hidden" class:open={mobileMenuOpen}>
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="mobile-menu md:hidden" class:open={mobileMenuOpen} onkeydown={handleMobileMenuKeydown}>
 		<div class="flex flex-col gap-y-1 p-6">
 			{#each sections as section}
 				<a
 					href={section.href}
 					onclick={closeMobileMenu}
-					class="rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 border-b border-[var(--border)] {isSectionActive(
+					class="rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 border-b border-[var(--border)] {isSectionActive(
 						section.href
 					)
 						? 'text-[var(--primary)] bg-[var(--bg-card)]'
@@ -138,7 +162,7 @@
 				<div class="flex gap-x-4">
 					<a
 						href="mailto:mbryzek@gmail.com"
-						class="text-[var(--text-tertiary)] transition-all duration-200 ease-out hover:text-[var(--primary)] hover:scale-110"
+						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
 						aria-label="Email"
 					>
 						<EmailIcon />
@@ -147,7 +171,7 @@
 						href="https://twitter.com/mbryzek"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] transition-all duration-200 ease-out hover:text-[var(--primary)] hover:scale-110"
+						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
 						aria-label="X (Twitter)"
 					>
 						<XIcon />
@@ -156,7 +180,7 @@
 						href="https://github.com/mbryzek"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] transition-all duration-200 ease-out hover:text-[var(--primary)] hover:scale-110"
+						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
 						aria-label="GitHub"
 					>
 						<GithubIcon />
@@ -165,7 +189,7 @@
 						href="https://www.linkedin.com/in/mbryzek"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] transition-all duration-200 ease-out hover:text-[var(--primary)] hover:scale-110"
+						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
 						aria-label="LinkedIn"
 					>
 						<LinkedInIcon />

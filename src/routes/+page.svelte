@@ -4,6 +4,11 @@
 	import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
 </script>
 
+<svelte:head>
+	<title>Michael Bryzek - Developer & Entrepreneur</title>
+	<meta name="description" content="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd." />
+</svelte:head>
+
 <Shell>
 	<div class="max-w-2xl mx-auto space-y-6">
 		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
