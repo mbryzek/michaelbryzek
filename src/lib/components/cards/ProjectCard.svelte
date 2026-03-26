@@ -17,19 +17,18 @@
 	let isPrimaryProject = $derived(!!project.projectUrl);
 	let isPrimaryGithub = $derived(!project.projectUrl && !!project.githubUrl);
 	let isPrimaryBlog = $derived(!project.projectUrl && !project.githubUrl && !!project.blogUrl);
+
+	function openUrl(e: MouseEvent, url: string) {
+		e.preventDefault();
+		e.stopPropagation();
+		window.open(url, '_blank', 'noopener,noreferrer');
+	}
 </script>
 
 {#if primaryUrl !== '#'}
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="block group focus:outline-none h-full cursor-pointer"
-		tabindex="0"
-		role="link"
-		onclick={() => window.open(primaryUrl, '_blank', 'noopener,noreferrer')}
-		onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.open(primaryUrl, '_blank', 'noopener,noreferrer'); } }}
-	>
+	<a href={primaryUrl} target="_blank" rel="noopener noreferrer" class="block group focus:outline-none h-full">
 		<div
-			class="h-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-all duration-200 group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)] flex flex-col"
+			class="h-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-colors transition-shadow duration-200 group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)] flex flex-col"
 		>
 			<div class="flex items-start justify-between mb-4">
 				<h2 class="text-xl font-semibold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors duration-200">
@@ -37,43 +36,34 @@
 				</h2>
 				<div class="flex gap-x-3 relative z-10 group/icons">
 					{#if project.projectUrl}
-						<a
-							href={project.projectUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 {isPrimaryProject ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
-							style="transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);"
+						<button
+							type="button"
+							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 card-icon-transition cursor-pointer {isPrimaryProject ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
 							aria-label="Project website"
-							onclick={(e) => e.stopPropagation()}
+							onclick={(e: MouseEvent) => openUrl(e, project.projectUrl!)}
 						>
 							<WebsiteIcon />
-						</a>
+						</button>
 					{/if}
 					{#if project.githubUrl}
-						<a
-							href={project.githubUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 {isPrimaryGithub ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
-							style="transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);"
+						<button
+							type="button"
+							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 card-icon-transition cursor-pointer {isPrimaryGithub ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
 							aria-label="GitHub repository"
-							onclick={(e) => e.stopPropagation()}
+							onclick={(e: MouseEvent) => openUrl(e, project.githubUrl!)}
 						>
 							<GithubIcon />
-						</a>
+						</button>
 					{/if}
 					{#if project.blogUrl}
-						<a
-							href={project.blogUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 {isPrimaryBlog ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
-							style="transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);"
+						<button
+							type="button"
+							class="text-[var(--text-tertiary)] hover:text-[var(--secondary)] hover:scale-125 card-icon-transition cursor-pointer {isPrimaryBlog ? 'group-hover:text-[var(--secondary)] group-hover:scale-125 group-hover/icons:text-[var(--text-tertiary)] group-hover/icons:scale-100' : ''}"
 							aria-label="Blog post"
-							onclick={(e) => e.stopPropagation()}
+							onclick={(e: MouseEvent) => openUrl(e, project.blogUrl!)}
 						>
 							<BlogIcon />
-						</a>
+						</button>
 					{/if}
 				</div>
 			</div>
@@ -83,11 +73,10 @@
 				{/each}
 			</div>
 		</div>
-	</div>
+	</a>
 {:else}
-	<!-- Fallback if no links available -->
 	<div
-		class="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 transition-all duration-200"
+		class="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 transition-colors duration-200"
 	>
 		<div class="mb-4">
 			<H2>{project.name}</H2>

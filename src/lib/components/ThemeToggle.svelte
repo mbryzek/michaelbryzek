@@ -25,19 +25,24 @@
 
 		isDark = !isDark;
 
+		const html = document.documentElement;
+		html.classList.add('theme-transitioning');
+
 		if (isDark) {
-			document.documentElement.classList.add('dark');
+			html.classList.add('dark');
 		} else {
-			document.documentElement.classList.remove('dark');
+			html.classList.remove('dark');
 		}
 
 		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+		setTimeout(() => html.classList.remove('theme-transitioning'), 300);
 	}
 </script>
 
 <button
 	onclick={toggleTheme}
-	class="rounded-lg p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all duration-200 ease-out cursor-pointer"
+	class="rounded-lg p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 ease-out cursor-pointer"
 	aria-label="Toggle theme"
 	type="button"
 >

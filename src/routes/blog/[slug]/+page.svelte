@@ -11,6 +11,11 @@
 	let { data }: Props = $props();
 </script>
 
+<svelte:head>
+	<title>{data.post.title} - Michael Bryzek</title>
+	<meta name="description" content="Blog post by Michael Bryzek: {data.post.title}" />
+</svelte:head>
+
 <Shell>
 	{#if data.post.slug === 'managing-state-in-elm-single-page-applications'}
 		<ManagingStateInElmSinglePageApps title={data.post.title} date={data.post.date} />
