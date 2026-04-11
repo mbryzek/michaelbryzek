@@ -2,6 +2,14 @@ import type { Talk } from '$lib/types';
 
 export const talks: Talk[] = [
 	{
+		title: 'Shipping at the Speed of Thought',
+		event: 'MIT AI Alumni Club',
+		date: 'April 2026',
+		description:
+			'A talk exploring how AI is transforming the way we build software, enabling developers to ship faster than ever before.',
+		videoUrl: 'https://www.youtube.com/watch?v=DduKznHrh4M'
+	},
+	{
 		title: 'Testing in Production',
 		event: 'Software Unscripted Podcast',
 		date: 'January 2025',
