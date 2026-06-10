@@ -11,14 +11,8 @@
 </svelte:head>
 
 <Shell>
-	<section class="hero">
-		<p class="eyebrow">About</p>
-		<h1>Developer &amp; serial entrepreneur</h1>
-		<p>Founder of Gilt Groupe and Flow Commerce, now spending my days building Rallyd.</p>
-	</section>
-
-	<div class="prose mt-10">
-		<p class="lead">
+	<div class="prose">
+		<p>
 			My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.
 		</p>
 		<p>
