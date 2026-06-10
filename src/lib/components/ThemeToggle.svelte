@@ -6,9 +6,10 @@
 
 	onMount(() => {
 		if (browser) {
+			// The no-flash script in +layout.svelte already set data-theme before paint;
+			// here we only sync the toggle's icon state to the stored preference.
 			const stored = localStorage.getItem('theme');
 			isDark = stored === 'light' ? false : true;
-			document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 		}
 	});
 

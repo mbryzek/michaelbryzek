@@ -17,7 +17,7 @@
 		{#each blogPosts as post}
 			<a class="post" href={urls.blogPost(post.slug)}>
 				<span class="date">{post.date}</span>
-				<span><p class="post-title">{post.title}</p></span>
+				<p class="post-title">{post.title}</p>
 			</a>
 		{/each}
 	</div>

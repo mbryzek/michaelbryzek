@@ -188,6 +188,10 @@
 		color: var(--text);
 		background: var(--surface-2);
 	}
+	.mobile-menu-button:focus-visible {
+		outline: none;
+		box-shadow: var(--ring);
+	}
 
 	.hamburger-line {
 		width: 22px;
