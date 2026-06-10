@@ -1,7 +1,9 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		href: string;
-		children: any;
+		children: Snippet;
 		class?: string;
 	}
 

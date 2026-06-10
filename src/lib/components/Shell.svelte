@@ -6,10 +6,11 @@
 	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import LinkedInIcon from '$lib/components/icons/LinkedInIcon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		title?: string;
-		children: any;
+		children: Snippet;
 	}
 
 	let { title, children }: Props = $props();
