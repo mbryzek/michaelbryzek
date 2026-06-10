@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Shell from '$lib/components/Shell.svelte';
-	import P from '$lib/components/ui/P.svelte';
 	import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
 </script>
 

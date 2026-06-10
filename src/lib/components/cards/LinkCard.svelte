@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Link } from '$lib/types';
-	import H2 from '$lib/components/ui/H2.svelte';
 	import P from '$lib/components/ui/P.svelte';
-	import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
 	import WebsiteIcon from '$lib/components/icons/WebsiteIcon.svelte';
 
 	interface Props {
