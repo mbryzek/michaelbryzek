@@ -6,11 +6,14 @@
 
 <svelte:head>
 	<title>Talks - Michael Bryzek</title>
-	<meta name="description" content="Conference talks and presentations by Michael Bryzek on microservices, testing in production, and startups." />
+	<meta
+		name="description"
+		content="Conference talks and presentations by Michael Bryzek on microservices, testing in production, and startups."
+	/>
 </svelte:head>
 
 <Shell title="Talks">
-	<div class="space-y-6">
+	<div class="card-grid">
 		{#each talks as talk}
 			<TalkCard {talk} />
 		{/each}

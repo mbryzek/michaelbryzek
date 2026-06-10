@@ -8,18 +8,13 @@
 	let { children }: Props = $props();
 </script>
 
-<!-- Prevent flash by setting dark mode before hydration -->
+<!-- Prevent flash by setting the theme before hydration -->
 <svelte:head>
 	<script>
-		// Set dark mode immediately
 		(function () {
 			const stored = localStorage.getItem('theme');
-			const isDark = stored ? stored === 'dark' : true; // Default to dark
-			if (isDark) {
-				document.documentElement.classList.add('dark');
-			} else {
-				document.documentElement.classList.remove('dark');
-			}
+			const theme = stored === 'light' || stored === 'dark' ? stored : 'dark'; // Default to dark
+			document.documentElement.setAttribute('data-theme', theme);
 		})();
 	</script>
 </svelte:head>

@@ -5,16 +5,26 @@
 </script>
 
 <Shell>
-	<div class="flex flex-col items-center justify-center py-12">
-		<h1 class="text-4xl font-bold text-[var(--text-primary)] mb-4">{$page.status}</h1>
-		<p class="text-[var(--text-secondary)] mb-6">
+	<div class="flex flex-col items-center justify-center text-center py-16">
+		<p class="error-status">{$page.status}</p>
+		<p class="error-message">
 			{$page.error?.message ?? "The page you're looking for doesn't exist."}
 		</p>
-		<a
-			href={urls.index}
-			class="bg-[var(--bg-card)] hover:bg-[var(--bg-hover)] text-[var(--primary)] border border-[var(--border)] px-6 py-3 rounded-lg transition-colors duration-200"
-		>
-			Go Home
-		</a>
+		<a class="btn" href={urls.index}>Go home</a>
 	</div>
 </Shell>
+
+<style>
+	.error-status {
+		font-size: var(--text-4xl);
+		font-weight: var(--fw-bold);
+		letter-spacing: var(--tracking-tight);
+		color: var(--text);
+		margin: 0 0 var(--space-3);
+	}
+	.error-message {
+		font-size: var(--text-md);
+		color: var(--text-muted);
+		margin: 0 0 var(--space-6);
+	}
+</style>

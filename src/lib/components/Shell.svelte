@@ -63,57 +63,48 @@
 	}
 </script>
 
-<div class="min-h-screen flex flex-col bg-[var(--bg-base)] text-[var(--text-primary)]">
-	<!-- Navigation -->
-	<nav class="border-b border-[var(--border)] bg-[var(--bg-elevated)]">
-		<div class="mx-auto max-w-4xl px-6 py-5">
-			<div class="flex items-center justify-between">
-				<a
-					href={urls.index}
-					class="text-xl font-semibold text-[var(--text-primary)] hover:text-[var(--primary)] transition-colors duration-200"
+<div class="min-h-screen flex flex-col">
+	<!-- Top bar -->
+	<header class="topbar">
+		<div
+			class="mx-auto w-full max-w-[1080px] px-6 py-4 flex items-center justify-between gap-6"
+		>
+			<a href={urls.index} class="brand">
+				<span class="mark">M</span>
+				<span>Michael Bryzek</span>
+			</a>
+
+			<!-- Desktop nav -->
+			<div class="hidden md:flex items-center gap-4">
+				<nav class="topnav">
+					{#each sections as section}
+						<a href={section.href} aria-current={isSectionActive(section.href) ? 'page' : undefined}>
+							{section.name}
+						</a>
+					{/each}
+				</nav>
+				<ThemeToggle />
+			</div>
+
+			<!-- Mobile controls -->
+			<div class="flex md:hidden items-center gap-3">
+				<ThemeToggle />
+				<button
+					onclick={toggleMobileMenu}
+					class="mobile-menu-button"
+					class:active={mobileMenuOpen}
+					aria-label="Toggle menu"
+					aria-expanded={mobileMenuOpen}
 				>
-					Michael Bryzek
-				</a>
-
-				<!-- Desktop Navigation -->
-				<div class="hidden md:flex items-center gap-x-2">
-					<div class="flex gap-x-1">
-						{#each sections as section}
-							<a
-								href={section.href}
-								class="rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 {isSectionActive(
-									section.href
-								)
-									? 'text-[var(--primary)]'
-									: 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}"
-							>
-								{section.name}
-							</a>
-						{/each}
-					</div>
-					<ThemeToggle />
-				</div>
-
-				<!-- Mobile Menu Button -->
-				<div class="flex md:hidden items-center gap-x-2">
-					<ThemeToggle />
-					<button
-						onclick={toggleMobileMenu}
-						class="mobile-menu-button p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors duration-200 z-[1001] relative"
-						class:active={mobileMenuOpen}
-						aria-label="Toggle menu"
-						aria-expanded={mobileMenuOpen}
-					>
-						<span class="hamburger-line"></span>
-						<span class="hamburger-line"></span>
-						<span class="hamburger-line"></span>
-					</button>
-				</div>
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+				</button>
 			</div>
 		</div>
-	</nav>
+	</header>
 
-	<!-- Mobile Menu Overlay -->
+	<!-- Mobile menu overlay -->
 	<button
 		class="mobile-menu-overlay md:hidden"
 		class:open={mobileMenuOpen}
@@ -122,19 +113,16 @@
 		tabindex="-1"
 	></button>
 
-	<!-- Mobile Menu Side Panel -->
+	<!-- Mobile menu side panel -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="mobile-menu md:hidden" class:open={mobileMenuOpen} onkeydown={handleMobileMenuKeydown}>
-		<div class="flex flex-col gap-y-1 p-6">
+		<div class="flex flex-col p-4">
 			{#each sections as section}
 				<a
 					href={section.href}
 					onclick={closeMobileMenu}
-					class="rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 border-b border-[var(--border)] {isSectionActive(
-						section.href
-					)
-						? 'text-[var(--primary)] bg-[var(--bg-card)]'
-						: 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]'}"
+					aria-current={isSectionActive(section.href) ? 'page' : undefined}
+					class="mobile-link"
 				>
 					{section.name}
 				</a>
@@ -142,113 +130,100 @@
 		</div>
 	</div>
 
-	<!-- Main Content -->
-	<main class="flex-1 mx-auto w-full max-w-4xl px-6 py-12">
+	<!-- Main content -->
+	<main class="flex-1 mx-auto w-full max-w-[1080px] px-6 py-10 md:py-14">
 		{#if title}
-			<h1 class="text-3xl font-bold text-[var(--text-primary)] mb-8 text-center">{title}</h1>
+			<h1 class="page-title">{title}</h1>
 		{/if}
-		<div>
-			{@render children()}
-		</div>
+		{@render children()}
 	</main>
 
 	<!-- Footer -->
-	<footer class="mt-auto border-t border-[var(--border)] bg-[var(--bg-elevated)]">
-		<div class="mx-auto max-w-4xl px-6 py-8">
-			<div class="flex items-center justify-between">
-				<div class="text-sm text-[var(--text-tertiary)]">
-					© {currentYear} Michael Bryzek
-				</div>
-				<div class="flex gap-x-4">
-					<a
-						href="mailto:mbryzek@gmail.com"
-						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
-						aria-label="Email"
-					>
-						<EmailIcon />
-					</a>
-					<a
-						href="https://twitter.com/mbryzek"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
-						aria-label="X (Twitter)"
-					>
-						<XIcon />
-					</a>
-					<a
-						href="https://github.com/mbryzek"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
-						aria-label="GitHub"
-					>
-						<GithubIcon />
-					</a>
-					<a
-						href="https://www.linkedin.com/in/mbryzek"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-[var(--text-tertiary)] card-icon-transition hover:text-[var(--primary)] hover:scale-110"
-						aria-label="LinkedIn"
-					>
-						<LinkedInIcon />
-					</a>
-				</div>
+	<footer class="foot mt-auto">
+		<div
+			class="mx-auto w-full max-w-[1080px] px-6 py-7 flex items-center justify-between gap-4"
+		>
+			<span>© {currentYear} Michael Bryzek</span>
+			<div class="socials">
+				<a href="mailto:mbryzek@gmail.com" aria-label="Email"><EmailIcon /></a>
+				<a
+					href="https://twitter.com/mbryzek"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="X (Twitter)"><XIcon /></a
+				>
+				<a
+					href="https://github.com/mbryzek"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="GitHub"><GithubIcon /></a
+				>
+				<a
+					href="https://www.linkedin.com/in/mbryzek"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="LinkedIn"><LinkedInIcon /></a
+				>
 			</div>
 		</div>
 	</footer>
 </div>
 
 <style>
-	/* Mobile hamburger animation */
+	/* Mobile hamburger */
 	.mobile-menu-button {
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
 		padding: 0.5rem;
+		border-radius: var(--radius-sm);
+		color: var(--text-muted);
+		position: relative;
+		z-index: 1001;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+	}
+	.mobile-menu-button:hover {
+		color: var(--text);
+		background: var(--surface-2);
 	}
 
 	.hamburger-line {
-		width: 24px;
+		width: 22px;
 		height: 2px;
 		background: currentColor;
 		transition: all 0.3s ease;
 		display: block;
 	}
-
 	.mobile-menu-button.active .hamburger-line:nth-child(1) {
 		transform: translateY(7px) rotate(45deg);
 	}
-
 	.mobile-menu-button.active .hamburger-line:nth-child(2) {
 		opacity: 0;
 	}
-
 	.mobile-menu-button.active .hamburger-line:nth-child(3) {
 		transform: translateY(-7px) rotate(-45deg);
 	}
 
-	/* Mobile menu overlay */
+	/* Overlay */
 	.mobile-menu-overlay {
 		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
+		inset: 0;
 		height: 100vh;
 		background: rgba(0, 0, 0, 0.5);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 0.3s ease;
 		z-index: 999;
+		border: 0;
 	}
-
 	.mobile-menu-overlay.open {
 		opacity: 1;
 		pointer-events: auto;
 	}
 
-	/* Mobile menu side panel */
+	/* Side panel */
 	.mobile-menu {
 		position: fixed;
 		top: 0;
@@ -256,19 +231,36 @@
 		width: 280px;
 		max-width: 85vw;
 		height: 100vh;
-		background: var(--bg-elevated);
-		border-left: 1px solid var(--border);
+		background: var(--surface);
+		border-left: 1px solid var(--hairline);
 		transition: right 0.3s ease;
 		z-index: 1000;
 		overflow-y: auto;
-		padding-top: 70px; /* Account for navbar height */
+		padding-top: 72px;
 	}
-
 	.mobile-menu.open {
 		right: 0;
 	}
 
-	/* Full width on smallest screens */
+	.mobile-link {
+		padding: 0.75rem 1rem;
+		border-radius: var(--radius-sm);
+		font-size: var(--text-base);
+		font-weight: var(--fw-medium);
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid var(--hairline);
+		transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+	}
+	.mobile-link:hover {
+		color: var(--text);
+		background: var(--surface-2);
+	}
+	.mobile-link[aria-current='page'] {
+		color: var(--accent-text);
+		background: var(--surface-2);
+	}
+
 	@media (max-width: 640px) {
 		.mobile-menu {
 			width: 100%;

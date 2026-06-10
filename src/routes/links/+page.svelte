@@ -10,7 +10,7 @@
 </svelte:head>
 
 <Shell title="Links">
-	<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+	<div class="card-grid">
 		{#each links as link}
 			<LinkCard {link} />
 		{/each}
