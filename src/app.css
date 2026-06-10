@@ -163,6 +163,14 @@ html {
 		animation-duration: 0.001ms !important;
 		transition-duration: 0.001ms !important;
 	}
+	/* The .theme-transitioning rule below sets the transition shorthand with
+	   higher specificity; neutralize it here so a theme toggle stays instant. */
+	html.theme-transitioning,
+	html.theme-transitioning *,
+	html.theme-transitioning *::before,
+	html.theme-transitioning *::after {
+		transition: none !important;
+	}
 }
 
 body {
