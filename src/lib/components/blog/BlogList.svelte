@@ -7,8 +7,8 @@
 	let { items, class: className = '' }: Props = $props();
 </script>
 
-<ul class="mt-4 list-disc pl-8 text-[var(--text-secondary)] space-y-2 {className}">
+<ul class={className}>
 	{#each items as item}
-		<li class="leading-relaxed">{item}</li>
+		<li>{item}</li>
 	{/each}
 </ul>

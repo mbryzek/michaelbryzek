@@ -8,20 +8,34 @@
 	let { talk }: Props = $props();
 </script>
 
-<a href={talk.videoUrl} target="_blank" rel="noopener noreferrer" class="block group focus:outline-none">
-	<div
-		class="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-colors transition-shadow duration-200 group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)]"
-	>
-		<div class="mb-4">
-			<h2 class="text-xl font-semibold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors duration-200">
-				{talk.title}
-			</h2>
-			<p class="text-[var(--text-tertiary)] text-sm mt-2 italic">
-				{talk.event} • {talk.date}
-			</p>
-		</div>
-		<p class="text-[var(--text-secondary)] leading-relaxed text-[15px]">
-			{talk.description}
-		</p>
+<a class="project" href={talk.videoUrl} target="_blank" rel="noopener noreferrer">
+	<div class="project-top">
+		<p class="pname">{talk.title}</p>
+		<span class="arrow" aria-hidden="true">
+			<svg
+				viewBox="0 0 24 24"
+				width="18"
+				height="18"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<line x1="7" y1="17" x2="17" y2="7"></line>
+				<polyline points="7 7 17 7 17 17"></polyline>
+			</svg>
+		</span>
 	</div>
+	<p class="talk-meta">{talk.event} · {talk.date}</p>
+	<p class="pdesc">{talk.description}</p>
 </a>
+
+<style>
+	.talk-meta {
+		font-family: var(--font-mono);
+		font-size: var(--text-xs);
+		color: var(--text-subtle);
+		margin: 0;
+	}
+</style>

@@ -6,23 +6,18 @@
 
 <svelte:head>
 	<title>Blog - Michael Bryzek</title>
-	<meta name="description" content="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />
+	<meta
+		name="description"
+		content="Blog posts by Michael Bryzek on software engineering, Elm, and building products."
+	/>
 </svelte:head>
 
 <Shell title="Blog">
-	<div class="space-y-6">
+	<div class="post-list">
 		{#each blogPosts as post}
-			<a href={urls.blogPost(post.slug)} class="block group focus:outline-none">
-				<div
-					class="bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-colors transition-shadow duration-200 group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)]"
-				>
-					<h2
-						class="text-xl font-semibold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors duration-200 mb-2"
-					>
-						{post.title}
-					</h2>
-					<p class="text-[var(--text-tertiary)] text-sm">{post.date}</p>
-				</div>
+			<a class="post" href={urls.blogPost(post.slug)}>
+				<span class="date">{post.date}</span>
+				<p class="post-title">{post.title}</p>
 			</a>
 		{/each}
 	</div>

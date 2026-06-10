@@ -12,13 +12,23 @@
 	let { items, class: className = '' }: Props = $props();
 </script>
 
-<ul class="mt-4 list-disc pl-8 text-[var(--text-secondary)] space-y-3 {className}">
+<ul class={className}>
 	{#each items as item}
-		<li class="leading-relaxed">
-			<div class="flex flex-col gap-y-2">
-				<div class="font-semibold text-[var(--text-primary)]">{item.title}</div>
-				<div>{item.content}</div>
-			</div>
+		<li>
+			<span class="title">{item.title}</span>
+			<span>{item.content}</span>
 		</li>
 	{/each}
 </ul>
+
+<style>
+	li {
+		margin-bottom: var(--space-3);
+	}
+	.title {
+		display: block;
+		font-weight: var(--fw-semibold);
+		color: var(--text);
+		margin-bottom: 2px;
+	}
+</style>

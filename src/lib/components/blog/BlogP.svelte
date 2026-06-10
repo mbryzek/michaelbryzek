@@ -1,12 +1,14 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
-		children: any;
+		children: Snippet;
 		class?: string;
 	}
 
 	let { children, class: className = '' }: Props = $props();
 </script>
 
-<p class="mt-4 leading-relaxed text-[var(--text-secondary)] text-[15px] {className}">
+<p class={className}>
 	{@render children()}
 </p>

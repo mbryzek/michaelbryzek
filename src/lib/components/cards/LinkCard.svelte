@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { Link } from '$lib/types';
-	import P from '$lib/components/ui/P.svelte';
-	import WebsiteIcon from '$lib/components/icons/WebsiteIcon.svelte';
 
 	interface Props {
 		link: Link;
@@ -10,25 +8,28 @@
 	let { link }: Props = $props();
 </script>
 
-<a href={link.url} target="_blank" rel="noopener noreferrer" class="block group focus:outline-none h-full">
-	<div
-		class="h-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-6 hover:border-[var(--primary)] hover:bg-[var(--bg-hover)] hover:shadow-lg transition-colors transition-shadow duration-200 cursor-pointer group-focus-visible:ring-2 group-focus-visible:ring-[var(--primary)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[var(--bg-base)] flex flex-col"
-	>
-		<div class="flex items-start justify-between mb-4">
-			<h2 class="text-xl font-semibold text-[var(--text-primary)] group-hover:text-[var(--primary)] transition-colors duration-200">
-				{link.name}
-			</h2>
-			<span
-				class="text-[var(--text-tertiary)] group-hover:text-[var(--secondary)] group-hover:scale-125 card-icon-transition"
-				aria-label="External link"
+<a class="project" href={link.url} target="_blank" rel="noopener noreferrer">
+	<div class="project-top">
+		<p class="pname">{link.name}</p>
+		<span class="arrow" aria-hidden="true">
+			<svg
+				viewBox="0 0 24 24"
+				width="18"
+				height="18"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
 			>
-				<WebsiteIcon />
-			</span>
-		</div>
-		<div class="space-y-3 flex-1">
-			{#each link.description as text}
-				<P>{text}</P>
-			{/each}
-		</div>
+				<line x1="7" y1="17" x2="17" y2="7"></line>
+				<polyline points="7 7 17 7 17 17"></polyline>
+			</svg>
+		</span>
+	</div>
+	<div class="flex flex-col gap-2 flex-1">
+		{#each link.description as text}
+			<p class="pdesc">{text}</p>
+		{/each}
 	</div>
 </a>

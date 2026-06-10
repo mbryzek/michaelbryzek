@@ -1,26 +1,28 @@
 <script lang="ts">
 	import Shell from '$lib/components/Shell.svelte';
-	import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
 </script>
 
 <svelte:head>
 	<title>Michael Bryzek - Developer & Entrepreneur</title>
-	<meta name="description" content="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd." />
+	<meta
+		name="description"
+		content="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd."
+	/>
 </svelte:head>
 
 <Shell>
-	<div class="max-w-2xl mx-auto space-y-6">
-		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
+	<div class="prose">
+		<p>
 			My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.
 		</p>
-		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
+		<p>
 			I'm best known for founding Gilt Groupe in 2007 and Flow Commerce in 2015, which now powers
 			international commerce inside Shopify.
 		</p>
-		<p class="text-[var(--text-primary)] text-lg leading-relaxed">
-			Recently, I spend most of my time building <ExternalLink
-				href="https://rallyd.net">Rallyd</ExternalLink
-			>, an AI-powered pickleball game scheduling application.
+		<p>
+			Recently, I spend most of my time building
+			<a href="https://rallyd.net" target="_blank" rel="noopener noreferrer">Rallyd</a>, an
+			AI-powered pickleball game scheduling application.
 		</p>
 	</div>
 </Shell>
