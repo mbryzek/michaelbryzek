@@ -1,8 +1,7 @@
 <!-- Diagonal arrow (up-right) used in external-link cards -->
 <svg
+	class="h-[18px] w-[18px]"
 	viewBox="0 0 24 24"
-	width="18"
-	height="18"
 	fill="none"
 	stroke="currentColor"
 	stroke-width="2"
