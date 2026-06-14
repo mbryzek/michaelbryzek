@@ -651,6 +651,12 @@ code,
 	color: var(--accent-text);
 	transform: scale(1.12);
 }
+.card-icons a:focus-visible,
+.card-icons button:focus-visible {
+	outline: none;
+	box-shadow: var(--ring);
+	border-radius: var(--radius-sm);
+}
 
 /* ============================================================
    Footer
