@@ -7,4 +7,4 @@
 	let { lines, class: className = '' }: Props = $props();
 </script>
 
-<pre class="codeblock {className}">{#each lines as line}<div class="whitespace-pre-wrap">{line}</div>{/each}</pre>
+<pre class="codeblock {className}">{lines.join('\n')}</pre>
