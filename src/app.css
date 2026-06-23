@@ -2,6 +2,48 @@
 @plugin "@tailwindcss/forms";
 
 /* ============================================================
+   Self-hosted fonts (same-origin, latin subset, font-display: swap)
+   Files live in static/fonts and are served at /fonts, so the
+   browser fetches them over the existing connection — no
+   cross-origin Google Fonts round trip.
+   ============================================================ */
+@font-face {
+	font-family: "Hanken Grotesk";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("/fonts/hanken-grotesk-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Hanken Grotesk";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("/fonts/hanken-grotesk-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Hanken Grotesk";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("/fonts/hanken-grotesk-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+	font-family: "Hanken Grotesk";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("/fonts/hanken-grotesk-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+	font-family: "JetBrains Mono";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+
+/* ============================================================
    Bryzek Design System — Tokens
    Light + Dark, switched via [data-theme] on <html>.
    ============================================================ */
