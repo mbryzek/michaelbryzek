@@ -87,6 +87,7 @@ npm run preview
 ## Build Output
 
 Static HTML pages generated in `/build`:
+
 - All routes pre-rendered at build time
 - Optimized assets in `_app/immutable/`
 - Ready for deployment to any static host
@@ -94,6 +95,7 @@ Static HTML pages generated in `/build`:
 ## Migration Notes
 
 This site was migrated from Elm 0.19.1 to SvelteKit 2.x, preserving:
+
 - Exact dark theme color palette
 - All content (projects, talks, links, blog posts)
 - Navigation structure and footer
@@ -101,6 +103,7 @@ This site was migrated from Elm 0.19.1 to SvelteKit 2.x, preserving:
 - SEO-friendly static HTML generation
 
 Key improvements:
+
 - Simpler component syntax with Svelte 5 runes
 - Faster builds and hot module replacement
 - Native TypeScript support

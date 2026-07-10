@@ -1,21 +1,21 @@
 <script lang="ts">
-	import Shell from '$lib/components/Shell.svelte';
-	import TalkCard from '$lib/components/cards/TalkCard.svelte';
-	import { talks } from '$lib/data/talks';
+  import Shell from '$lib/components/Shell.svelte';
+  import TalkCard from '$lib/components/cards/TalkCard.svelte';
+  import { talks } from '$lib/data/talks';
 </script>
 
 <svelte:head>
-	<title>Talks - Michael Bryzek</title>
-	<meta
-		name="description"
-		content="Conference talks and presentations by Michael Bryzek on microservices, testing in production, and startups."
-	/>
+  <title>Talks - Michael Bryzek</title>
+  <meta
+    name="description"
+    content="Conference talks and presentations by Michael Bryzek on microservices, testing in production, and startups."
+  />
 </svelte:head>
 
 <Shell title="Talks">
-	<div class="card-grid">
-		{#each talks as talk}
-			<TalkCard {talk} />
-		{/each}
-	</div>
+  <div class="card-grid">
+    {#each talks as talk}
+      <TalkCard {talk} />
+    {/each}
+  </div>
 </Shell>
