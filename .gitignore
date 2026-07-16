@@ -17,6 +17,8 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+# Committed .env holds only empty PUBLIC_VERSION / PUBLIC_RELEASED_AT defaults
+!.env
 
 # Vite
 vite.config.js.timestamp-*
