@@ -11,49 +11,59 @@
   let { project }: Props = $props();
 
   // Primary link priority: projectUrl > githubUrl > blogUrl
-  let primaryUrl = $derived(project.projectUrl || project.githubUrl || project.blogUrl || '#');
-
-  function openUrl(e: MouseEvent, url: string) {
-    e.preventDefault();
-    e.stopPropagation();
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
+  let primaryUrl = $derived(project.projectUrl || project.githubUrl || project.blogUrl || '');
 </script>
 
-{#snippet body()}
+<!--
+  The card is a plain container. Its interactive elements — the project name
+  and each icon — are real <a> anchors. We must NOT wrap the whole card in an
+  outer <a> and then nest these anchors/buttons inside it: nested interactive
+  content is invalid HTML and breaks keyboard + screen-reader semantics (the
+  previous version did exactly that). Real anchors also restore native
+  middle-click / open-in-new-tab / status-bar URL behavior.
+-->
+<div class="project">
   <div class="project-top">
-    <p class="pname">{project.name}</p>
+    {#if primaryUrl}
+      <a class="pname" href={primaryUrl} target="_blank" rel="noopener noreferrer">
+        {project.name}
+      </a>
+    {:else}
+      <p class="pname">{project.name}</p>
+    {/if}
     <div class="card-icons">
       {#if project.projectUrl}
-        <button type="button" aria-label="Project website" onclick={(e: MouseEvent) => openUrl(e, project.projectUrl!)}>
+        <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" aria-label="Project website">
           <WebsiteIcon />
-        </button>
+        </a>
       {/if}
       {#if project.githubUrl}
-        <button type="button" aria-label="GitHub repository" onclick={(e: MouseEvent) => openUrl(e, project.githubUrl!)}>
+        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
           <GithubIcon />
-        </button>
+        </a>
       {/if}
       {#if project.blogUrl}
-        <button type="button" aria-label="Blog post" onclick={(e: MouseEvent) => openUrl(e, project.blogUrl!)}>
+        <a href={project.blogUrl} target="_blank" rel="noopener noreferrer" aria-label="Blog post">
           <BlogIcon />
-        </button>
+        </a>
       {/if}
     </div>
   </div>
-  <div class="flex flex-col gap-2 flex-1">
+  <div class="flex flex-1 flex-col gap-2">
     {#each project.description as text}
       <p class="pdesc">{text}</p>
     {/each}
   </div>
-{/snippet}
+</div>
 
-{#if primaryUrl !== '#'}
-  <a class="project" href={primaryUrl} target="_blank" rel="noopener noreferrer">
-    {@render body()}
-  </a>
-{:else}
-  <div class="project" style="cursor:default">
-    {@render body()}
-  </div>
-{/if}
+<style>
+  /* The name renders as an anchor now; strip default link styling so it keeps
+     the previous look and the card's hover treatment (.project:hover .pname). */
+  a.pname {
+    text-decoration: none;
+    color: inherit;
+  }
+  a.pname:hover {
+    color: var(--accent-text);
+  }
+</style>
