@@ -14,7 +14,7 @@ export const talks: Talk[] = [
     date: 'January 2025',
     description:
       "A conversation with Richard Feldman about embracing 'testing in production' as a way to improve overall quality of software. We dive into aligning organizational incentives, embracing true continuous delivery and some rarer practices including the elimination of testing and staging environments.",
-    videoUrl: 'https://www.youtube.com/watch?v=j6ow-UemzBc'
+    videoUrl: 'https://www.youtube.com/watch?v=6qv0sCcV_Zg'
   },
   {
     title: 'Design Microservice Architectures the Right Way',
