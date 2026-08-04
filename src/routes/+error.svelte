@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import Shell from '$lib/components/Shell.svelte';
   import { urls } from '$lib/urls';
 </script>
 
 <Shell>
   <div class="flex flex-col items-center justify-center text-center py-16">
-    <p class="error-status">{$page.status}</p>
+    <p class="error-status">{page.status}</p>
     <p class="error-message">
-      {$page.error?.message ?? "The page you're looking for doesn't exist."}
+      {page.error?.message ?? "The page you're looking for doesn't exist."}
     </p>
     <a class="btn" href={urls.index}>Go home</a>
   </div>

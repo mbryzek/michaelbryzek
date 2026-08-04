@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
+  import { tick } from 'svelte';
   import { urls } from '$lib/urls';
   import EmailIcon from '$lib/components/icons/EmailIcon.svelte';
   import XIcon from '$lib/components/icons/XIcon.svelte';
@@ -23,28 +24,51 @@
     { href: urls.links, name: 'Links' }
   ];
 
-  const currentPath = $derived($page.url.pathname);
   const currentYear = new Date().getFullYear();
 
   let mobileMenuOpen = $state(false);
+  let mobileMenuEl: HTMLElement | undefined = $state();
+  let mobileMenuButtonEl: HTMLButtonElement | undefined = $state();
 
   function isSectionActive(sectionHref: string): boolean {
-    return currentPath === sectionHref;
+    return page.url.pathname === sectionHref;
   }
 
-  function toggleMobileMenu() {
-    mobileMenuOpen = !mobileMenuOpen;
+  // The panel is `inert` while closed, so focus can only be moved into it after
+  // the DOM has been updated — hence the `tick()`. Without moving focus in, the
+  // Tab trap and Escape handling below would never fire: focus would stay on the
+  // hamburger, which sits outside the panel.
+  async function openMobileMenu() {
+    mobileMenuOpen = true;
+    document.body.style.overflow = 'hidden';
+    await tick();
+    mobileMenuEl?.querySelector<HTMLElement>('a')?.focus();
   }
 
   function closeMobileMenu() {
+    if (!mobileMenuOpen) return;
     mobileMenuOpen = false;
+    document.body.style.overflow = '';
+    mobileMenuButtonEl?.focus();
+  }
+
+  function toggleMobileMenu() {
+    if (mobileMenuOpen) {
+      closeMobileMenu();
+    } else {
+      void openMobileMenu();
+    }
+  }
+
+  // Escape is handled on the window rather than the panel so it works no matter
+  // where focus happens to be while the menu is open.
+  function handleWindowKeydown(e: KeyboardEvent) {
+    if (mobileMenuOpen && e.key === 'Escape') {
+      closeMobileMenu();
+    }
   }
 
   function handleMobileMenuKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape') {
-      closeMobileMenu();
-      return;
-    }
     if (e.key !== 'Tab') return;
 
     const menu = e.currentTarget as HTMLElement;
@@ -63,6 +87,8 @@
     }
   }
 </script>
+
+<svelte:window onkeydown={handleWindowKeydown} />
 
 <div class="min-h-screen flex flex-col">
   <!-- Top bar -->
@@ -89,11 +115,13 @@
       <div class="flex md:hidden items-center gap-3">
         <ThemeToggle />
         <button
+          bind:this={mobileMenuButtonEl}
           onclick={toggleMobileMenu}
           class="mobile-menu-button"
           class:active={mobileMenuOpen}
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           <span class="hamburger-line"></span>
           <span class="hamburger-line"></span>
@@ -104,12 +132,31 @@
   </header>
 
   <!-- Mobile menu overlay -->
-  <button class="mobile-menu-overlay md:hidden" class:open={mobileMenuOpen} onclick={closeMobileMenu} aria-label="Close menu" tabindex="-1"
+  <button
+    class="mobile-menu-overlay md:hidden"
+    class:open={mobileMenuOpen}
+    onclick={closeMobileMenu}
+    aria-label="Close menu"
+    tabindex="-1"
+    inert={!mobileMenuOpen}
   ></button>
 
-  <!-- Mobile menu side panel -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="mobile-menu md:hidden" class:open={mobileMenuOpen} onkeydown={handleMobileMenuKeydown}>
+  <!-- Mobile menu side panel. `inert` while closed keeps its links out of the tab
+       order and out of the accessibility tree — the panel is only translated
+       off-screen, never hidden, so without it a phone user tabbing from the
+       hamburger lands on invisible links. -->
+  <div
+    bind:this={mobileMenuEl}
+    id="mobile-menu"
+    class="mobile-menu md:hidden"
+    class:open={mobileMenuOpen}
+    onkeydown={handleMobileMenuKeydown}
+    inert={!mobileMenuOpen}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site navigation"
+    tabindex="-1"
+  >
     <div class="flex flex-col p-4">
       {#each sections as section}
         <a
@@ -191,7 +238,7 @@
   .mobile-menu-overlay {
     position: fixed;
     inset: 0;
-    height: 100vh;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     pointer-events: none;
@@ -211,7 +258,7 @@
     right: -100%;
     width: 280px;
     max-width: 85vw;
-    height: 100vh;
+    height: 100dvh;
     background: var(--surface);
     border-left: 1px solid var(--hairline);
     transition: right 0.3s ease;
