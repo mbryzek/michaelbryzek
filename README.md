@@ -19,11 +19,12 @@ src/
 │   │   ├── Shell.svelte              # Main layout with navigation and footer
 │   │   ├── icons/                    # SVG icon components
 │   │   ├── cards/                    # ProjectCard, TalkCard, LinkCard
-│   │   ├── ui/                       # P, H1, H2, ExternalLink
-│   │   └── blog/                     # Blog styling components
+│   │   ├── ui/                       # ExternalLink
+│   │   ├── blog/                     # Blog styling components
+│   │   └── ThemeToggle.svelte        # Light/dark theme switch
 │   ├── data/
 │   │   ├── projects.ts               # 7 projects
-│   │   ├── talks.ts                  # 3 talks
+│   │   ├── talks.ts                  # 4 talks
 │   │   ├── links.ts                  # 2 links
 │   │   └── blog.ts                   # Blog metadata
 │   ├── posts/
@@ -36,6 +37,7 @@ src/
 │   ├── +layout.ts                    # Prerender configuration
 │   ├── +page.svelte                  # Home/About page
 │   ├── +error.svelte                 # 404 page
+│   ├── _internal_/version/+server.ts  # Build version endpoint
 │   ├── projects/+page.svelte
 │   ├── talks/+page.svelte
 │   ├── links/+page.svelte
@@ -58,8 +60,16 @@ npm install
 # or
 npm run dev
 
-# Type check
+# Type check, lint and format check (the full gate)
 npm run check
+
+# Run tests
+npm test
+
+# Lint / format on their own
+npm run lint
+npm run lint:fix
+npm run format
 
 # Build for production
 npm run build
@@ -72,17 +82,23 @@ npm run preview
 
 - **/** - Home/About page
 - **/projects** - Project showcase (7 projects)
-- **/talks** - Speaking engagements (3 talks)
+- **/talks** - Speaking engagements (4 talks)
 - **/links** - External links (2 links)
 - **/blog** - Blog index
 - **/blog/[slug]** - Individual blog posts (2 posts)
 
 ## Design
 
-- **Dark Theme**: gray-800 background with gray-700/600 cards
-- **Typography**: System fonts with responsive sizing
+- **Theming**: CSS custom-property tokens under `[data-theme='light']` /
+  `[data-theme='dark']` in `app.css`, switched by `ThemeToggle.svelte`. Dark is
+  the default; the choice is stored in `localStorage` and applied by an inline
+  script in `+layout.svelte` before first paint so there is no flash.
+- **Typography**: Self-hosted Hanken Grotesk (UI) and JetBrains Mono (code),
+  subset to latin and preloaded from `static/fonts/`
 - **Mobile-First**: Responsive grid layouts with Tailwind breakpoints
 - **Icons**: Custom SVG components for GitHub, LinkedIn, X, Email, etc.
+- **Accessibility**: WCAG AA contrast on text tokens, visible focus rings, and
+  `prefers-reduced-motion` support throughout
 
 ## Build Output
 
