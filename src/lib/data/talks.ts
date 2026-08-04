@@ -30,6 +30,6 @@ export const talks: Talk[] = [
     date: 'December 2013',
     description:
       "This was a really fun talk for me with my family visiting in NYC. We talked about what it was like to build gilt.com - but also about my family's background escaping Poland and building a new life in America - events that have deeply shaped my own personality, work ethic, and values.",
-    videoUrl: 'https://www.youtube.com/watch?v=XWM_H3Acq8w&t=5s'
+    videoUrl: 'https://www.youtube.com/watch?v=XWM_H3Acq8w'
   }
 ];

@@ -4,13 +4,13 @@ export const links: Link[] = [
   {
     name: 'Abundant Nexus',
     description: [
-      "My father's last company honored him with an incredible conference - the Abundant Nexus - recognizing my father's optimism, passion for MEMS and focus on improving the world with Adbundance."
+      "My father's last company honored him with an incredible conference - the Abundant Nexus - recognizing my father's optimism, passion for MEMS and focus on improving the world with Abundance."
     ],
     url: 'https://abundantnexus.com'
   },
   {
     name: 'Cameron Bryzek',
     description: ['My oldest child Cameron has an amazing hobby building leather works from raw cowhide.'],
-    url: 'https://cameron.bryzek.com'
+    url: 'https://cameronbryzek.com'
   }
 ];
