@@ -61,9 +61,9 @@
   <BlogP>Example of redirecting the user to login as necessary:</BlogP>
   <BlogCode
     lines={[
-      'Just Route.RouteRestricted ->\n',
-      '    pageAuthenticatedData global (\\g ->\n',
-      '        ( PageRestricted.init g |> PageRestricted, Cmd.none)\n',
+      'Just Route.RouteRestricted ->',
+      '    pageAuthenticatedData global (\\g ->',
+      '        ( PageRestricted.init g |> PageRestricted, Cmd.none)',
       '    )'
     ]}
   />

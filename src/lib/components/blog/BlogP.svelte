@@ -3,12 +3,11 @@
 
   interface Props {
     children: Snippet;
-    class?: string;
   }
 
-  let { children, class: className = '' }: Props = $props();
+  let { children }: Props = $props();
 </script>
 
-<p class={className}>
+<p>
   {@render children()}
 </p>

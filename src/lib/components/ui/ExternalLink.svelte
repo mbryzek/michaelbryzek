@@ -4,12 +4,11 @@
   interface Props {
     href: string;
     children: Snippet;
-    class?: string;
   }
 
-  let { href, children, class: className = '' }: Props = $props();
+  let { href, children }: Props = $props();
 </script>
 
-<a {href} target="_blank" rel="noopener noreferrer" class={className}>
+<a {href} target="_blank" rel="noopener noreferrer">
   {@render children()}
 </a>

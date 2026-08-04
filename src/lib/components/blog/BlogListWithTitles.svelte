@@ -6,13 +6,12 @@
 
   interface Props {
     items: ItemWithTitle[];
-    class?: string;
   }
 
-  let { items, class: className = '' }: Props = $props();
+  let { items }: Props = $props();
 </script>
 
-<ul class={className}>
+<ul>
   {#each items as item}
     <li>
       <span class="title">{item.title}</span>
