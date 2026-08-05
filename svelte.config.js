@@ -9,7 +9,9 @@ const config = {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
-      fallback: undefined,
+      // Emit build/404.html so a direct hit on an unknown path renders the
+      // site's own +error.svelte instead of the host's generic 404 page.
+      fallback: '404.html',
       precompress: false,
       strict: true
     }),

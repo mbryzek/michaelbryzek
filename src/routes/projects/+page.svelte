@@ -1,16 +1,14 @@
 <script lang="ts">
   import Shell from '$lib/components/Shell.svelte';
+  import Seo from '$lib/components/Seo.svelte';
   import ProjectCard from '$lib/components/cards/ProjectCard.svelte';
   import { projects } from '$lib/data/projects';
 </script>
 
-<svelte:head>
-  <title>Projects - Michael Bryzek</title>
-  <meta
-    name="description"
-    content="Open source projects and products by Michael Bryzek, including Rallyd, API Builder, and Schema Evolution Manager."
-  />
-</svelte:head>
+<Seo
+  title="Projects - Michael Bryzek"
+  description="Open source projects and products by Michael Bryzek, including Rallyd, API Builder, and Schema Evolution Manager."
+/>
 
 <Shell title="Projects">
   <div class="card-grid">

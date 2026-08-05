@@ -1,16 +1,14 @@
 <script lang="ts">
   import Shell from '$lib/components/Shell.svelte';
+  import Seo from '$lib/components/Seo.svelte';
 </script>
 
-<svelte:head>
-  <title>Michael Bryzek - Developer & Entrepreneur</title>
-  <meta
-    name="description"
-    content="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd."
-  />
-</svelte:head>
+<Seo
+  title="Michael Bryzek - Developer & Entrepreneur"
+  description="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd."
+/>
 
-<Shell>
+<Shell title="Michael Bryzek">
   <div class="prose">
     <p>My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.</p>
     <p>

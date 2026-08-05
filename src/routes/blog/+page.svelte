@@ -1,13 +1,11 @@
 <script lang="ts">
   import Shell from '$lib/components/Shell.svelte';
+  import Seo from '$lib/components/Seo.svelte';
   import { blogPosts } from '$lib/data/blog';
   import { urls } from '$lib/urls';
 </script>
 
-<svelte:head>
-  <title>Blog - Michael Bryzek</title>
-  <meta name="description" content="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />
-</svelte:head>
+<Seo title="Blog - Michael Bryzek" description="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />
 
 <Shell title="Blog">
   <div class="post-list">
