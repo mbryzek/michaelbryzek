@@ -6,11 +6,44 @@ import svelteParser from 'svelte-eslint-parser';
 import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
 
+const RUNE_GLOBALS = {
+  $state: 'readonly',
+  $derived: 'readonly',
+  $effect: 'readonly',
+  $props: 'readonly',
+  $bindable: 'readonly',
+  $inspect: 'readonly',
+  $host: 'readonly'
+};
+
+// Shorthand in a conditional spread silently drops or renames a field when the
+// local variable name and the property name drift apart.
+const noShorthandInConditionalSpread = [
+  'error',
+  {
+    selector: 'SpreadElement > LogicalExpression[operator="&&"] > ObjectExpression > Property[shorthand=true]',
+    message: 'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value }.'
+  },
+  {
+    selector: 'SpreadElement > ConditionalExpression > ObjectExpression > Property[shorthand=true]',
+    message: 'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value }.'
+  }
+];
+
+const sharedTsRules = {
+  'no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+  '@typescript-eslint/no-explicit-any': 'warn',
+  'no-restricted-syntax': noShorthandInConditionalSpread
+};
+
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   // Global ignores
   {
-    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', 'src/generated/**', '*.config.js', '*.config.ts']
+    // .reviewable/completion.js is evaluated by Reviewable as a function body
+    // (it uses a top-level `return`), so it is not parseable as a module.
+    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', '.reviewable/**']
   },
 
   // Base ESLint recommended rules
@@ -18,7 +51,7 @@ export default [
 
   // TypeScript files (server-side, utils, etc.)
   {
-    files: ['**/*.ts'],
+    files: ['src/**/*.ts'],
     ignores: ['**/*.svelte.ts'],
     languageOptions: {
       parser: tsparser,
@@ -37,25 +70,8 @@ export default [
       '@typescript-eslint': tseslint
     },
     rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'error',
-
-      // KEY RULE: Catch shorthand properties in conditional spreads
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'SpreadElement > LogicalExpression[operator="&&"] > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        },
-        {
-          selector: 'SpreadElement > ConditionalExpression > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        }
-      ]
+      ...sharedTsRules,
+      '@typescript-eslint/consistent-type-imports': 'error'
     }
   },
 
@@ -71,36 +87,14 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        $state: 'readonly',
-        $derived: 'readonly',
-        $effect: 'readonly',
-        $props: 'readonly',
-        $bindable: 'readonly',
-        $inspect: 'readonly',
-        $host: 'readonly'
+        ...RUNE_GLOBALS
       }
     },
     plugins: {
       '@typescript-eslint': tseslint
     },
     rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'SpreadElement > LogicalExpression[operator="&&"] > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        },
-        {
-          selector: 'SpreadElement > ConditionalExpression > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        }
-      ]
+      ...sharedTsRules
     }
   },
 
@@ -116,13 +110,7 @@ export default [
       },
       globals: {
         ...globals.browser,
-        $state: 'readonly',
-        $derived: 'readonly',
-        $effect: 'readonly',
-        $props: 'readonly',
-        $bindable: 'readonly',
-        $inspect: 'readonly',
-        $host: 'readonly'
+        ...RUNE_GLOBALS
       }
     },
     plugins: {
@@ -152,16 +140,24 @@ export default [
     }
   },
 
-  // JavaScript files
+  // Root config files (*.config.js / *.config.ts) — deliberately not type-aware:
+  // they sit outside tsconfig's include, so `project` parsing would fail on them.
   {
-    files: ['**/*.js'],
+    files: ['*.js', '*.ts'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module'
+      },
       globals: {
         ...globals.node
       }
-    }
+    },
+    plugins: {
+      '@typescript-eslint': tseslint
+    },
+    rules: sharedTsRules
   },
 
   // Disable stylistic rules that conflict with prettier
