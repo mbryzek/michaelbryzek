@@ -1,10 +1,9 @@
 <script lang="ts">
   interface Props {
     lines: string[];
-    class?: string;
   }
 
-  let { lines, class: className = '' }: Props = $props();
+  let { lines }: Props = $props();
 </script>
 
-<pre class="codeblock {className}">{lines.join('\n')}</pre>
+<pre class="codeblock">{lines.join('\n')}</pre>

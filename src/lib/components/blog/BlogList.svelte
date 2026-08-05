@@ -1,13 +1,12 @@
 <script lang="ts">
   interface Props {
     items: string[];
-    class?: string;
   }
 
-  let { items, class: className = '' }: Props = $props();
+  let { items }: Props = $props();
 </script>
 
-<ul class={className}>
+<ul>
   {#each items as item}
     <li>{item}</li>
   {/each}

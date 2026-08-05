@@ -11,9 +11,11 @@
 </script>
 
 <article class="article">
-  <div class="article-meta">{date}</div>
-  <h1>{title}</h1>
+  <header>
+    <div class="article-meta">{date}</div>
+    <h1>{title}</h1>
+  </header>
+  <div class="prose mt-6">
+    {@render children()}
+  </div>
 </article>
-<div class="prose mt-6">
-  {@render children()}
-</div>
