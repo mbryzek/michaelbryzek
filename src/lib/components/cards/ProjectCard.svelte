@@ -12,6 +12,14 @@
 
   // Primary link priority: projectUrl > githubUrl > blogUrl
   let primaryUrl = $derived(project.projectUrl || project.githubUrl || project.blogUrl || '');
+
+  // `blogUrl` is a path on this site; `projectUrl` and `githubUrl` are absolute
+  // and belong on another origin. Only the latter get a new tab — opening our
+  // own page in one bypasses client-side routing and strands the visitor in a
+  // second tab of the same site.
+  function isExternal(url: string): boolean {
+    return url.startsWith('http');
+  }
 </script>
 
 <!--
@@ -25,7 +33,12 @@
 <div class="project">
   <div class="project-top">
     {#if primaryUrl}
-      <a class="pname" href={primaryUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        class="pname"
+        href={primaryUrl}
+        target={isExternal(primaryUrl) ? '_blank' : undefined}
+        rel={isExternal(primaryUrl) ? 'noopener noreferrer' : undefined}
+      >
         {project.name}
       </a>
     {:else}
@@ -43,7 +56,7 @@
         </a>
       {/if}
       {#if project.blogUrl}
-        <a href={project.blogUrl} target="_blank" rel="noopener noreferrer" aria-label="Blog post">
+        <a href={project.blogUrl} aria-label="Blog post">
           <BlogIcon />
         </a>
       {/if}
