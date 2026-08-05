@@ -124,7 +124,7 @@
 
   --text: #15171c;
   --text-muted: #565d6b;
-  --text-subtle: #828997;
+  --text-subtle: #666e7b;
   --text-onaccent: #ffffff;
 
   --accent: #2563eb;
@@ -162,7 +162,7 @@
 
   --text: #f1f3f6;
   --text-muted: #a6adbb;
-  --text-subtle: #79808d;
+  --text-subtle: #8b93a1;
   --text-onaccent: #10131a;
 
   --accent: #60a5fa;
@@ -699,6 +699,12 @@ code,
   background: transparent;
   border: 0;
   padding: 0;
+  /* The glyph is 18px. WCAG 2.2 SC 2.5.8 wants at least 24x24 CSS px of target,
+     and with only a 12px gap the 24px minimum circles would otherwise overlap. */
+  min-width: 24px;
+  min-height: 24px;
+  display: grid;
+  place-items: center;
   color: var(--text-subtle);
   cursor: pointer;
   transition:
