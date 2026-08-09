@@ -20,6 +20,13 @@ export const blogPosts = [
  */
 export type BlogSlug = (typeof blogPosts)[number]['slug'];
 
-export function findPost(slug: string): BlogPost | undefined {
+/**
+ * One entry of `blogPosts`, with its `slug` narrowed to the literal rather than
+ * widened back to `string` by the `BlogPost` interface. `findPost` returns this
+ * so a caller can index a `Record<BlogSlug, ...>` with the slug it found.
+ */
+export type BlogPostEntry = (typeof blogPosts)[number];
+
+export function findPost(slug: string): BlogPostEntry | undefined {
   return blogPosts.find((post) => post.slug === slug);
 }
