@@ -34,13 +34,23 @@
     return page.url.pathname === sectionHref;
   }
 
+  // Lock the ROOT element, not <body>. app.css sets `html { overflow-y: scroll }`
+  // to reserve the scrollbar gutter, and the body's overflow only propagates to
+  // the viewport while the root's own overflow is `visible` — so the usual
+  // `document.body.style.overflow = 'hidden'` was silently doing nothing and the
+  // page scrolled behind the open panel. `scrollbar-gutter: stable` is already on
+  // the same element, so locking it shifts no layout.
+  function setScrollLocked(locked: boolean) {
+    document.documentElement.style.overflow = locked ? 'hidden' : '';
+  }
+
   // The panel is `inert` while closed, so focus can only be moved into it after
   // the DOM has been updated — hence the `tick()`. Without moving focus in, the
   // Tab trap and Escape handling below would never fire: focus would stay on the
   // hamburger, which sits outside the panel.
   async function openMobileMenu() {
     mobileMenuOpen = true;
-    document.body.style.overflow = 'hidden';
+    setScrollLocked(true);
     await tick();
     mobileMenuEl?.querySelector<HTMLElement>('a')?.focus();
   }
@@ -48,7 +58,7 @@
   function closeMobileMenu() {
     if (!mobileMenuOpen) return;
     mobileMenuOpen = false;
-    document.body.style.overflow = '';
+    setScrollLocked(false);
     mobileMenuButtonEl?.focus();
   }
 
@@ -64,6 +74,18 @@
   // where focus happens to be while the menu is open.
   function handleWindowKeydown(e: KeyboardEvent) {
     if (mobileMenuOpen && e.key === 'Escape') {
+      closeMobileMenu();
+    }
+  }
+
+  // The panel, its overlay and the hamburger are all `md:hidden`. Crossing to
+  // the desktop breakpoint with the menu open therefore hides every control that
+  // could close it while the scroll lock above stays on — a page nothing but
+  // Escape can unstick. Close on the way past instead. 768px is Tailwind's `md`.
+  const DESKTOP_BREAKPOINT = 768;
+
+  function handleWindowResize() {
+    if (mobileMenuOpen && window.innerWidth >= DESKTOP_BREAKPOINT) {
       closeMobileMenu();
     }
   }
@@ -88,7 +110,7 @@
   }
 </script>
 
-<svelte:window onkeydown={handleWindowKeydown} />
+<svelte:window onkeydown={handleWindowKeydown} onresize={handleWindowResize} />
 
 <div class="min-h-screen flex flex-col">
   <!-- Top bar -->

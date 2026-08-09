@@ -627,7 +627,12 @@ code,
    ============================================================ */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  /* `min(290px, 100%)` rather than a bare 290px: a bare track floor is a hard
+     minimum, so on a viewport narrower than 290px + <main>'s 48px of padding
+     (~314px — the Fold cover screen and similar) the card pushed past the
+     viewport and the whole page scrolled sideways. `min()` lets the single
+     column collapse to the space actually available instead. */
+  grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
   gap: var(--space-4);
 }
 .project {
