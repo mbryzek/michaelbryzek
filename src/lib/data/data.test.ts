@@ -11,10 +11,25 @@ import type { Link, Project, Talk } from '$lib/types';
  * descriptions with trailing spaces, and two URLs pointing at redirect sources.
  * Pin the invariants that hold today so the next edit cannot break them.
  *
- * The whitespace, redirect-host and query-param assertions are deliberately
- * NOT here yet: the data they pin is corrected in the sibling PR, and asserting
- * them before that merges would ship a red branch. Add them once it lands.
+ * The whitespace, redirect-host and query-param assertions were deferred until
+ * the PR correcting that data had landed (#32). It has, so they are here now —
+ * each one pins a defect that reached production once already.
  */
+
+/**
+ * Hosts that were once linked here and answered a redirect rather than the page
+ * (#32 verified both live: cameron.bryzek.com 302, www.bthackathon.com 301).
+ * A redirect costs a round trip and, on a link that is itself shared onward,
+ * loses the canonical URL — so keep the canonical host in the data.
+ */
+const REDIRECTING_HOSTS = ['cameron.bryzek.com', 'www.bthackathon.com'];
+
+/**
+ * A YouTube watch URL identifies the video with `v` and nothing else. A seek
+ * (`t`), a playlist (`list`) or a tracking param is an artifact of however the
+ * URL was copied, and it changes what a visitor is shown.
+ */
+const ALLOWED_VIDEO_PARAMS = ['v'];
 
 const allStrings: { where: string; value: string }[] = [
   ...projects.flatMap((p: Project) => [
@@ -50,6 +65,19 @@ describe('site content', () => {
     const offenders = allStrings.filter(({ value }) => value.length === 0);
     expect(offenders).toEqual([]);
   });
+
+  // Each description entry renders as its own <p>, so surrounding whitespace is
+  // invisible dead weight that survives every review by being unreadable in the
+  // diff. Three of these shipped before #32 stripped them.
+  it('has no leading or trailing whitespace', () => {
+    const offenders = allStrings.filter(({ value }) => value !== value.trim());
+    expect(offenders).toEqual([]);
+  });
+
+  it('has no runs of repeated whitespace', () => {
+    const offenders = allStrings.filter(({ value }) => /\s{2,}/.test(value));
+    expect(offenders).toEqual([]);
+  });
 });
 
 describe('external urls', () => {
@@ -60,6 +88,20 @@ describe('external urls', () => {
 
   it('all parse as URLs', () => {
     const offenders = externalUrls.filter(({ value }) => !URL.canParse(value));
+    expect(offenders).toEqual([]);
+  });
+
+  it('point at canonical hosts, not known redirect sources', () => {
+    const offenders = externalUrls.filter(({ value }) => REDIRECTING_HOSTS.includes(new URL(value).host));
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe('talk video urls', () => {
+  it('carry only the video id', () => {
+    const offenders = talks
+      .map((t: Talk) => ({ where: `talks[${t.title}].videoUrl`, params: [...new URL(t.videoUrl).searchParams.keys()] }))
+      .filter(({ params }) => params.some((p) => !ALLOWED_VIDEO_PARAMS.includes(p)));
     expect(offenders).toEqual([]);
   });
 });
