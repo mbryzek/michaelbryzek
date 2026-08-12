@@ -59,12 +59,24 @@ rotating it signs everyone out, which is the intended way to revoke access.
 
 ### 3. Deploy
 
+`dev release` takes a **subcommand**, not an app name, and infers the app from
+the directory it runs in — so `cd` to a checkout of this repo first:
+
 ```sh
-dev release michaelbryzek
+cd ~/code/michaelbryzek
+dev release app          # dispatches on kind (sveltekit) from the app config
 ```
 
-Then send Lisa the URL and the password. On her phone: open in Safari, Share →
-**Add to Home Screen**. It installs as an icon and launches full-screen.
+Run it from a checkout sitting on `main`: it fast-forwards local main and
+releases that, so a feature-branch checkout is the wrong place to be. It
+preflights the `personal` Cloudflare login itself, then builds and runs
+`wrangler pages deploy` for you — no `XDG_CONFIG_HOME` prefix needed here,
+unlike the by-hand commands above.
+
+The app is then at **https://bryzek.com/trips/europe-26**. Send Lisa that URL
+and the password. On her phone: open in **Safari** (the only iOS browser that
+installs it properly), Share → **Add to Home Screen**. It gets an icon, launches
+full-screen, and works offline after the first launch.
 
 ## Running it locally
 
