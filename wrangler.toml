@@ -1,0 +1,35 @@
+# Cloudflare Pages configuration for bryzek.com.
+#
+# The site is deployed with `wrangler pages deploy .svelte-kit/cloudflare`
+# (see devops/bin/release-sveltekit), which reads the bindings below. Only the
+# /trips/* routes use them; every other page is a static asset.
+#
+# ONE-TIME SETUP (see src/routes/trips/europe-26/README.md):
+#   wrangler d1 create bryzek-trips          # then paste database_id below
+#   wrangler d1 migrations apply bryzek-trips --remote
+#   wrangler pages secret put TRIP_PASSWORD_HASH --project-name michaelbryzek
+#   wrangler pages secret put TRIP_COOKIE_SECRET --project-name michaelbryzek
+#   wrangler pages secret put ANTHROPIC_API_KEY  --project-name michaelbryzek
+
+name = "michaelbryzek"
+# Kept at or behind the date the pinned wrangler's local runtime supports, so
+# `wrangler pages dev` runs the same configuration that deploys. A date in the
+# future of the local workerd binary fails to boot locally while deploying fine,
+# which is the worst of both.
+compatibility_date = "2026-08-06"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".svelte-kit/cloudflare"
+
+[[d1_databases]]
+binding = "TRIP_DB"
+database_name = "bryzek-trips"
+# Replace with the id printed by `wrangler d1 create bryzek-trips`.
+#
+# Local dev ignores the value (it keys storage by binding name), so this
+# placeholder is enough to run `wrangler pages dev`. It is deliberately not a
+# well-formed UUID: a real-looking wrong id would deploy and then fail at
+# request time with a confusing "no such table", whereas this is rejected up
+# front. An empty string is worse still — it fails wrangler's own config
+# validation and breaks local dev too.
+database_id = "REPLACE_ME_RUN_wrangler_d1_create_bryzek-trips"
+migrations_dir = "migrations"

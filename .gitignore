@@ -8,6 +8,11 @@ node_modules
 /.svelte-kit
 /build
 
+# Local Cloudflare secrets for `wrangler pages dev`. Real values live in
+# Cloudflare (`wrangler pages secret put`) — nothing here is ever committed.
+.dev.vars
+.dev.vars.*
+
 # OS
 .DS_Store
 Thumbs.db

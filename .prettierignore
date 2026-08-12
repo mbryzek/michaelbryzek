@@ -2,3 +2,8 @@ node_modules/
 .svelte-kit/
 build/
 package-lock.json
+
+# Local Cloudflare state and bundled worker output from `wrangler pages dev`.
+# Git-ignored, but prettier walks the working tree, so `npm run format:check`
+# would otherwise fail on generated code.
+.wrangler/

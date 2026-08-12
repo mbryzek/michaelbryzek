@@ -43,16 +43,43 @@ export default [
   {
     // .reviewable/completion.js is evaluated by Reviewable as a function body
     // (it uses a top-level `return`), so it is not parseable as a module.
-    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', '.reviewable/**']
+    // `.wrangler/` holds local Cloudflare state and bundled build artifacts
+    // written by `wrangler pages dev`. It is git-ignored, but eslint walks the
+    // working tree rather than the index, so without this `npm run check`
+    // fails with thousands of errors on generated code for anyone who has run
+    // the trip app locally.
+    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', '.reviewable/**', '.wrangler/**']
   },
 
   // Base ESLint recommended rules
   eslint.configs.recommended,
 
+  // The service worker is deliberately not type-aware here. SvelteKit compiles
+  // it against its own generated tsconfig (it targets the webworker lib, not
+  // the DOM), so it is absent from ./tsconfig.json's includes and `project`
+  // parsing fails on it. svelte-check still type-checks it.
+  {
+    files: ['src/service-worker.ts'],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module'
+      },
+      globals: {
+        ...globals.serviceworker
+      }
+    },
+    plugins: {
+      '@typescript-eslint': tseslint
+    },
+    rules: sharedTsRules
+  },
+
   // TypeScript files (server-side, utils, etc.)
   {
     files: ['src/**/*.ts'],
-    ignores: ['**/*.svelte.ts'],
+    ignores: ['**/*.svelte.ts', 'src/service-worker.ts'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
