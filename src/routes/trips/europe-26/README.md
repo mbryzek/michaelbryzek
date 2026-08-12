@@ -9,21 +9,39 @@ Design doc: `~/code/claude/plans/2026-08-11-trip-europe26-design.md`.
 
 ## One-time setup
 
-Everything below runs once, against the `personal` Cloudflare account. Nothing
-here is automated because each step either mints a secret or costs money.
+### Every wrangler command needs the `personal` profile
 
-### 1. Create the database
-
-```sh
-wrangler d1 create bryzek-trips
-```
-
-Paste the printed `database_id` into `wrangler.toml`, replacing the
-`REPLACE_ME_...` placeholder. Then load the schema and the itinerary:
+Cloudflare access here is a per-account `wrangler login` OAuth profile, not an
+API token. `bryzek.com` lives under the `personal` label, so every command must
+carry it:
 
 ```sh
-wrangler d1 migrations apply bryzek-trips --remote
+XDG_CONFIG_HOME=~/.cloudflare/personal wrangler <command>
 ```
+
+A **bare** `wrangler` uses its own global config — a different, older session —
+and fails with `Authentication error [code: 10000]`, _even though_
+`wrangler whoami` there reports the right email, Super Administrator, and
+`d1 (write)`. The scope list it prints comes from local config, not from the
+server. `release-sveltekit` sets this prefix for you; anything you run by hand
+does not.
+
+The worse failure is the one that doesn't error: a command that succeeded under
+the wrong profile would create the database in the wrong account, and the
+binding would resolve to nothing at request time.
+
+### 1. Create the database — done
+
+Already created and migrated:
+
+```sh
+XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 create bryzek-trips
+XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 migrations apply bryzek-trips --remote
+```
+
+`database_id` is set in `wrangler.toml`; the schema and the 25-day itinerary are
+loaded. Do not re-run the seed against the live database — it would insert a
+second copy of every row.
 
 ### 2. Set the three secrets
 
@@ -58,8 +76,10 @@ wrangler pages dev
 ```
 
 `.dev.vars` wants `TRIP_PASSWORD_HASH`, `TRIP_COOKIE_SECRET` and
-`ANTHROPIC_API_KEY`. Local D1 keys its storage by binding name, so the
-placeholder `database_id` in `wrangler.toml` is fine for local work.
+`ANTHROPIC_API_KEY`; a throwaway hash and any random string are fine locally.
+
+None of the local commands need the `personal` profile — local D1 keys its
+storage by binding name and never calls the API. Only `--remote` and deploys do.
 
 Note `wrangler pages dev` serves the **built** output — rerun `npm run build`
 after changing anything, and restart it (a rebuild replaces the directory out
