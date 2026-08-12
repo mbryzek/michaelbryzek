@@ -4,20 +4,35 @@
 # (see devops/bin/release-sveltekit), which reads the bindings below. Only the
 # /trips/* routes use them; every other page is a static asset.
 #
-# EVERY wrangler command for this site must run under the `personal` login
-# profile, the same one release-sveltekit deploys with:
+# EVERY by-hand wrangler command for this site needs TWO things set, because
+# they fix two different failures:
 #
-#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler <command>
+#   export XDG_CONFIG_HOME=$HOME/.cloudflare/personal    # which login
+#   export CLOUDFLARE_ACCOUNT_ID=5d441200f99d0384528d8d97fa28bb27   # which account
 #
-# A bare `wrangler` uses its global config instead — a different, older OAuth
-# session — which fails with "Authentication error [code: 10000]" even though
-# `wrangler whoami` reports the right email and d1:write. Worse than the error:
-# a command that *did* succeed there would create the database in the wrong
-# account, and the binding would resolve to nothing at request time.
+# WHICH LOGIN: Cloudflare access here is a per-account `wrangler login` OAuth
+# profile. A bare `wrangler` reads its own global config — a different, older
+# session — and fails "Authentication error [code: 10000]". The trap is that
+# `wrangler whoami` there reports the right email, Super Administrator and
+# d1:write; that scope list is printed from local config, not the server.
 #
-# ONE-TIME SETUP (see src/routes/trips/europe-26/README.md):
-#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 create bryzek-trips
-#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 migrations apply bryzek-trips --remote
+# WHICH ACCOUNT: one login can see several accounts. With nothing pinned,
+# wrangler picks one — it resolved to the clubaid.ai account (4b2f…) and failed
+# the same way while setting this app's secrets. The env var is the only lever:
+# Pages rejects `account_id` in this file outright ("Configuration file for
+# Pages projects does not support account_id"), so it cannot be pinned here.
+#
+# The error is the benign outcome. The one to avoid is a command that SUCCEEDS
+# against the wrong account and quietly creates a resource bryzek.com will never
+# read.
+#
+# `dev release app` needs neither — release-sveltekit sets the profile itself
+# and reads the account from the app config.
+#
+# ONE-TIME SETUP (see src/routes/trips/europe-26/README.md) — with both vars
+# exported as above:
+#   wrangler d1 create bryzek-trips
+#   wrangler d1 migrations apply bryzek-trips --remote
 #   wrangler pages secret put TRIP_PASSWORD_HASH --project-name michaelbryzek
 #   wrangler pages secret put TRIP_COOKIE_SECRET --project-name michaelbryzek
 #   wrangler pages secret put ANTHROPIC_API_KEY  --project-name michaelbryzek

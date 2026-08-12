@@ -9,34 +9,45 @@ Design doc: `~/code/claude/plans/2026-08-11-trip-europe26-design.md`.
 
 ## One-time setup
 
-### Every wrangler command needs the `personal` profile
-
-Cloudflare access here is a per-account `wrangler login` OAuth profile, not an
-API token. `bryzek.com` lives under the `personal` label, so every command must
-carry it:
+### Set these two before any by-hand wrangler command
 
 ```sh
-XDG_CONFIG_HOME=~/.cloudflare/personal wrangler <command>
+export XDG_CONFIG_HOME=$HOME/.cloudflare/personal              # which login
+export CLOUDFLARE_ACCOUNT_ID=5d441200f99d0384528d8d97fa28bb27  # which account
 ```
 
-A **bare** `wrangler` uses its own global config — a different, older session —
-and fails with `Authentication error [code: 10000]`, _even though_
-`wrangler whoami` there reports the right email, Super Administrator, and
-`d1 (write)`. The scope list it prints comes from local config, not from the
-server. `release-sveltekit` sets this prefix for you; anything you run by hand
-does not.
+They fix two different failures, and both produce the **same** misleading error:
+`Authentication error [code: 10000]`.
 
-The worse failure is the one that doesn't error: a command that succeeded under
-the wrong profile would create the database in the wrong account, and the
-binding would resolve to nothing at request time.
+**Which login.** Cloudflare access here is a per-account `wrangler login` OAuth
+profile, not an API token. A bare `wrangler` reads its own global config — a
+different, older session. The trap is that `wrangler whoami` there reports the
+right email, Super Administrator, and `d1 (write)`, so it reads as proof the
+token is fine; that scope list is printed from local config, not from the
+server. Wrangler's "missing expected Oauth scopes" warning misleads the same
+way, and its suggested fix — `wrangler login` — refreshes the profile you are
+not using.
+
+**Which account.** One login can see several accounts, and with nothing pinned
+wrangler picks one: run from `~/code`, these commands resolved to the
+clubaid.ai account (`4b2f…`) and failed. The account **cannot** be pinned in
+`wrangler.toml` — Pages rejects it with _"Configuration file for Pages projects
+does not support account_id"_ — so the environment variable is the only lever.
+
+The error is the benign outcome. The one to avoid is a command that **succeeds**
+against the wrong account and quietly creates a resource `bryzek.com` will never
+read.
+
+`dev release app` needs neither: `release-sveltekit` sets the profile itself and
+takes the account from the app config.
 
 ### 1. Create the database — done
 
 Already created and migrated:
 
 ```sh
-XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 create bryzek-trips
-XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 migrations apply bryzek-trips --remote
+wrangler d1 create bryzek-trips
+wrangler d1 migrations apply bryzek-trips --remote
 ```
 
 `database_id` is set in `wrangler.toml`; the schema and the 25-day itinerary are
@@ -69,9 +80,8 @@ dev release app          # dispatches on kind (sveltekit) from the app config
 
 Run it from a checkout sitting on `main`: it fast-forwards local main and
 releases that, so a feature-branch checkout is the wrong place to be. It
-preflights the `personal` Cloudflare login itself, then builds and runs
-`wrangler pages deploy` for you — no `XDG_CONFIG_HOME` prefix needed here,
-unlike the by-hand commands above.
+preflights the `personal` Cloudflare login itself and takes the account from the
+app config, so neither environment variable above applies here.
 
 The app is then at **https://bryzek.com/trips/europe-26**. Send Lisa that URL
 and the password. On her phone: open in **Safari** (the only iOS browser that
