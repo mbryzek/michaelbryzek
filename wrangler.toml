@@ -4,12 +4,25 @@
 # (see devops/bin/release-sveltekit), which reads the bindings below. Only the
 # /trips/* routes use them; every other page is a static asset.
 #
+# EVERY wrangler command for this site must run under the `personal` login
+# profile, the same one release-sveltekit deploys with:
+#
+#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler <command>
+#
+# A bare `wrangler` uses its global config instead — a different, older OAuth
+# session — which fails with "Authentication error [code: 10000]" even though
+# `wrangler whoami` reports the right email and d1:write. Worse than the error:
+# a command that *did* succeed there would create the database in the wrong
+# account, and the binding would resolve to nothing at request time.
+#
 # ONE-TIME SETUP (see src/routes/trips/europe-26/README.md):
-#   wrangler d1 create bryzek-trips          # then paste database_id below
-#   wrangler d1 migrations apply bryzek-trips --remote
+#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 create bryzek-trips
+#   XDG_CONFIG_HOME=~/.cloudflare/personal wrangler d1 migrations apply bryzek-trips --remote
 #   wrangler pages secret put TRIP_PASSWORD_HASH --project-name michaelbryzek
 #   wrangler pages secret put TRIP_COOKIE_SECRET --project-name michaelbryzek
 #   wrangler pages secret put ANTHROPIC_API_KEY  --project-name michaelbryzek
+#
+# The database and its migrations are already applied — only the secrets remain.
 
 name = "michaelbryzek"
 # Kept at or behind the date the pinned wrangler's local runtime supports, so
@@ -31,5 +44,5 @@ database_name = "bryzek-trips"
 # request time with a confusing "no such table", whereas this is rejected up
 # front. An empty string is worse still — it fails wrangler's own config
 # validation and breaks local dev too.
-database_id = "REPLACE_ME_RUN_wrangler_d1_create_bryzek-trips"
+database_id = "d17853ac-7062-414a-b36c-5a11614d90e8"
 migrations_dir = "migrations"
