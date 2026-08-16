@@ -250,7 +250,15 @@ html.theme-transitioning *::after {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 50;
+  /* Above the mobile nav panel (1000) and its overlay (999), because the panel's
+     close control — the hamburger, which animates into an X — lives in here. The
+     bar is a stacking context twice over (sticky + z-index, and independently
+     `backdrop-filter`), so a z-index on the button itself is scoped to this bar
+     and cannot lift it over the panel; only the bar's own value counts. At 50 the
+     panel painted over it, and under 641px the panel is full-width and full-height
+     so it covered the tap-outside overlay too: the menu had no close affordance at
+     all on a phone. The panel's `padding-top` reserves this bar's height. */
+  z-index: 1001;
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--hairline);

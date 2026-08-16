@@ -40,9 +40,21 @@
   // `document.body.style.overflow = 'hidden'` was silently doing nothing and the
   // page scrolled behind the open panel. `scrollbar-gutter: stable` is already on
   // the same element, so locking it shifts no layout.
-  function setScrollLocked(locked: boolean) {
-    document.documentElement.style.overflow = locked ? 'hidden' : '';
-  }
+  //
+  // Driven by an effect rather than set imperatively from open/close, because
+  // <html> outlives this component and every route mounts its own <Shell>: a
+  // history navigation with the panel open — the back gesture, which is how a
+  // phone user dismisses an overlay — destroys the instance holding the lock
+  // without running either handler. The effect's teardown releases it on the way
+  // out, and re-running it on mount clears whatever a previous instance left.
+  // Nothing else could: the remounted Shell has `mobileMenuOpen === false`, so
+  // Escape and the resize handler both no-op and only a reload frees the page.
+  $effect(() => {
+    document.documentElement.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.documentElement.style.overflow = '';
+    };
+  });
 
   // The panel is `inert` while closed, so focus can only be moved into it after
   // the DOM has been updated — hence the `tick()`. Without moving focus in, the
@@ -50,7 +62,6 @@
   // hamburger, which sits outside the panel.
   async function openMobileMenu() {
     mobileMenuOpen = true;
-    setScrollLocked(true);
     await tick();
     mobileMenuEl?.querySelector<HTMLElement>('a')?.focus();
   }
@@ -58,7 +69,6 @@
   function closeMobileMenu() {
     if (!mobileMenuOpen) return;
     mobileMenuOpen = false;
-    setScrollLocked(false);
     mobileMenuButtonEl?.focus();
   }
 
@@ -224,8 +234,6 @@
     padding: 0.5rem;
     border-radius: var(--radius-sm);
     color: var(--text-muted);
-    position: relative;
-    z-index: 1001;
     background: transparent;
     border: 0;
     cursor: pointer;
