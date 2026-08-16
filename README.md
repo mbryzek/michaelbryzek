@@ -5,7 +5,7 @@ Personal website for Michael Bryzek, built with SvelteKit and Tailwind CSS.
 ## Tech Stack
 
 - **Framework**: SvelteKit 2.x with TypeScript and Svelte 5 runes
-- **Styling**: Tailwind CSS 4.x with @tailwindcss/forms plugin
+- **Styling**: Tailwind CSS 4.x
 - **Deployment**: Static site generation with @sveltejs/adapter-static
 - **Type Safety**: Strict TypeScript configuration
 - **Build**: Vite 8.x with the @tailwindcss/vite plugin
