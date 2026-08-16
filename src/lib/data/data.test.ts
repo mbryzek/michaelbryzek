@@ -43,6 +43,11 @@ const allStrings: { where: string; value: string }[] = [
   ...talks.flatMap((t: Talk) => [
     { where: `talks[${t.title}].title`, value: t.title },
     { where: `talks[${t.title}].event`, value: t.event },
+    // `date` is rendered on /talks like the rest of these, and was the one
+    // rendered talk field no check covered — while `blogPosts[].date` below was
+    // covered from the start. An empty or space-padded talk date passed every
+    // assertion in this file.
+    { where: `talks[${t.title}].date`, value: t.date },
     { where: `talks[${t.title}].description`, value: t.description }
   ]),
   ...blogPosts.flatMap((b) => [
