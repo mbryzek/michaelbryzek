@@ -24,6 +24,8 @@ vi.mock('$app/state', () => ({
 
 const Shell = (await import('./Shell.svelte')).default;
 
+const read = (relative: string) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), 'utf8');
+
 const rootOverflow = () => document.documentElement.style.overflow;
 const menuButton = () => document.querySelector<HTMLButtonElement>('button[aria-label="Toggle menu"]');
 
@@ -118,8 +120,6 @@ describe('Shell mobile menu scroll lock', () => {
  * Formatting is safe to parse against because `prettier --check` gates CI.
  */
 describe('mobile menu layering', () => {
-  const read = (relative: string) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), 'utf8');
-
   /** The `z-index` declared in the first `<selector> { ... }` block found. */
   function zIndexOf(css: string, selector: string): number {
     const block = new RegExp(`\\${selector}\\s*\\{([^}]*)\\}`).exec(css);
@@ -147,5 +147,34 @@ describe('mobile menu layering', () => {
     const button = /\.mobile-menu-button\s*\{([^}]*)\}/.exec(read('./Shell.svelte'));
     expect(button).not.toBeNull();
     expect(button![1]).not.toMatch(/z-index/);
+  });
+});
+
+/**
+ * The site is three full-bleed bands — top bar, <main>, footer — each wrapping a
+ * centered column of the same width and gutter. That width was spelled inline as
+ * `max-w-[1080px]` in all three, so `--page-max` sat in the token block with no
+ * reader at all: editing it changed nothing, which is the worst kind of wrong,
+ * because the token looks like the control and is not (ISS-2932).
+ *
+ * Nothing else catches a relapse. Re-inlining the number type checks, lints and
+ * renders identically — it is only wrong the day somebody edits the token and
+ * believes it took. So pin the direction of the dependency, not the pixels.
+ */
+describe('page width has one source of truth', () => {
+  it('routes every band through .page-shell rather than an inline width', () => {
+    const shell = read('./Shell.svelte');
+
+    expect(shell.match(/class="page-shell\b/g)).toHaveLength(3);
+    expect(shell).not.toMatch(/max-w-\[/);
+  });
+
+  it('reads that width from --page-max, which is defined', () => {
+    const appCss = read('../../app.css');
+
+    const block = /\.page-shell\s*\{([^}]*)\}/.exec(appCss);
+    expect(block, 'no rule block for .page-shell').not.toBeNull();
+    expect(block![1]).toMatch(/max-width:\s*var\(--page-max\)/);
+    expect(appCss).toMatch(/--page-max:\s*\S+;/);
   });
 });

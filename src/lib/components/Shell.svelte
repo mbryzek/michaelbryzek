@@ -125,7 +125,7 @@
 <div class="min-h-screen flex flex-col">
   <!-- Top bar -->
   <header class="topbar">
-    <div class="mx-auto w-full max-w-[1080px] px-6 py-4 flex items-center justify-between gap-6">
+    <div class="page-shell py-4 flex items-center justify-between gap-6">
       <a href={urls.index} class="brand">
         <span class="mark">M</span>
         <span>Michael Bryzek</span>
@@ -204,7 +204,7 @@
   </div>
 
   <!-- Main content -->
-  <main class="flex-1 mx-auto w-full max-w-[1080px] px-6 py-10 md:py-14">
+  <main class="page-shell flex-1 py-10 md:py-14">
     {#if title}
       <h1 class="page-title">{title}</h1>
     {/if}
@@ -213,7 +213,7 @@
 
   <!-- Footer -->
   <footer class="foot mt-auto">
-    <div class="mx-auto w-full max-w-[1080px] px-6 py-7 flex items-center justify-between gap-4">
+    <div class="page-shell py-7 flex items-center justify-between gap-4">
       <span>© {currentYear} Michael Bryzek</span>
       <div class="socials">
         <a href="mailto:mbryzek@gmail.com" aria-label="Email"><EmailIcon /></a>
