@@ -45,7 +45,7 @@
 
 /* ============================================================
    Bryzek Design System — Tokens
-   Light + Dark, switched via [data-theme] on <html>.
+   Dark by default on :root; light opts in via [data-theme='light'] on <html>.
    ============================================================ */
 :root {
   /* Type families */
@@ -110,46 +110,15 @@
   --dur: 200ms;
 }
 
-/* ---------------- LIGHT ---------------- */
+/* ---------------- DARK (the default) ---------------- */
+/* The dark tokens live on :root so that a document whose data-theme attribute
+   was never set still renders the theme this site actually defaults to. That
+   happens whenever the inline script in +layout.svelte does not run — JS off,
+   or a CSP that forbids inline script — and it used to leave a light page whose
+   only theme control was the sun, i.e. an offer to switch to the theme already
+   on screen. LIGHT below must stay BELOW this block: the two selectors have
+   equal specificity, so source order is what lets the explicit choice win. */
 :root,
-[data-theme='light'] {
-  color-scheme: light;
-
-  --bg: #f1f2f5;
-  --bg-subtle: #e9ebef;
-  --surface: #ffffff;
-  --surface-2: #f4f5f7;
-  --hairline: #e0e2e8;
-  --hairline-strong: #ccd0d8;
-
-  --text: #15171c;
-  --text-muted: #565d6b;
-  --text-subtle: #666e7b;
-  --text-onaccent: #ffffff;
-
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-soft: #eaf0fe;
-  --accent-border: #cdddfb;
-  --accent-text: #1d4ed8;
-
-  --success: #15803d;
-  --success-soft: #e7f4ec;
-  --warning: #b45309;
-  --warning-soft: #fbf0e0;
-  --danger: #be123c;
-  --danger-soft: #fce9ed;
-
-  --code-bg: #f5f6f8;
-  --code-text: #1f2430;
-
-  --shadow-sm: 0 1px 2px rgba(20, 23, 30, 0.06);
-  --shadow-md: 0 4px 16px -4px rgba(20, 23, 30, 0.1), 0 1px 2px rgba(20, 23, 30, 0.05);
-  --shadow-lg: 0 18px 48px -12px rgba(20, 23, 30, 0.18);
-  --ring: 0 0 0 3px rgba(37, 99, 235, 0.22);
-}
-
-/* ---------------- DARK ---------------- */
 [data-theme='dark'] {
   color-scheme: dark;
 
@@ -185,6 +154,44 @@
   --shadow-md: 0 6px 22px -6px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 24px 60px -16px rgba(0, 0, 0, 0.7);
   --ring: 0 0 0 3px rgba(96, 165, 250, 0.3);
+}
+
+/* ---------------- LIGHT ---------------- */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f1f2f5;
+  --bg-subtle: #e9ebef;
+  --surface: #ffffff;
+  --surface-2: #f4f5f7;
+  --hairline: #e0e2e8;
+  --hairline-strong: #ccd0d8;
+
+  --text: #15171c;
+  --text-muted: #565d6b;
+  --text-subtle: #666e7b;
+  --text-onaccent: #ffffff;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #eaf0fe;
+  --accent-border: #cdddfb;
+  --accent-text: #1d4ed8;
+
+  --success: #15803d;
+  --success-soft: #e7f4ec;
+  --warning: #b45309;
+  --warning-soft: #fbf0e0;
+  --danger: #be123c;
+  --danger-soft: #fce9ed;
+
+  --code-bg: #f5f6f8;
+  --code-text: #1f2430;
+
+  --shadow-sm: 0 1px 2px rgba(20, 23, 30, 0.06);
+  --shadow-md: 0 4px 16px -4px rgba(20, 23, 30, 0.1), 0 1px 2px rgba(20, 23, 30, 0.05);
+  --shadow-lg: 0 18px 48px -12px rgba(20, 23, 30, 0.18);
+  --ring: 0 0 0 3px rgba(37, 99, 235, 0.22);
 }
 
 /* ============================================================

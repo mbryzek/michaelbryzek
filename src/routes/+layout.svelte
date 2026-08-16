@@ -15,8 +15,10 @@
     (function () {
       // localStorage throws when storage is blocked (Safari Lockdown Mode,
       // sandboxed iframes). Without the guard the throw aborts this function
-      // before data-theme is ever set, and the page renders with the :root
-      // light block while the toggle shows the dark icon.
+      // before data-theme is ever set. That case is no longer a broken page —
+      // :root carries the dark palette, so an unset attribute renders the same
+      // dark default this script would have written — but it does lose a stored
+      // 'light' preference, so keep the guard and set the attribute anyway.
       let stored = null;
       try {
         stored = localStorage.getItem('theme');

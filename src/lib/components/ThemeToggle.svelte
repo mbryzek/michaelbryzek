@@ -60,7 +60,12 @@
   /* Dark is the default when no preference has been stored, so the sun shows
      unless <html> is explicitly in light mode. Both icons are in the markup and
      CSS picks between them, so the correct one is painted on the first frame —
-     there is no JS state to hydrate and therefore nothing to flip. */
+     there is no JS state to hydrate and therefore nothing to flip.
+
+     This keys off the absence of the attribute, exactly as the palette in
+     app.css does, so the two cannot disagree about what "no data-theme" means.
+     They did once: the palette's fallback was light while this one's was dark,
+     and a visitor without JS got a light page offering to switch to light. */
   .icon-moon {
     display: none;
   }

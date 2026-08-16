@@ -89,10 +89,12 @@ npm run preview
 
 ## Design
 
-- **Theming**: CSS custom-property tokens under `[data-theme='light']` /
-  `[data-theme='dark']` in `app.css`, switched by `ThemeToggle.svelte`. Dark is
-  the default; the choice is stored in `localStorage` and applied by an inline
-  script in `+layout.svelte` before first paint so there is no flash.
+- **Theming**: CSS custom-property tokens in `app.css`, switched by
+  `ThemeToggle.svelte`. Dark is the default and lives on `:root`, so it holds
+  even when no `data-theme` attribute is set at all; light opts in via
+  `[data-theme='light']` and `[data-theme='dark']` is the explicit override.
+  The choice is stored in `localStorage` and applied by an inline script in
+  `+layout.svelte` before first paint so there is no flash.
 - **Typography**: Self-hosted Hanken Grotesk (UI) and JetBrains Mono (code),
   subset to latin and preloaded from `static/fonts/`
 - **Mobile-First**: Responsive grid layouts with Tailwind breakpoints
