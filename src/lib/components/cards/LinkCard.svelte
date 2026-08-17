@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { Link } from '$lib/types';
+  import type { Link as LinkData } from '$lib/types';
+  import Link from '$lib/components/ui/Link.svelte';
   import ArrowUpRightIcon from '$lib/components/icons/ArrowUpRightIcon.svelte';
 
   interface Props {
-    link: Link;
+    link: LinkData;
   }
 
   let { link }: Props = $props();
 </script>
 
-<a class="project" href={link.url} target="_blank" rel="noopener noreferrer">
+<Link class="project" href={link.url}>
   <div class="project-top">
     <p class="pname">{link.name}</p>
     <span class="arrow"><ArrowUpRightIcon /></span>
@@ -19,4 +20,4 @@
       <p class="pdesc">{text}</p>
     {/each}
   </div>
-</a>
+</Link>

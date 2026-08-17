@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Project } from '$lib/types';
+  import Link from '$lib/components/ui/Link.svelte';
   import WebsiteIcon from '$lib/components/icons/WebsiteIcon.svelte';
   import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
   import BlogIcon from '$lib/components/icons/BlogIcon.svelte';
@@ -12,14 +13,6 @@
 
   // Primary link priority: projectUrl > githubUrl > blogUrl
   let primaryUrl = $derived(project.projectUrl || project.githubUrl || project.blogUrl || '');
-
-  // `blogUrl` is a path on this site; `projectUrl` and `githubUrl` are absolute
-  // and belong on another origin. Only the latter get a new tab — opening our
-  // own page in one bypasses client-side routing and strands the visitor in a
-  // second tab of the same site.
-  function isExternal(url: string): boolean {
-    return url.startsWith('http');
-  }
 </script>
 
 <!--
@@ -33,32 +26,19 @@
 <div class="project">
   <div class="project-top">
     {#if primaryUrl}
-      <a
-        class="pname"
-        href={primaryUrl}
-        target={isExternal(primaryUrl) ? '_blank' : undefined}
-        rel={isExternal(primaryUrl) ? 'noopener noreferrer' : undefined}
-      >
-        {project.name}
-      </a>
+      <Link class="pname" href={primaryUrl}>{project.name}</Link>
     {:else}
       <p class="pname">{project.name}</p>
     {/if}
     <div class="card-icons">
       {#if project.projectUrl}
-        <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" aria-label="Project website">
-          <WebsiteIcon />
-        </a>
+        <Link href={project.projectUrl} ariaLabel="Project website"><WebsiteIcon /></Link>
       {/if}
       {#if project.githubUrl}
-        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
-          <GithubIcon />
-        </a>
+        <Link href={project.githubUrl} ariaLabel="GitHub repository"><GithubIcon /></Link>
       {/if}
       {#if project.blogUrl}
-        <a href={project.blogUrl} aria-label="Blog post">
-          <BlogIcon />
-        </a>
+        <Link href={project.blogUrl} ariaLabel="Blog post"><BlogIcon /></Link>
       {/if}
     </div>
   </div>
@@ -68,15 +48,3 @@
     {/each}
   </div>
 </div>
-
-<style>
-  /* The name renders as an anchor now; strip default link styling so it keeps
-     the previous look and the card's hover treatment (.project:hover .pname). */
-  a.pname {
-    text-decoration: none;
-    color: inherit;
-  }
-  a.pname:hover {
-    color: var(--accent-text);
-  }
-</style>

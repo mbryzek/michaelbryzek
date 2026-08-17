@@ -3,7 +3,7 @@
   import BlogP from '$lib/components/blog/BlogP.svelte';
   import BlogH2 from '$lib/components/blog/BlogH2.svelte';
   import BlogListWithTitles from '$lib/components/blog/BlogListWithTitles.svelte';
-  import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
+  import Link from '$lib/components/ui/Link.svelte';
 
   interface Props {
     title: string;
@@ -115,8 +115,8 @@
     others find value in it and refine the product based on real-world feedback.
   </BlogP>
   <BlogP>
-    If you're interested in trying out True Acumen, I'd love for you to <ExternalLink href="https://www.trueacumen.com/waitlist"
-      >join our waitlist</ExternalLink
+    If you're interested in trying out True Acumen, I'd love for you to <Link href="https://www.trueacumen.com/waitlist"
+      >join our waitlist</Link
     >.
   </BlogP>
 </BlogPost>

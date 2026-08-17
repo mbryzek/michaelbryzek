@@ -606,6 +606,17 @@ code {
 .project:hover .pname {
   color: var(--accent-text);
 }
+/* The project name renders as an anchor; strip default link styling so it keeps
+   the plain look and the card's hover treatment (.project:hover .pname). This
+   lives here rather than in ProjectCard because the anchor is emitted by
+   ui/Link.svelte, which a scoped rule in the card cannot reach. */
+.project a.pname {
+  text-decoration: none;
+  color: inherit;
+}
+.project a.pname:hover {
+  color: var(--accent-text);
+}
 .project .pdesc {
   font-size: var(--text-sm);
   color: var(--text-muted);

@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Talk } from '$lib/types';
+  import Link from '$lib/components/ui/Link.svelte';
   import ArrowUpRightIcon from '$lib/components/icons/ArrowUpRightIcon.svelte';
 
   interface Props {
@@ -9,14 +10,14 @@
   let { talk }: Props = $props();
 </script>
 
-<a class="project" href={talk.videoUrl} target="_blank" rel="noopener noreferrer">
+<Link class="project" href={talk.videoUrl}>
   <div class="project-top">
     <p class="pname">{talk.title}</p>
     <span class="arrow"><ArrowUpRightIcon /></span>
   </div>
   <p class="talk-meta">{talk.event} · {talk.date}</p>
   <p class="pdesc">{talk.description}</p>
-</a>
+</Link>
 
 <style>
   .talk-meta {

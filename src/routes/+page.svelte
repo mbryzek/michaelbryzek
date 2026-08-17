@@ -1,6 +1,7 @@
 <script lang="ts">
   import Shell from '$lib/components/Shell.svelte';
   import Seo from '$lib/components/Seo.svelte';
+  import Link from '$lib/components/ui/Link.svelte';
 </script>
 
 <Seo
@@ -16,8 +17,7 @@
     </p>
     <p>
       Recently, I spend most of my time building
-      <a href="https://rallyd.net" target="_blank" rel="noopener noreferrer">Rallyd</a>, an AI-powered pickleball game scheduling
-      application.
+      <Link href="https://rallyd.net">Rallyd</Link>, an AI-powered pickleball game scheduling application.
     </p>
   </div>
 </Shell>

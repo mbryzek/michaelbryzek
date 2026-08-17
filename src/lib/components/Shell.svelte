@@ -7,6 +7,7 @@
   import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
   import LinkedInIcon from '$lib/components/icons/LinkedInIcon.svelte';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+  import Link from '$lib/components/ui/Link.svelte';
   import type { Snippet } from 'svelte';
 
   interface Props {
@@ -217,9 +218,9 @@
       <span>© {currentYear} Michael Bryzek</span>
       <div class="socials">
         <a href="mailto:mbryzek@gmail.com" aria-label="Email"><EmailIcon /></a>
-        <a href="https://twitter.com/mbryzek" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><XIcon /></a>
-        <a href="https://github.com/mbryzek" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GithubIcon /></a>
-        <a href="https://www.linkedin.com/in/mbryzek" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>
+        <Link href="https://twitter.com/mbryzek" ariaLabel="X (Twitter)"><XIcon /></Link>
+        <Link href="https://github.com/mbryzek" ariaLabel="GitHub"><GithubIcon /></Link>
+        <Link href="https://www.linkedin.com/in/mbryzek" ariaLabel="LinkedIn"><LinkedInIcon /></Link>
       </div>
     </div>
   </footer>
