@@ -15,5 +15,9 @@ export default defineConfig({
   // environment and opt out by simply not asking for a DOM. A test that wants
   // one declares `@vitest-environment happy-dom` in its own docblock, which
   // keeps the fast pure-data suites out of a DOM they have no use for.
-  resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined
+  //
+  // Spread rather than `resolve: ... : undefined`, because under
+  // `exactOptionalPropertyTypes` an explicit `undefined` is not the same as an
+  // absent key and vite's `UserConfig` does not accept one.
+  ...(process.env['VITEST'] ? { resolve: { conditions: ['browser'] } } : {})
 });

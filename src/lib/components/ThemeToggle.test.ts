@@ -17,6 +17,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { captures, ruleBlockBody } from '$lib/testing/regex';
 
 const read = (relative: string) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), 'utf8');
 
@@ -25,9 +26,7 @@ const themeToggle = read('./ThemeToggle.svelte');
 
 /** The custom-property names declared inside the first `<selector> { ... }` block. */
 function tokenNamesIn(selector: string): string[] {
-  const block = new RegExp(`\\${selector}\\s*\\{([^}]*)\\}`).exec(appCss);
-  expect(block, `no rule block for ${selector}`).not.toBeNull();
-  const names = [...block![1].matchAll(/^\s*(--[\w-]+):/gm)].map((m) => m[1]);
+  const names = captures(ruleBlockBody(appCss, selector), /^\s*(--[\w-]+):/gm);
   expect(names.length, `no tokens in ${selector}`).toBeGreaterThan(10);
   return names;
 }
