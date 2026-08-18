@@ -33,12 +33,10 @@ echo "building ${CI_REPO:-michaelbryzek} @ ${CI_SHA:-working tree} (${CI_EVENT:-
 # survives every clean.
 npm ci
 
-# svelte-check + eslint --max-warnings 0 + prettier --check.
+# svelte-check + eslint --max-warnings 0 + prettier --check + vitest. `npm run check`
+# is the whole gate in every SvelteKit repo in this fleet (ISS-3885), so there is
+# deliberately no second test step below. There is no Playwright suite here at all.
 npm run check
-
-# vitest. Named `test` rather than `test:unit` in this repo, and there is no
-# Playwright suite here at all, so this is the whole of it.
-npm run test
 
 # THE BUILD IS A VERDICT `npm run check` CANNOT GIVE (ISS-868). SvelteKit's
 # "$lib/server imported into browser code" guard is a vite BUILD plugin, so
