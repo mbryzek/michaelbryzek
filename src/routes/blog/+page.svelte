@@ -5,7 +5,7 @@
   import { urls } from '$lib/urls';
 </script>
 
-<Seo title="Blog - Michael Bryzek" description="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />
+<Seo title="Blog" description="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />
 
 <Shell title="Blog">
   <div class="post-list">
