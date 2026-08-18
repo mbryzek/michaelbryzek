@@ -15,7 +15,7 @@
     <p class="pname">{link.name}</p>
     <span class="arrow"><ArrowUpRightIcon /></span>
   </div>
-  <div class="flex flex-col gap-2 flex-1">
+  <div class="flex flex-1 flex-col gap-2">
     {#each link.description as text}
       <p class="pdesc">{text}</p>
     {/each}

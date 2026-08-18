@@ -5,7 +5,7 @@
 </script>
 
 <Shell>
-  <div class="flex flex-col items-center justify-center text-center py-16">
+  <div class="flex flex-col items-center justify-center py-16 text-center">
     <p class="error-status">{page.status}</p>
     <p class="error-message">
       {page.error?.message ?? "The page you're looking for doesn't exist."}
