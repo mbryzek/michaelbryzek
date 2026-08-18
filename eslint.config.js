@@ -41,9 +41,7 @@ const sharedTsRules = {
 export default [
   // Global ignores
   {
-    // .reviewable/completion.js is evaluated by Reviewable as a function body
-    // (it uses a top-level `return`), so it is not parseable as a module.
-    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', '.reviewable/**']
+    ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**']
   },
 
   // Base ESLint recommended rules
