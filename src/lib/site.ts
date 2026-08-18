@@ -10,3 +10,13 @@ export const SITE_NAME = 'Michael Bryzek';
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path}`;
 }
+
+/**
+ * True when `url` points off this origin. `blogUrl` and the nav are rooted
+ * paths on this site; a project's website and GitHub links are absolute. Only
+ * the latter open in a new tab — see `ui/Link.svelte`, the one anchor that
+ * reads this.
+ */
+export function isExternal(url: string): boolean {
+  return url.startsWith('http');
+}

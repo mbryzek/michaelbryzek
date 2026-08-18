@@ -4,7 +4,7 @@
   import BlogH2 from '$lib/components/blog/BlogH2.svelte';
   import BlogList from '$lib/components/blog/BlogList.svelte';
   import BlogCode from '$lib/components/blog/BlogCode.svelte';
-  import ExternalLink from '$lib/components/ui/ExternalLink.svelte';
+  import Link from '$lib/components/ui/Link.svelte';
 
   interface Props {
     title: string;
@@ -34,7 +34,7 @@
   <BlogP>Hope you find this useful and if you have any suggestions, improvements or questions please do share!</BlogP>
   <BlogH2>Source Code & Live Demo</BlogH2>
   <BlogP>
-    Source Code: <ExternalLink href="https://github.com/mbryzek/state-management-in-elm">GitHub Repo</ExternalLink>
+    Source Code: <Link href="https://github.com/mbryzek/state-management-in-elm">GitHub Repo</Link>
   </BlogP>
   <BlogH2>Authentication</BlogH2>
   <BlogP>
@@ -125,12 +125,12 @@
   </BlogP>
   <BlogH2>Thank you</BlogH2>
   <BlogP>
-    A big thank you to Richard Feldman for his original work on an <ExternalLink href="https://github.com/rtfeldman/elm-spa-example"
-      >Elm Spa example</ExternalLink
+    A big thank you to Richard Feldman for his original work on an <Link href="https://github.com/rtfeldman/elm-spa-example"
+      >Elm Spa example</Link
     >
     and to Dwayne Crooks for his recent example
-    <ExternalLink href="https://discourse.elm-lang.org/t/announcing-dwayne-elm-conduit-a-replacement-for-rtfeldman-elm-spa-example/9758"
-      >Dwayne's Conduit</ExternalLink
+    <Link href="https://discourse.elm-lang.org/t/announcing-dwayne-elm-conduit-a-replacement-for-rtfeldman-elm-spa-example/9758"
+      >Dwayne's Conduit</Link
     >
   </BlogP>
   <BlogP>Have suggestions or comments? Please find me on X @mbryzek</BlogP>
