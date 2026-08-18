@@ -123,17 +123,17 @@
 
 <svelte:window onkeydown={handleWindowKeydown} onresize={handleWindowResize} />
 
-<div class="min-h-screen flex flex-col">
+<div class="flex min-h-screen flex-col">
   <!-- Top bar -->
   <header class="topbar">
-    <div class="page-shell py-4 flex items-center justify-between gap-6">
+    <div class="page-shell flex items-center justify-between gap-6 py-4">
       <a href={urls.index} class="brand">
         <span class="mark">M</span>
         <span>Michael Bryzek</span>
       </a>
 
       <!-- Desktop nav -->
-      <div class="hidden md:flex items-center gap-4">
+      <div class="hidden items-center gap-4 md:flex">
         <nav class="topnav">
           {#each sections as section}
             <a href={section.href} aria-current={isSectionActive(section.href) ? 'page' : undefined}>
@@ -145,7 +145,7 @@
       </div>
 
       <!-- Mobile controls -->
-      <div class="flex md:hidden items-center gap-3">
+      <div class="flex items-center gap-3 md:hidden">
         <ThemeToggle />
         <button
           bind:this={mobileMenuButtonEl}
@@ -214,7 +214,7 @@
 
   <!-- Footer -->
   <footer class="foot mt-auto">
-    <div class="page-shell py-7 flex items-center justify-between gap-4">
+    <div class="page-shell flex items-center justify-between gap-4 py-7">
       <span>© {currentYear} Michael Bryzek</span>
       <div class="socials">
         <a href="mailto:mbryzek@gmail.com" aria-label="Email"><EmailIcon /></a>
