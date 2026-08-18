@@ -17,6 +17,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { captures, ruleBlockBody } from '$lib/testing/regex';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }
@@ -122,11 +123,9 @@ describe('Shell mobile menu scroll lock', () => {
 describe('mobile menu layering', () => {
   /** The `z-index` declared in the first `<selector> { ... }` block found. */
   function zIndexOf(css: string, selector: string): number {
-    const block = new RegExp(`\\${selector}\\s*\\{([^}]*)\\}`).exec(css);
-    expect(block, `no rule block for ${selector}`).not.toBeNull();
-    const declaration = /z-index:\s*(\d+)/.exec(block![1]);
-    expect(declaration, `no z-index in ${selector}`).not.toBeNull();
-    return Number(declaration![1]);
+    const declared = captures(ruleBlockBody(css, selector), /z-index:\s*(\d+)/g)[0];
+    expect(declared, `no z-index in ${selector}`).toBeDefined();
+    return Number(declared);
   }
 
   it('paints the top bar above the panel, and the panel above its overlay', () => {

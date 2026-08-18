@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { blogPosts } from '$lib/data/blog';
 import { absoluteUrl } from '$lib/site';
 import { urls } from '$lib/urls';
+import { captures } from '$lib/testing/regex';
 import { GET } from './+server';
 
 /**
@@ -22,6 +23,9 @@ const loc = (path: string) => `<loc>${absoluteUrl(path)}</loc>`;
 async function sitemapBody(): Promise<string> {
   return await GET().text();
 }
+
+/** Every url the sitemap lists. */
+const locsIn = (body: string): string[] => captures(body, /<loc>([^<]+)<\/loc>/g);
 
 describe('sitemap', () => {
   it('lists every static route in urls', async () => {
@@ -44,14 +48,14 @@ describe('sitemap', () => {
 
   it('lists nothing twice', async () => {
     const body = await sitemapBody();
-    const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    const locs = locsIn(body);
 
     expect(locs).toEqual([...new Set(locs)]);
   });
 
   it('lists nothing beyond the routes and the posts', async () => {
     const body = await sitemapBody();
-    const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    const locs = locsIn(body);
 
     const expected = [
       ...Object.values(urls)
@@ -65,7 +69,7 @@ describe('sitemap', () => {
 
   it('serves absolute urls, which the sitemap protocol requires', async () => {
     const body = await sitemapBody();
-    const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    const locs = locsIn(body);
 
     expect(locs.length).toBeGreaterThan(0);
     expect(locs.filter((url) => !url.startsWith('https://'))).toEqual([]);
