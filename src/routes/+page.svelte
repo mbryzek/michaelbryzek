@@ -6,7 +6,7 @@
 
 <Seo
   title="Michael Bryzek - Developer & Entrepreneur"
-  description="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Rallyd."
+  description="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Playbook."
 />
 
 <Shell title="Michael Bryzek">
@@ -17,7 +17,7 @@
     </p>
     <p>
       Recently, I spend most of my time building
-      <Link href="https://rallyd.net">Rallyd</Link>, an AI-powered pickleball game scheduling application.
+      <Link href="https://plybk.us">Playbook</Link>, helping sport clubs run better.
     </p>
   </div>
 </Shell>
