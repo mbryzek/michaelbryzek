@@ -6,7 +6,7 @@
 </script>
 
 <Seo
-  title="Projects - Michael Bryzek"
+  title="Projects"
   description="Open source projects and products by Michael Bryzek, including Rallyd, API Builder, and Schema Evolution Manager."
 />
 

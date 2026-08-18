@@ -5,7 +5,8 @@
 </script>
 
 <Seo
-  title="Michael Bryzek - Developer & Entrepreneur"
+  title="Developer & Entrepreneur"
+  nameFirst
   description="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Playbook."
 />
 

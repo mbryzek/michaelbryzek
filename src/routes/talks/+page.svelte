@@ -6,7 +6,7 @@
 </script>
 
 <Seo
-  title="Talks - Michael Bryzek"
+  title="Talks"
   description="Conference talks and presentations by Michael Bryzek on microservices, testing in production, and startups."
 />
 
