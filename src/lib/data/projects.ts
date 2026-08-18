@@ -3,6 +3,11 @@ import { urls } from '$lib/urls';
 
 export const projects: Project[] = [
   {
+    name: 'Playbook',
+    description: ['Helping sport clubs run better.'],
+    projectUrl: 'https://plybk.us'
+  },
+  {
     name: 'Rallyd',
     description: ['AI-powered pickleball game scheduling application making it easy to schedule great games with your favorite players.'],
     projectUrl: 'https://rallyd.net'
