@@ -13,7 +13,7 @@
   const Post = $derived(postComponents[data.post.slug]);
 </script>
 
-<Seo title="{data.post.title} - Michael Bryzek" description="Blog post by Michael Bryzek: {data.post.title}" />
+<Seo title={data.post.title} description="Blog post by Michael Bryzek: {data.post.title}" />
 
 <Shell>
   <Post title={data.post.title} date={data.post.date} />
