@@ -15,7 +15,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it } from 'vitest';
-import { svelteSources } from '$lib/testing/sources';
+import { svelteSources } from '$lib/testing/walk';
 
 const Link = (await import('./Link.svelte')).default;
 
