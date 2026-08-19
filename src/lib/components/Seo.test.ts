@@ -11,12 +11,13 @@
  * So pin both halves: this component composes the document title from
  * `SITE_NAME`, and no page hands it a title that spells the name out again.
  */
-import { readdirSync, readFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SITE_NAME } from '$lib/site';
 import { captures } from '$lib/testing/regex';
+import { svelteSources } from '$lib/testing/sources';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }
@@ -24,16 +25,7 @@ vi.mock('$app/state', () => ({
 
 const Seo = (await import('./Seo.svelte')).default;
 
-// vitest runs from the repo root.
-const ROUTES = join(process.cwd(), 'src', 'routes');
-
-function svelteFiles(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(dir, entry.name);
-    if (entry.isDirectory()) return svelteFiles(path);
-    return entry.isFile() && entry.name.endsWith('.svelte') ? [path] : [];
-  });
-}
+const ROUTES = join('src', 'routes');
 
 /**
  * The `title` attribute of every `<Seo ...>` tag in `source`. Only that
@@ -93,8 +85,7 @@ describe('Seo title composition', () => {
 });
 
 describe('this component owns the site name in the title', () => {
-  // Repo-relative, so a failure names the file the way you would open it.
-  const files = svelteFiles(ROUTES).map((path) => relative(process.cwd(), path));
+  const files = svelteSources(ROUTES);
 
   it('finds the pages to sweep', () => {
     expect(files.filter((path) => seoTitles(readFileSync(path, 'utf8')).length > 0).length).toBeGreaterThan(4);
