@@ -252,7 +252,11 @@
     width: 22px;
     height: 2px;
     background: currentColor;
-    transition: all 0.3s ease;
+    /* `all` would animate any declaration added here later, including layout
+       ones. The rules that move this line set transform and opacity only. */
+    transition:
+      transform var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
     display: block;
   }
   .mobile-menu-button.active .hamburger-line:nth-child(1) {
@@ -273,7 +277,7 @@
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--dur) var(--ease);
     z-index: 999;
     border: 0;
   }
@@ -292,7 +296,7 @@
     height: 100dvh;
     background: var(--surface);
     border-left: 1px solid var(--hairline);
-    transition: right 0.3s ease;
+    transition: right var(--dur) var(--ease);
     z-index: 1000;
     overflow-y: auto;
     padding-top: 72px;
