@@ -10,7 +10,7 @@
     <p class="error-message">
       {page.error?.message ?? "The page you're looking for doesn't exist."}
     </p>
-    <a class="btn" href={urls.index}>Go home</a>
+    <a class="btn focus-ring" href={urls.index}>Go home</a>
   </div>
 </Shell>
 

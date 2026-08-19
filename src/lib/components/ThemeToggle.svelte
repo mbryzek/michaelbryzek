@@ -26,7 +26,7 @@
   }
 </script>
 
-<button onclick={toggleTheme} class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme" type="button">
+<button onclick={toggleTheme} class="theme-toggle focus-ring" aria-label="Toggle color theme" title="Toggle theme" type="button">
   <!-- Sun — shown in dark mode, switches to light -->
   <svg
     class="icon icon-sun"
