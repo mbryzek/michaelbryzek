@@ -66,11 +66,22 @@ describe('icon glyph size has one source of truth', () => {
     expect(iconComponents.length).toBeGreaterThan(5);
 
     for (const [name, source] of [...iconComponents, ['ThemeToggle.svelte', themeToggle] as const]) {
-      // One `class="icon ..."` per <svg>, and no second way to say how big it is.
-      expect(source.match(/<svg\b/g), `no svg in ${name}`).not.toBeNull();
-      expect(source.match(/class="icon\b/g)?.length, `${name} does not size every svg from .icon`).toBe(source.match(/<svg\b/g)?.length);
-      expect(source, `${name} sizes an svg with a utility`).not.toMatch(/\b[hw]-\[/);
-      expect(source, `${name} sizes an svg with an attribute`).not.toMatch(/<svg\b[^>]*\s(?:width|height)=/);
+      const tags = [...source.matchAll(/<svg\b[^>]*>/g)].map((match) => match[0]);
+      expect(tags.length, `no svg in ${name}`).toBeGreaterThan(0);
+
+      for (const tag of tags) {
+        const classes = /class="([^"]*)"/.exec(tag)?.[1]?.split(/\s+/) ?? [];
+
+        expect(classes, `${name}: an svg that .icon does not size`).toContain('icon');
+        // The other two ways to say how big an svg is: a presentation attribute,
+        // and a Tailwind sizing utility — `size-5` as much as `h-[18px]`, since a
+        // utility loses to .icon here and would sit in the markup doing nothing.
+        expect(tag, `${name}: an svg sized by an attribute`).not.toMatch(/\s(?:width|height)=/);
+        expect(
+          classes.filter((utility) => /^(?:min-|max-)?(?:size|[hw])-/.test(utility)),
+          `${name}: an svg sized by a utility`
+        ).toEqual([]);
+      }
     }
   });
 
