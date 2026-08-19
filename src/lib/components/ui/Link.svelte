@@ -10,7 +10,15 @@
    * would bypass client-side routing and strand the visitor in a second tab of
    * the same site (#32). Nothing in the build, svelte-check, eslint or the test
    * suite notices a hand-written anchor that gets one half of that wrong, so
-   * `Link.pins.test.ts` fails the suite if one reappears.
+   * `Link.test.ts` fails the suite if one reappears.
+   *
+   * The site's keyboard focus ring is decided here for the same reason. Every
+   * interactive element on the site shows it, so whether a given anchor rings is
+   * not a per-call-site choice — it follows from being an anchor, and saying so
+   * once is what keeps the next one from being written without it. A call site
+   * that passes `class` still gets it; the two are concatenated rather than
+   * chosen between, with `focus-ring` last so the call site's own class is what
+   * a reader sees first.
    */
   interface Props {
     href: string;
@@ -23,12 +31,9 @@
   let { href, class: className, ariaLabel, children }: Props = $props();
 
   let external = $derived(isExternal(href));
+  let classes = $derived(className === undefined ? 'focus-ring' : `${className} focus-ring`);
 </script>
 
-<a
-  {href}
-  class={className}
-  aria-label={ariaLabel}
-  target={external ? '_blank' : undefined}
-  rel={external ? 'noopener noreferrer' : undefined}>{@render children()}</a
+<a {href} class={classes} aria-label={ariaLabel} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
+  >{@render children()}</a
 >
