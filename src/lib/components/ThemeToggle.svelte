@@ -29,7 +29,7 @@
 <button onclick={toggleTheme} class="theme-toggle focus-ring" aria-label="Toggle color theme" title="Toggle theme" type="button">
   <!-- Sun — shown in dark mode, switches to light -->
   <svg
-    class="icon-sun"
+    class="icon icon-sun"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -43,7 +43,7 @@
   </svg>
   <!-- Moon — shown in light mode, switches to dark -->
   <svg
-    class="icon-moon"
+    class="icon icon-moon"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
