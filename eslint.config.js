@@ -22,11 +22,13 @@ const noShorthandInConditionalSpread = [
   'error',
   {
     selector: 'SpreadElement > LogicalExpression[operator="&&"] > ObjectExpression > Property[shorthand=true]',
-    message: 'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value }.'
+    message:
+      'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
   },
   {
     selector: 'SpreadElement > ConditionalExpression > ObjectExpression > Property[shorthand=true]',
-    message: 'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value }.'
+    message:
+      'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
   }
 ];
 
@@ -117,28 +119,11 @@ export default [
     },
     rules: {
       ...sveltePlugin.configs.recommended.rules,
+      ...sharedTsRules,
       // KEY RULE: {@html} is the only XSS sink in a Svelte app, and the values that reach our
       // components (names, scraped data, model output) are user-set. Every use must be an
       // explicit, justified exemption naming why the string is app-authored - never a default.
-      'svelte/no-at-html-tags': 'error',
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-
-      // KEY RULE: Catch shorthand properties in conditional spreads
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'SpreadElement > LogicalExpression[operator="&&"] > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        },
-        {
-          selector: 'SpreadElement > ConditionalExpression > ObjectExpression > Property[shorthand=true]',
-          message:
-            'Avoid shorthand properties in conditional spreads. Use explicit { field_name: value } to prevent property name mismatches with API types.'
-        }
-      ]
+      'svelte/no-at-html-tags': 'error'
     }
   },
 
