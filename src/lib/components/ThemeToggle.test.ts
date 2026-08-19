@@ -14,15 +14,12 @@
  * reads as correct on its own — you have to compare the two to see it. So pin
  * both halves and, above all, that they agree.
  */
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { captures, ruleBlockBody } from '$lib/testing/regex';
+import { captures, ruleBlockBody, styleBlock } from '$lib/testing/regex';
+import { readSource } from '$lib/testing/source';
 
-const read = (relative: string) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), 'utf8');
-
-const appCss = read('../../app.css');
-const themeToggle = read('./ThemeToggle.svelte');
+const appCss = readSource(import.meta.url, '../../app.css');
+const themeToggle = readSource(import.meta.url, './ThemeToggle.svelte');
 
 /** The custom-property names declared inside the first `<selector> { ... }` block. */
 function tokenNamesIn(selector: string): string[] {
@@ -90,12 +87,9 @@ describe('theme palette fallback', () => {
 describe('theme toggle icon fallback', () => {
   // Svelte scopes these rules at compile time and vitest never applies them, so
   // read the source: what matters is which attribute state each rule keys off.
-  const iconRules = /<style>([\s\S]*)<\/style>/.exec(themeToggle);
+  const css = styleBlock(themeToggle);
 
   it('shows the sun — "switch to light" — when no data-theme attribute is set', () => {
-    expect(iconRules).not.toBeNull();
-    const css = iconRules![1];
-
     // The moon is hidden unconditionally and revealed only under light, so the
     // sun is what an attribute-less document paints. That is the dark-mode icon,
     // which is the same answer the palette gives above — the agreement is the

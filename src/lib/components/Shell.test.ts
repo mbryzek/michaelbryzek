@@ -13,11 +13,10 @@
  * later. So pin the lifecycle: locked while open, released when closed, and
  * released when the component goes away no matter which of those it was doing.
  */
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { captures, ruleBlockBody } from '$lib/testing/regex';
+import { readSource } from '$lib/testing/source';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }
@@ -25,7 +24,8 @@ vi.mock('$app/state', () => ({
 
 const Shell = (await import('./Shell.svelte')).default;
 
-const read = (relative: string) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), 'utf8');
+const shellSource = readSource(import.meta.url, './Shell.svelte');
+const appCss = readSource(import.meta.url, '../../app.css');
 
 const rootOverflow = () => document.documentElement.style.overflow;
 const menuButton = () => document.querySelector<HTMLButtonElement>('button[aria-label="Toggle menu"]');
@@ -129,12 +129,9 @@ describe('mobile menu layering', () => {
   }
 
   it('paints the top bar above the panel, and the panel above its overlay', () => {
-    const shell = read('./Shell.svelte');
-    const appCss = read('../../app.css');
-
     const topbar = zIndexOf(appCss, '.topbar');
-    const panel = zIndexOf(shell, '.mobile-menu');
-    const overlay = zIndexOf(shell, '.mobile-menu-overlay');
+    const panel = zIndexOf(shellSource, '.mobile-menu');
+    const overlay = zIndexOf(shellSource, '.mobile-menu-overlay');
 
     expect(topbar).toBeGreaterThan(panel);
     expect(panel).toBeGreaterThan(overlay);
@@ -143,9 +140,7 @@ describe('mobile menu layering', () => {
   it('does not put a z-index on the hamburger, which cannot escape the bar', () => {
     // A z-index here is not merely redundant, it is misleading: it reads as
     // "this button is above the panel" while the bar's own value is what decides.
-    const button = /\.mobile-menu-button\s*\{([^}]*)\}/.exec(read('./Shell.svelte'));
-    expect(button).not.toBeNull();
-    expect(button![1]).not.toMatch(/z-index/);
+    expect(ruleBlockBody(shellSource, '.mobile-menu-button')).not.toMatch(/z-index/);
   });
 });
 
@@ -162,18 +157,12 @@ describe('mobile menu layering', () => {
  */
 describe('page width has one source of truth', () => {
   it('routes every band through .page-shell rather than an inline width', () => {
-    const shell = read('./Shell.svelte');
-
-    expect(shell.match(/class="page-shell\b/g)).toHaveLength(3);
-    expect(shell).not.toMatch(/max-w-\[/);
+    expect(shellSource.match(/class="page-shell\b/g)).toHaveLength(3);
+    expect(shellSource).not.toMatch(/max-w-\[/);
   });
 
   it('reads that width from --page-max, which is defined', () => {
-    const appCss = read('../../app.css');
-
-    const block = /\.page-shell\s*\{([^}]*)\}/.exec(appCss);
-    expect(block, 'no rule block for .page-shell').not.toBeNull();
-    expect(block![1]).toMatch(/max-width:\s*var\(--page-max\)/);
+    expect(ruleBlockBody(appCss, '.page-shell')).toMatch(/max-width:\s*var\(--page-max\)/);
     expect(appCss).toMatch(/--page-max:\s*\S+;/);
   });
 });
