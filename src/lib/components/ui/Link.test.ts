@@ -11,24 +11,16 @@
  * half wrong renders and passes. So the sweep below fails the suite the moment
  * a copy of those attributes reappears anywhere outside this file.
  */
-import { readdirSync, readFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it } from 'vitest';
+import { svelteSources } from '$lib/testing/sources';
 
 const Link = (await import('./Link.svelte')).default;
 
-// vitest runs from the repo root.
-const SRC = join(process.cwd(), 'src');
+const SRC = 'src';
 const OWNER = join('lib', 'components', 'ui', 'Link.svelte');
-
-function svelteFiles(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(dir, entry.name);
-    if (entry.isDirectory()) return svelteFiles(path);
-    return entry.isFile() && entry.name.endsWith('.svelte') ? [path] : [];
-  });
-}
 
 /** Every `<a ...>` open tag in `source`, attributes included. */
 function anchorTags(source: string): string[] {
@@ -114,10 +106,7 @@ describe('Link', () => {
 });
 
 describe('this component owns the new-tab decision', () => {
-  // Repo-relative, so a failure names the file the way you would open it.
-  const files = svelteFiles(SRC)
-    .filter((path) => !path.endsWith(OWNER))
-    .map((path) => relative(process.cwd(), path));
+  const files = svelteSources(SRC).filter((path) => !path.endsWith(OWNER));
 
   it('finds the components to sweep', () => {
     expect(files.length).toBeGreaterThan(10);
