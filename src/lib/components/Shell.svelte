@@ -150,7 +150,7 @@
         <button
           bind:this={mobileMenuButtonEl}
           onclick={toggleMobileMenu}
-          class="mobile-menu-button"
+          class="mobile-menu-button focus-ring"
           class:active={mobileMenuOpen}
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
@@ -242,10 +242,6 @@
   .mobile-menu-button:hover {
     color: var(--text);
     background: var(--surface-2);
-  }
-  .mobile-menu-button:focus-visible {
-    outline: none;
-    box-shadow: var(--ring);
   }
 
   .hamburger-line {

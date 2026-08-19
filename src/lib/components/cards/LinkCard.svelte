@@ -10,7 +10,7 @@
   let { link }: Props = $props();
 </script>
 
-<Link class="project" href={link.url}>
+<Link class="project focus-ring" href={link.url}>
   <div class="project-top">
     <p class="pname">{link.name}</p>
     <span class="arrow"><ArrowUpRightIcon /></span>

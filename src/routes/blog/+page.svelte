@@ -10,7 +10,7 @@
 <Shell title="Blog">
   <div class="post-list">
     {#each blogPosts as post}
-      <a class="post" href={urls.blogPost(post.slug)}>
+      <a class="post focus-ring" href={urls.blogPost(post.slug)}>
         <span class="date">{post.date}</span>
         <p class="post-title">{post.title}</p>
       </a>

@@ -334,10 +334,6 @@ html.theme-transitioning *::after {
 .theme-toggle:active {
   transform: scale(0.94);
 }
-.theme-toggle:focus-visible {
-  outline: none;
-  box-shadow: var(--ring);
-}
 .theme-toggle svg {
   width: 18px;
   height: 18px;
@@ -388,10 +384,6 @@ html.theme-transitioning *::after {
 }
 .btn:active {
   transform: translateY(1px);
-}
-.btn:focus-visible {
-  outline: none;
-  box-shadow: var(--ring);
 }
 .btn svg {
   width: 16px;
@@ -501,10 +493,6 @@ code {
 .post:hover {
   background: var(--surface-2);
 }
-.post:focus-visible {
-  outline: none;
-  box-shadow: var(--ring);
-}
 .post .date {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -586,10 +574,6 @@ code {
   box-shadow: var(--shadow-md);
   border-color: var(--hairline-strong);
 }
-.project:focus-visible {
-  outline: none;
-  box-shadow: var(--ring);
-}
 .project-top {
   display: flex;
   align-items: flex-start;
@@ -645,6 +629,10 @@ code {
   background: transparent;
   border: 0;
   padding: 0;
+  /* Not part of the focus ring, which is why it is declared here and not in a
+     :focus-visible rule: it is what makes the ring follow the corner when one
+     is drawn, and it is inert the rest of the time. */
+  border-radius: var(--radius-sm);
   /* The glyph is 18px. WCAG 2.2 SC 2.5.8 wants at least 24x24 CSS px of target,
      and with only a 12px gap the 24px minimum circles would otherwise overlap. */
   min-width: 24px;
@@ -661,12 +649,6 @@ code {
 .card-icons button:hover {
   color: var(--accent-text);
   transform: scale(1.12);
-}
-.card-icons a:focus-visible,
-.card-icons button:focus-visible {
-  outline: none;
-  box-shadow: var(--ring);
-  border-radius: var(--radius-sm);
 }
 
 /* ============================================================
@@ -699,4 +681,28 @@ code {
 .foot .socials svg {
   width: 17px;
   height: 17px;
+}
+
+/* ============================================================
+   Focus ring — the one place the ring is applied
+   ============================================================ */
+/* `--ring` says what the ring looks like; this says which elements get one, and
+   both halves are now stated once. Every interactive element that should show
+   the site's own keyboard focus indicator carries `focus-ring` in its markup —
+   including elements inside a component's scoped <style>, which is why this is a
+   class the markup opts into rather than a list of selectors: a scoped rule can
+   only reach that component, and a selector list here would have to name every
+   component's private class names from the outside.
+
+   `outline: none` is only ever safe alongside the ring that replaces it, so the
+   two live in one rule and neither can be written without the other.
+
+   This section is LAST on purpose. `.focus-ring:focus-visible` and a rule like
+   `.project:hover` have equal specificity (0,2,0), and an element can be
+   keyboard-focused and hovered at the same time, so source order is what decides
+   which box-shadow is drawn. Anything appended below this would take the ring
+   away from that element. */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
 }
