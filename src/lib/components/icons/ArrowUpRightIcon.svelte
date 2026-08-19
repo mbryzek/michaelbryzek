@@ -1,6 +1,6 @@
 <!-- Diagonal arrow (up-right) used in external-link cards -->
 <svg
-  class="h-[18px] w-[18px]"
+  class="icon"
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"

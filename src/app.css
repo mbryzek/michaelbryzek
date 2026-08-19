@@ -102,6 +102,10 @@
   --measure: 68ch;
   --page-max: 1080px;
 
+  /* Icons — the size a glyph renders at, and the full set of them. */
+  --icon-size: 18px;
+  --icon-size-sm: 16px;
+
   /* Motion */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur-fast: 120ms;
@@ -246,6 +250,24 @@ html.theme-transitioning *::after {
 }
 
 /* ============================================================
+   Icons
+   ============================================================ */
+/* Every glyph in the app is an `<svg class="icon">`, and this is the only rule
+   in the codebase that gives an svg a width or a height. A container that wants
+   a different size rebinds --icon-size on ITSELF (see .btn) rather than adding a
+   `<container> svg` rule. Both reach the same pixels; only one of them says so
+   where somebody looking for the size will read it. A descendant selector
+   outranks this class — and this stylesheet is unlayered while Tailwind's
+   utilities sit in a cascade layer, so it outranks a `w-[Npx]` utility too — so
+   such a rule wins in silence, over a component that looks like it decides its
+   own size. Rebinding the token also inherits into a Svelte scoped `<style>`,
+   which a rule written here cannot reach at all. */
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+/* ============================================================
    Top bar / nav
    ============================================================ */
 .topbar {
@@ -338,10 +360,6 @@ html.theme-transitioning *::after {
   outline: none;
   box-shadow: var(--ring);
 }
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-}
 
 /* ============================================================
    Page titles
@@ -360,6 +378,10 @@ html.theme-transitioning *::after {
 .btn {
   --btn-bg: var(--accent);
   --btn-fg: var(--text-onaccent);
+  /* A button's glyph is deliberately smaller than the site's. Rebinding the
+     token rather than writing `.btn svg { width: 16px }` keeps .icon the one
+     rule that sizes an svg. */
+  --icon-size: var(--icon-size-sm);
   appearance: none;
   font-family: inherit;
   font-size: var(--text-sm);
@@ -392,10 +414,6 @@ html.theme-transitioning *::after {
 .btn:focus-visible {
   outline: none;
   box-shadow: var(--ring);
-}
-.btn svg {
-  width: 16px;
-  height: 16px;
 }
 
 /* ============================================================
@@ -645,10 +663,12 @@ code {
   background: transparent;
   border: 0;
   padding: 0;
-  /* The glyph is 18px. WCAG 2.2 SC 2.5.8 wants at least 24x24 CSS px of target,
-     and with only a 12px gap the 24px minimum circles would otherwise overlap. */
-  min-width: 24px;
-  min-height: 24px;
+  /* WCAG 2.2 SC 2.5.8 wants at least 24x24 CSS px of target, and with only a
+     12px gap the 24px minimum circles would otherwise overlap. max() rather
+     than a bare 24px so the floor holds by construction whatever the glyph is:
+     the target can never be smaller than the icon it wraps, and never under 24. */
+  min-width: max(24px, var(--icon-size));
+  min-height: max(24px, var(--icon-size));
   display: grid;
   place-items: center;
   color: var(--text-subtle);
@@ -695,8 +715,4 @@ code {
 .foot .socials a:hover {
   color: var(--text);
   background: var(--surface-2);
-}
-.foot .socials svg {
-  width: 17px;
-  height: 17px;
 }
