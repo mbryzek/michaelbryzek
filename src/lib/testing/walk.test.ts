@@ -8,7 +8,7 @@
 import { readFileSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { svelteSources } from './sources';
+import { svelteSources } from './walk';
 
 describe('svelteSources', () => {
   const files = svelteSources('src');

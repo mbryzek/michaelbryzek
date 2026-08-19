@@ -7,6 +7,9 @@
  * path relative to the test that asks for it is the one step every such suite
  * needs, and it is worth owning once: `new URL(relative, import.meta.url)` is
  * easy to write and easy to write subtly differently.
+ *
+ * Reading a file the caller NAMES is this module. Walking a tree it does not
+ * name is `walk.ts`.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

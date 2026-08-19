@@ -7,6 +7,11 @@
  * returned fewer files would turn both suites green with the guard gone.
  *
  * One walker, so there is one thing to get right rather than one per suite.
+ *
+ * Named for the walk rather than for what it hands back: `source.ts` beside it
+ * reads a file the caller NAMES, this one walks a TREE the caller does not.
+ * Two test-support modules whose names differ only by a plural are two a
+ * reader tells apart by luck, and importing the wrong one type checks.
  */
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
