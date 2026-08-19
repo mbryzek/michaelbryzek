@@ -32,13 +32,13 @@
     {/if}
     <div class="card-icons">
       {#if project.projectUrl}
-        <Link class="focus-ring" href={project.projectUrl} ariaLabel="Project website"><WebsiteIcon /></Link>
+        <Link href={project.projectUrl} ariaLabel="Project website"><WebsiteIcon /></Link>
       {/if}
       {#if project.githubUrl}
-        <Link class="focus-ring" href={project.githubUrl} ariaLabel="GitHub repository"><GithubIcon /></Link>
+        <Link href={project.githubUrl} ariaLabel="GitHub repository"><GithubIcon /></Link>
       {/if}
       {#if project.blogUrl}
-        <Link class="focus-ring" href={project.blogUrl} ariaLabel="Blog post"><BlogIcon /></Link>
+        <Link href={project.blogUrl} ariaLabel="Blog post"><BlogIcon /></Link>
       {/if}
     </div>
   </div>

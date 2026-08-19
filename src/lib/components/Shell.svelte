@@ -127,7 +127,7 @@
   <!-- Top bar -->
   <header class="topbar">
     <div class="page-shell flex items-center justify-between gap-6 py-4">
-      <a href={urls.index} class="brand">
+      <a href={urls.index} class="brand focus-ring">
         <span class="mark">M</span>
         <span>Michael Bryzek</span>
       </a>
@@ -136,7 +136,7 @@
       <div class="hidden items-center gap-4 md:flex">
         <nav class="topnav">
           {#each sections as section}
-            <a href={section.href} aria-current={isSectionActive(section.href) ? 'page' : undefined}>
+            <a href={section.href} class="focus-ring" aria-current={isSectionActive(section.href) ? 'page' : undefined}>
               {section.name}
             </a>
           {/each}
@@ -196,7 +196,7 @@
           href={section.href}
           onclick={closeMobileMenu}
           aria-current={isSectionActive(section.href) ? 'page' : undefined}
-          class="mobile-link"
+          class="mobile-link focus-ring"
         >
           {section.name}
         </a>
@@ -217,7 +217,7 @@
     <div class="page-shell flex items-center justify-between gap-4 py-7">
       <span>© {currentYear} Michael Bryzek</span>
       <div class="socials">
-        <a href="mailto:mbryzek@gmail.com" aria-label="Email"><EmailIcon /></a>
+        <a href="mailto:mbryzek@gmail.com" class="focus-ring" aria-label="Email"><EmailIcon /></a>
         <Link href="https://twitter.com/mbryzek" ariaLabel="X (Twitter)"><XIcon /></Link>
         <Link href="https://github.com/mbryzek" ariaLabel="GitHub"><GithubIcon /></Link>
         <Link href="https://www.linkedin.com/in/mbryzek" ariaLabel="LinkedIn"><LinkedInIcon /></Link>

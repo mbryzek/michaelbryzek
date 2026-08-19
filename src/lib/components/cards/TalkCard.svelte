@@ -10,7 +10,7 @@
   let { talk }: Props = $props();
 </script>
 
-<Link class="project focus-ring" href={talk.videoUrl}>
+<Link class="project" href={talk.videoUrl}>
   <div class="project-top">
     <p class="pname">{talk.title}</p>
     <span class="arrow"><ArrowUpRightIcon /></span>

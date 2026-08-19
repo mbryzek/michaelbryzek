@@ -1,7 +1,7 @@
 /**
  * @vitest-environment happy-dom
  *
- * Two things are pinned here, and only the second one is about this component.
+ * Three things are pinned here, and only the last one is about this component.
  *
  * `target="_blank"` without `rel="noopener"` hands the opened document a live
  * `window.opener` handle on this one, and a rooted path opened in a new tab
@@ -10,6 +10,12 @@
  * svelte-check, eslint or any other test — a hand-written anchor that gets one
  * half wrong renders and passes. So the sweep below fails the suite the moment
  * a copy of those attributes reappears anywhere outside this file.
+ *
+ * The site's focus ring is the same shape of rule one property over: every
+ * interactive element shows it, and an anchor that misses it degrades to the
+ * browser's own outline — which looks fine to anyone using a mouse and is
+ * nobody's decision. This component applies it to every anchor it emits, so
+ * `focusRing.test.ts` can sweep the hand-written ones and skip the rest.
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -75,15 +81,18 @@ describe('Link', () => {
   it('passes class through, because the card CSS keys on it', () => {
     const component = mountLink({ href: 'https://rallyd.net', class: 'project' });
 
-    expect(anchor().getAttribute('class')).toBe('project');
+    // The call site's class is kept AND the ring is added — they are
+    // concatenated, not chosen between, or passing `class` would silently opt
+    // that anchor out of the site's focus indicator.
+    expect(anchor().getAttribute('class')).toBe('project focus-ring');
 
     unmount(component);
   });
 
-  it('emits no class attribute when the call site passes none', () => {
+  it('rings every anchor, so no call site decides whether this one shows focus', () => {
     const component = mountLink({ href: 'https://rallyd.net' });
 
-    expect(anchor().hasAttribute('class')).toBe(false);
+    expect(anchor().getAttribute('class')).toBe('focus-ring');
 
     unmount(component);
   });

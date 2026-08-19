@@ -115,3 +115,43 @@ describe('the focus ring is applied in one place', () => {
     expect(afterTheRule.trim(), 'a rule was appended below the focus-ring rule').toBe('');
   });
 });
+
+/**
+ * `ui/Link.svelte` applies the class itself, so its own anchor carries no
+ * literal `focus-ring` in the tag and every `<Link>` call site is covered
+ * without one. `Link.test.ts` pins that by mounting the component.
+ */
+const RING_OWNER = 'src/lib/components/ui/Link.svelte';
+
+/** Every `<a ...>` and `<button ...>` open tag in `source`, attributes included. */
+const focusableTags = (source: string): string[] => source.match(/<(?:a|button)\b[^>]*>/gs) ?? [];
+
+/** `class="... focus-ring ..."`, or the same inside a `{...}` expression. */
+const CARRIES_RING = /class=(?:"[^"]*\bfocus-ring\b|\{[^}]*\bfocus-ring\b)/;
+
+/**
+ * `tabindex="-1"` takes an element out of the tab order, so no keyboard press
+ * can ever put `:focus-visible` on it and there is no ring to be missing. The
+ * mobile menu's overlay and its panel are both that: click targets and focus
+ * containers, sized to the viewport, where a ring would be wrong even if one
+ * could be drawn.
+ */
+const NOT_TABBABLE = /tabindex=(?:"-1"|'-1'|\{-1\})/;
+
+describe('every element a keyboard can reach opts in', () => {
+  const markup = Object.entries(SOURCES).filter(([path]) => path.endsWith('.svelte') && path !== RING_OWNER);
+
+  it('finds the components to sweep', () => {
+    // A walk that quietly returned nothing would turn this suite green with the
+    // guard gone.
+    expect(markup.length).toBeGreaterThan(10);
+  });
+
+  it.each(markup)('%s rings every anchor and button it writes by hand', (path, source) => {
+    for (const tag of focusableTags(source)) {
+      if (NOT_TABBABLE.test(tag)) continue;
+
+      expect(tag, `${path} writes a focusable element with no focus-ring — it will show the browser outline instead`).toMatch(CARRIES_RING);
+    }
+  });
+});
