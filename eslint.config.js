@@ -5,6 +5,13 @@ import sveltePlugin from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
 import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
+import {
+  typed as p10Typed,
+  untyped as p10Untyped,
+  svelte as p10Svelte,
+  tests as p10Tests,
+  testFiles as p10TestFiles
+} from './eslint.p10.js';
 
 const RUNE_GLOBALS = {
   $state: 'readonly',
@@ -35,7 +42,6 @@ const noShorthandInConditionalSpread = [
 const sharedTsRules = {
   'no-unused-vars': 'off',
   '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-  '@typescript-eslint/no-explicit-any': 'warn',
   'no-restricted-syntax': noShorthandInConditionalSpread
 };
 
@@ -70,6 +76,7 @@ export default [
       '@typescript-eslint': tseslint
     },
     rules: {
+      ...p10Typed,
       ...sharedTsRules,
       '@typescript-eslint/consistent-type-imports': 'error'
     }
@@ -77,12 +84,13 @@ export default [
 
   // Svelte TypeScript files (.svelte.ts) - Svelte runes
   {
-    files: ['**/*.svelte.ts'],
+    files: ['src/**/*.svelte.ts'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module'
+        sourceType: 'module',
+        project: './tsconfig.json'
       },
       globals: {
         ...globals.browser,
@@ -94,11 +102,14 @@ export default [
       '@typescript-eslint': tseslint
     },
     rules: {
+      ...p10Typed,
       ...sharedTsRules
     }
   },
 
-  // Svelte files - no type-aware linting (tsconfig doesn't include them)
+  // Svelte files. Type-aware: `.svelte` is in the tsconfig SvelteKit generates, so the
+  // parser can hand typescript-eslint a program for a component and `no-floating-promises`
+  // reads real types here rather than guessing.
   {
     files: ['**/*.svelte'],
     languageOptions: {
@@ -106,7 +117,9 @@ export default [
       parserOptions: {
         parser: tsparser,
         ecmaVersion: 'latest',
-        sourceType: 'module'
+        sourceType: 'module',
+        project: './tsconfig.json',
+        extraFileExtensions: ['.svelte']
       },
       globals: {
         ...globals.browser,
@@ -119,16 +132,18 @@ export default [
     },
     rules: {
       ...sveltePlugin.configs.recommended.rules,
-      ...sharedTsRules,
       // KEY RULE: {@html} is the only XSS sink in a Svelte app, and the values that reach our
       // components (names, scraped data, model output) are user-set. Every use must be an
       // explicit, justified exemption naming why the string is app-authored - never a default.
-      'svelte/no-at-html-tags': 'error'
+      'svelte/no-at-html-tags': 'error',
+      ...p10Svelte,
+      ...sharedTsRules
     }
   },
 
-  // Root config files (*.config.js / *.config.ts) — deliberately not type-aware:
-  // they sit outside tsconfig's include, so `project` parsing would fail on them.
+  // Root config files (*.config.js / *.config.ts) and `eslint.p10.js` — deliberately not
+  // type-aware: they sit outside tsconfig's include, so `project` parsing would fail on
+  // them. `p10Untyped` is every P10 rule except the one that reads types.
   {
     files: ['*.js', '*.ts'],
     languageOptions: {
@@ -144,7 +159,17 @@ export default [
     plugins: {
       '@typescript-eslint': tseslint
     },
-    rules: sharedTsRules
+    rules: {
+      ...p10Untyped,
+      ...sharedTsRules
+    }
+  },
+
+  // Test files relax exactly one P10 rule; `eslint.p10.js` says which and why. Last of the
+  // rule blocks, so it wins over the per-extension blocks above for the files it names.
+  {
+    files: p10TestFiles,
+    rules: p10Tests
   },
 
   // Disable stylistic rules that conflict with prettier

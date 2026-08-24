@@ -52,13 +52,13 @@ afterEach(() => {
 });
 
 describe('Shell mobile menu scroll lock', () => {
-  it('leaves the page scrollable while the menu is closed', () => {
+  it('leaves the page scrollable while the menu is closed', async () => {
     const component = mountShell();
     expect(rootOverflow()).toBe('');
-    unmount(component);
+    await unmount(component);
   });
 
-  it('locks the root element — not body — while the menu is open', () => {
+  it('locks the root element — not body — while the menu is open', async () => {
     const component = mountShell();
     openMenu();
 
@@ -67,32 +67,32 @@ describe('Shell mobile menu scroll lock', () => {
     // untouched so a future edit cannot quietly go back to it and still pass.
     expect(document.body.style.overflow).toBe('');
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('releases the lock when the menu is closed again', () => {
+  it('releases the lock when the menu is closed again', async () => {
     const component = mountShell();
     openMenu();
     openMenu();
 
     expect(rootOverflow()).toBe('');
-    unmount(component);
+    await unmount(component);
   });
 
-  it('releases the lock when the component is destroyed with the menu still open', () => {
+  it('releases the lock when the component is destroyed with the menu still open', async () => {
     const component = mountShell();
     openMenu();
     expect(rootOverflow()).toBe('hidden');
 
     // What a history navigation does: the instance holding the lock is torn down
     // without either close handler running.
-    unmount(component);
+    await unmount(component);
     flushSync();
 
     expect(rootOverflow()).toBe('');
   });
 
-  it('does not inherit a lock left behind on the root element', () => {
+  it('does not inherit a lock left behind on the root element', async () => {
     // Belt and braces for the same navigation: even if an instance were torn
     // down without its teardown running, the next page's Shell clears the root
     // rather than trusting whatever it found there.
@@ -101,7 +101,7 @@ describe('Shell mobile menu scroll lock', () => {
     const component = mountShell();
 
     expect(rootOverflow()).toBe('');
-    unmount(component);
+    await unmount(component);
   });
 });
 

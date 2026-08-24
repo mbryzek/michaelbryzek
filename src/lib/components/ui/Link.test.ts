@@ -52,33 +52,33 @@ afterEach(() => {
 });
 
 describe('Link', () => {
-  it('opens an off-origin href in a new tab without leaking the opener', () => {
+  it('opens an off-origin href in a new tab without leaking the opener', async () => {
     const component = mountLink({ href: 'https://rallyd.net' });
 
     expect(anchor().getAttribute('target')).toBe('_blank');
     expect(anchor().getAttribute('rel')).toBe('noopener noreferrer');
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('leaves a path on this site in the same tab', () => {
+  it('leaves a path on this site in the same tab', async () => {
     const component = mountLink({ href: '/blog/managing-state-in-elm-single-page-apps' });
 
     expect(anchor().hasAttribute('target')).toBe(false);
     expect(anchor().hasAttribute('rel')).toBe(false);
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('leaves a mailto: href in the same tab', () => {
+  it('leaves a mailto: href in the same tab', async () => {
     const component = mountLink({ href: 'mailto:mbryzek@gmail.com' });
 
     expect(anchor().hasAttribute('target')).toBe(false);
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('passes class through, because the card CSS keys on it', () => {
+  it('passes class through, because the card CSS keys on it', async () => {
     const component = mountLink({ href: 'https://rallyd.net', class: 'project' });
 
     // The call site's class is kept AND the ring is added — they are
@@ -86,31 +86,31 @@ describe('Link', () => {
     // that anchor out of the site's focus indicator.
     expect(anchor().getAttribute('class')).toBe('project focus-ring');
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('rings every anchor, so no call site decides whether this one shows focus', () => {
+  it('rings every anchor, so no call site decides whether this one shows focus', async () => {
     const component = mountLink({ href: 'https://rallyd.net' });
 
     expect(anchor().getAttribute('class')).toBe('focus-ring');
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('passes ariaLabel through as aria-label for icon-only links', () => {
+  it('passes ariaLabel through as aria-label for icon-only links', async () => {
     const component = mountLink({ href: 'https://github.com/mbryzek', ariaLabel: 'GitHub' });
 
     expect(anchor().getAttribute('aria-label')).toBe('GitHub');
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('emits no aria-label when the call site passes none', () => {
+  it('emits no aria-label when the call site passes none', async () => {
     const component = mountLink({ href: 'https://rallyd.net' });
 
     expect(anchor().hasAttribute('aria-label')).toBe(false);
 
-    unmount(component);
+    await unmount(component);
   });
 });
 
