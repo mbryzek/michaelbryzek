@@ -50,37 +50,37 @@ afterEach(() => {
 });
 
 describe('Seo title composition', () => {
-  it('appends the site name to the page title', () => {
+  it('appends the site name to the page title', async () => {
     const component = mountSeo({ title: 'Projects', description: 'd' });
 
     expect(document.title).toBe(`Projects - ${SITE_NAME}`);
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('leads with the site name when the page asks for it', () => {
+  it('leads with the site name when the page asks for it', async () => {
     const component = mountSeo({ title: 'Developer & Entrepreneur', description: 'd', nameFirst: true });
 
     expect(document.title).toBe(`${SITE_NAME} - Developer & Entrepreneur`);
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('gives og:title and twitter:title the same composed title as the tab', () => {
+  it('gives og:title and twitter:title the same composed title as the tab', async () => {
     const component = mountSeo({ title: 'Talks', description: 'd' });
 
     expect(metaContent('meta[property="og:title"]')).toBe(document.title);
     expect(metaContent('meta[name="twitter:title"]')).toBe(document.title);
 
-    unmount(component);
+    await unmount(component);
   });
 
-  it('names the site once, from the same token, in og:site_name', () => {
+  it('names the site once, from the same token, in og:site_name', async () => {
     const component = mountSeo({ title: 'Links', description: 'd' });
 
     expect(metaContent('meta[property="og:site_name"]')).toBe(SITE_NAME);
 
-    unmount(component);
+    await unmount(component);
   });
 });
 
