@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
+  import { browser } from '$app/env';
 
   // Which icon shows is decided purely by the `data-theme` attribute that the
   // no-flash script in +layout.svelte stamps onto <html> before first paint —
