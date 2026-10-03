@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { tick } from 'svelte';
   import { urls } from '$lib/urls';
+  import { SITE_NAME } from '$lib/site';
   import EmailIcon from '$lib/components/icons/EmailIcon.svelte';
   import XIcon from '$lib/components/icons/XIcon.svelte';
   import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
@@ -129,7 +130,7 @@
     <div class="page-shell flex items-center justify-between gap-6 py-4">
       <a href={urls.index} class="brand focus-ring">
         <span class="mark">M</span>
-        <span>Michael Bryzek</span>
+        <span>{SITE_NAME}</span>
       </a>
 
       <!-- Desktop nav -->
@@ -215,7 +216,7 @@
   <!-- Footer -->
   <footer class="foot mt-auto">
     <div class="page-shell flex items-center justify-between gap-4 py-7">
-      <span>© {currentYear} Michael Bryzek</span>
+      <span>© {currentYear} {SITE_NAME}</span>
       <div class="socials">
         <a href="mailto:mbryzek@gmail.com" class="focus-ring" aria-label="Email"><EmailIcon /></a>
         <Link href="https://twitter.com/mbryzek" ariaLabel="X (Twitter)"><XIcon /></Link>
