@@ -83,6 +83,18 @@ describe('site content', () => {
     const offenders = allStrings.filter(({ value }) => /\s{2,}/.test(value));
     expect(offenders).toEqual([]);
   });
+
+  // `cards/Card.svelte` keys its paragraphs by their text, and Svelte throws on
+  // a duplicate key — so a paragraph pasted twice into one card breaks the page.
+  it('repeats no paragraph within one description', () => {
+    const descriptions = [
+      ...projects.map((p) => ({ where: `projects[${p.name}]`, value: p.description })),
+      ...links.map((l) => ({ where: `links[${l.name}]`, value: l.description })),
+      ...talks.map((t) => ({ where: `talks[${t.title}]`, value: t.description }))
+    ];
+    const offenders = descriptions.filter(({ value }) => new Set(value).size !== value.length).map(({ where }) => where);
+    expect(offenders).toEqual([]);
+  });
 });
 
 describe('external urls', () => {

@@ -43,7 +43,7 @@
   </div>
   {@render children?.()}
   <div class="flex flex-1 flex-col gap-2">
-    {#each description as text, i (i)}
+    {#each description as text (text)}
       <p class="pdesc">{text}</p>
     {/each}
   </div>
