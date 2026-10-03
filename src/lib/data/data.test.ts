@@ -48,7 +48,7 @@ const allStrings: { where: string; value: string }[] = [
     // covered from the start. An empty or space-padded talk date passed every
     // assertion in this file.
     { where: `talks[${t.title}].date`, value: t.date },
-    { where: `talks[${t.title}].description`, value: t.description }
+    ...t.description.map((d, i) => ({ where: `talks[${t.title}].description[${i}]`, value: d }))
   ]),
   ...blogPosts.flatMap((b) => [
     { where: `blogPosts[${b.slug}].title`, value: b.title },
