@@ -17,6 +17,7 @@ import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { captures, ruleBlockBody } from '$lib/testing/regex';
 import { readSource } from '$lib/testing/source';
+import { SITE_NAME } from '$lib/site';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }
@@ -164,5 +165,34 @@ describe('page width has one source of truth', () => {
   it('reads that width from --page-max, which is defined', () => {
     expect(ruleBlockBody(appCss, '.page-shell')).toMatch(/max-width:\s*var\(--page-max\)/);
     expect(appCss).toMatch(/--page-max:\s*\S+;/);
+  });
+});
+
+/**
+ * The header brand, the footer and the home heading are the site's name in the
+ * page itself, so they read `SITE_NAME` exactly as Seo.svelte does for the tab
+ * title. A literal renders identically today and stops being the name the day
+ * the token changes, so pin the source as well as the output (ISS-15752).
+ */
+describe('the site name has one source of truth', () => {
+  const homeSource = readSource(import.meta.url, '../../routes/+page.svelte');
+
+  it('renders SITE_NAME in the header brand and the footer', async () => {
+    const component = mountShell();
+
+    expect(document.querySelector('header .brand')?.textContent).toContain(SITE_NAME);
+    expect(document.querySelector('footer')?.textContent).toContain(SITE_NAME);
+
+    await unmount(component);
+  });
+
+  it('spells the site name nowhere in Shell.svelte', () => {
+    expect(shellSource).not.toContain(SITE_NAME);
+  });
+
+  it('gives the home <Shell> its title from SITE_NAME', () => {
+    const titles = (homeSource.match(/<Shell\b[^>]*>/gs) ?? []).flatMap((tag) => captures(tag, /\btitle=("[^"]*"|\{[^}]*\})/g));
+
+    expect(titles).toEqual(['{SITE_NAME}']);
   });
 });

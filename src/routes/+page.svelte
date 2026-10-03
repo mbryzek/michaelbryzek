@@ -2,6 +2,7 @@
   import Shell from '$lib/components/Shell.svelte';
   import Seo from '$lib/components/Seo.svelte';
   import Link from '$lib/components/ui/Link.svelte';
+  import { SITE_NAME } from '$lib/site';
 </script>
 
 <Seo
@@ -10,7 +11,7 @@
   description="Michael Bryzek is a developer and serial entrepreneur, founder of Gilt Groupe and Flow Commerce, now building Playbook."
 />
 
-<Shell title="Michael Bryzek">
+<Shell title={SITE_NAME}>
   <div class="prose">
     <p>My name is Michael Bryzek and I'm a developer and serial entrepreneur living in New Jersey.</p>
     <p>
