@@ -6,6 +6,15 @@ export const SITE_URL = 'https://bryzek.com';
 
 export const SITE_NAME = 'Michael Bryzek';
 
+/**
+ * The document title: the page's own part with the site name appended, or,
+ * for the home page, leading. The only place the name and the separator are
+ * spelled, so every `<title>` on the site agrees on both.
+ */
+export function documentTitle(title: string, nameFirst = false): string {
+  return nameFirst ? `${SITE_NAME} - ${title}` : `${title} - ${SITE_NAME}`;
+}
+
 /** `path` is always a rooted path ('/', '/blog', '/blog/<slug>'). */
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path}`;

@@ -84,6 +84,18 @@ describe('Seo title composition', () => {
   });
 });
 
+describe('Seo indexing', () => {
+  it('declares the route it is rendered on as canonical', async () => {
+    const component = mountSeo({ title: 'Projects', description: 'd' });
+
+    expect(document.head.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://bryzek.com/projects');
+    expect(metaContent('meta[property="og:url"]')).toBe('https://bryzek.com/projects');
+    expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
+
+    await unmount(component);
+  });
+});
+
 describe('this component owns the site name in the title', () => {
   const files = svelteSources(ROUTES);
 

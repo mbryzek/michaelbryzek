@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { absoluteUrl, SITE_NAME } from '$lib/site';
+  import { absoluteUrl, documentTitle, SITE_NAME } from '$lib/site';
 
   interface Props {
     /**
@@ -20,7 +20,7 @@
 
   let { title, description, nameFirst = false }: Props = $props();
 
-  const documentTitle = $derived(nameFirst ? `${SITE_NAME} - ${title}` : `${title} - ${SITE_NAME}`);
+  const fullTitle = $derived(documentTitle(title, nameFirst));
 
   // Canonical comes from the actual route rather than a hand-passed path, so a
   // page cannot end up declaring itself canonical at someone else's URL.
@@ -28,17 +28,17 @@
 </script>
 
 <svelte:head>
-  <title>{documentTitle}</title>
+  <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={SITE_NAME} />
-  <meta property="og:title" content={documentTitle} />
+  <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={documentTitle} />
+  <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
 </svelte:head>
