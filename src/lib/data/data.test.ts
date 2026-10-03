@@ -48,7 +48,7 @@ const allStrings: { where: string; value: string }[] = [
     // covered from the start. An empty or space-padded talk date passed every
     // assertion in this file.
     { where: `talks[${t.title}].date`, value: t.date },
-    { where: `talks[${t.title}].description`, value: t.description }
+    ...t.description.map((d, i) => ({ where: `talks[${t.title}].description[${i}]`, value: d }))
   ]),
   ...blogPosts.flatMap((b) => [
     { where: `blogPosts[${b.slug}].title`, value: b.title },
@@ -81,6 +81,18 @@ describe('site content', () => {
 
   it('has no runs of repeated whitespace', () => {
     const offenders = allStrings.filter(({ value }) => /\s{2,}/.test(value));
+    expect(offenders).toEqual([]);
+  });
+
+  // `cards/Card.svelte` keys its paragraphs by their text, and Svelte throws on
+  // a duplicate key — so a paragraph pasted twice into one card breaks the page.
+  it('repeats no paragraph within one description', () => {
+    const descriptions = [
+      ...projects.map((p) => ({ where: `projects[${p.name}]`, value: p.description })),
+      ...links.map((l) => ({ where: `links[${l.name}]`, value: l.description })),
+      ...talks.map((t) => ({ where: `talks[${t.title}]`, value: t.description }))
+    ];
+    const offenders = descriptions.filter(({ value }) => new Set(value).size !== value.length).map(({ where }) => where);
     expect(offenders).toEqual([]);
   });
 });

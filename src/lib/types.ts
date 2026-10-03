@@ -10,7 +10,7 @@ export interface Talk {
   title: string;
   event: string;
   date: string;
-  description: string;
+  description: string[];
   videoUrl: string;
 }
 
