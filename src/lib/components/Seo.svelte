@@ -16,9 +16,15 @@
      * reads `<its own part> - <site name>`.
      */
     nameFirst?: boolean;
+    /**
+     * For a page that is not a real address on this site — the error page. It
+     * asks crawlers not to index it and declares no canonical or `og:url`,
+     * which would otherwise name the very path that does not exist.
+     */
+    noindex?: boolean;
   }
 
-  let { title, description, nameFirst = false }: Props = $props();
+  let { title, description, nameFirst = false, noindex = false }: Props = $props();
 
   const documentTitle = $derived(nameFirst ? `${SITE_NAME} - ${title}` : `${title} - ${SITE_NAME}`);
 
@@ -30,13 +36,17 @@
 <svelte:head>
   <title>{documentTitle}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
+  {#if noindex}
+    <meta name="robots" content="noindex" />
+  {:else}
+    <link rel="canonical" href={canonical} />
+    <meta property="og:url" content={canonical} />
+  {/if}
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={SITE_NAME} />
   <meta property="og:title" content={documentTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical} />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={documentTitle} />
