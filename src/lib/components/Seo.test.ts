@@ -35,7 +35,7 @@ const ROUTES = join('src', 'routes');
 const seoTitles = (source: string): string[] =>
   (source.match(/<Seo\b[^>]*>/gs) ?? []).flatMap((tag) => captures(tag, /\btitle=("[^"]*"|\{[^}]*\})/g));
 
-function mountSeo(props: { title: string; description: string; nameFirst?: boolean; noindex?: boolean }) {
+function mountSeo(props: { title: string; description: string; nameFirst?: boolean }) {
   const component = mount(Seo, { target: document.body, props });
   flushSync();
   return component;
@@ -91,17 +91,6 @@ describe('Seo indexing', () => {
     expect(document.head.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://bryzek.com/projects');
     expect(metaContent('meta[property="og:url"]')).toBe('https://bryzek.com/projects');
     expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
-
-    await unmount(component);
-  });
-
-  it('marks a noindex page and names no canonical address for it', async () => {
-    const component = mountSeo({ title: 'Page not found', description: 'd', noindex: true });
-
-    expect(document.title).toBe(`Page not found - ${SITE_NAME}`);
-    expect(metaContent('meta[name="robots"]')).toBe('noindex');
-    expect(document.head.querySelector('link[rel="canonical"]')).toBeNull();
-    expect(document.head.querySelector('meta[property="og:url"]')).toBeNull();
 
     await unmount(component);
   });

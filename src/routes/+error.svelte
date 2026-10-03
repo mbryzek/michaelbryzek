@@ -1,13 +1,13 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Seo from '$lib/components/Seo.svelte';
+  import NoindexHead from '$lib/components/NoindexHead.svelte';
   import Shell from '$lib/components/Shell.svelte';
   import { urls } from '$lib/urls';
 
   const message = $derived(page.error?.message ?? "The page you're looking for doesn't exist.");
 </script>
 
-<Seo title={page.status === 404 ? 'Page not found' : 'Error'} description={message} noindex />
+<NoindexHead title={page.status === 404 ? 'Page not found' : 'Error'} description={message} />
 
 <Shell>
   <div class="flex flex-col items-center justify-center py-16 text-center">
