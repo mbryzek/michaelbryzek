@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Shell from '$lib/components/Shell.svelte';
-  import Seo from '$lib/components/Seo.svelte';
-  import LinkCard from '$lib/components/cards/LinkCard.svelte';
-  import { links } from '$lib/data/links';
+  import Shell from '#lib/components/Shell.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import LinkCard from '#lib/components/cards/LinkCard.svelte';
+  import { links } from '#lib/data/links.ts';
 </script>
 
 <Seo title="Links" description="Links to people and projects connected to Michael Bryzek." />

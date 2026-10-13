@@ -1,9 +1,9 @@
 <script lang="ts">
-  import BlogPost from '$lib/components/blog/BlogPost.svelte';
-  import BlogP from '$lib/components/blog/BlogP.svelte';
-  import BlogH2 from '$lib/components/blog/BlogH2.svelte';
-  import BlogListWithTitles from '$lib/components/blog/BlogListWithTitles.svelte';
-  import Link from '$lib/components/ui/Link.svelte';
+  import BlogPost from '#lib/components/blog/BlogPost.svelte';
+  import BlogP from '#lib/components/blog/BlogP.svelte';
+  import BlogH2 from '#lib/components/blog/BlogH2.svelte';
+  import BlogListWithTitles from '#lib/components/blog/BlogListWithTitles.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
 
   interface Props {
     title: string;

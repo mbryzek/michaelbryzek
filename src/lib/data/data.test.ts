@@ -3,7 +3,7 @@ import { blogPosts } from './blog';
 import { links } from './links';
 import { projects } from './projects';
 import { talks } from './talks';
-import type { Link, Project, Talk } from '$lib/types';
+import type { Link, Project, Talk } from '#lib/types.ts';
 
 /**
  * These files are hand-maintained content with no build step to validate them,

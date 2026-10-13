@@ -1,6 +1,6 @@
-import { blogPosts } from '$lib/data/blog';
-import { absoluteUrl } from '$lib/site';
-import { urls } from '$lib/urls';
+import { blogPosts } from '#lib/data/blog.ts';
+import { absoluteUrl } from '#lib/site.ts';
+import { urls } from '#lib/urls.ts';
 
 export const prerender = true;
 

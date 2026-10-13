@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import Link from '$lib/components/ui/Link.svelte';
-  import ArrowUpRightIcon from '$lib/components/icons/ArrowUpRightIcon.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
+  import ArrowUpRightIcon from '#lib/components/icons/ArrowUpRightIcon.svelte';
 
   /**
    * The shell every card in a `.card-grid` shares: the `.project` container, the

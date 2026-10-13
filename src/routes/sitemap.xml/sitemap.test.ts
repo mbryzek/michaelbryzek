@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { blogPosts } from '$lib/data/blog';
-import { absoluteUrl } from '$lib/site';
-import { urls } from '$lib/urls';
-import { captures } from '$lib/testing/regex';
+import { blogPosts } from '#lib/data/blog.ts';
+import { absoluteUrl } from '#lib/site.ts';
+import { urls } from '#lib/urls.ts';
+import { captures } from '#lib/testing/regex.ts';
 import { GET } from './+server';
 
 /**

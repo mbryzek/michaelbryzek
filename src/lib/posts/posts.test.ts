@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { blogPosts } from '$lib/data/blog';
+import { blogPosts } from '#lib/data/blog.ts';
 import { postComponents } from './index';
 
 /**

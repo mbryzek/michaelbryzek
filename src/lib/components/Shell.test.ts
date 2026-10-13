@@ -15,9 +15,9 @@
  */
 import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { captures, ruleBlockBody } from '$lib/testing/regex';
-import { readSource } from '$lib/testing/source';
-import { SITE_NAME } from '$lib/site';
+import { captures, ruleBlockBody } from '#lib/testing/regex.ts';
+import { readSource } from '#lib/testing/source.ts';
+import { SITE_NAME } from '#lib/site.ts';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }

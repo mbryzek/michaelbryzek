@@ -1,4 +1,4 @@
-import type { Link } from '$lib/types';
+import type { Link } from '#lib/types.ts';
 
 export const links: Link[] = [
   {

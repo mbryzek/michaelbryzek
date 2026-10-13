@@ -1,10 +1,10 @@
 <script lang="ts">
-  import BlogPost from '$lib/components/blog/BlogPost.svelte';
-  import BlogP from '$lib/components/blog/BlogP.svelte';
-  import BlogH2 from '$lib/components/blog/BlogH2.svelte';
-  import BlogList from '$lib/components/blog/BlogList.svelte';
-  import BlogCode from '$lib/components/blog/BlogCode.svelte';
-  import Link from '$lib/components/ui/Link.svelte';
+  import BlogPost from '#lib/components/blog/BlogPost.svelte';
+  import BlogP from '#lib/components/blog/BlogP.svelte';
+  import BlogH2 from '#lib/components/blog/BlogH2.svelte';
+  import BlogList from '#lib/components/blog/BlogList.svelte';
+  import BlogCode from '#lib/components/blog/BlogCode.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
 
   interface Props {
     title: string;

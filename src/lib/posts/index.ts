@@ -1,5 +1,5 @@
 import type { Component } from 'svelte';
-import type { BlogSlug } from '$lib/data/blog';
+import type { BlogSlug } from '#lib/data/blog.ts';
 import ManagingStateInElmSinglePageApps from './ManagingStateInElmSinglePageApps.svelte';
 import MotivationBehindTrueAcumen from './MotivationBehindTrueAcumen.svelte';
 

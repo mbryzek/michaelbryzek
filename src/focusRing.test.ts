@@ -23,7 +23,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ruleBlockBody } from '$lib/testing/regex';
+import { ruleBlockBody } from '#lib/testing/regex.ts';
 
 const APPLIER = '.focus-ring:focus-visible';
 const APP_CSS = 'src/app.css';

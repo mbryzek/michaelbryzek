@@ -9,7 +9,7 @@
  */
 import { flushSync, mount, unmount, type Component } from 'svelte';
 import { afterEach, describe, expect, it } from 'vitest';
-import type { Link, Project, Talk } from '$lib/types';
+import type { Link, Project, Talk } from '#lib/types.ts';
 
 const LinkCard = (await import('./LinkCard.svelte')).default;
 const TalkCard = (await import('./TalkCard.svelte')).default;

@@ -15,8 +15,8 @@
  * both halves and, above all, that they agree.
  */
 import { beforeEach, describe, expect, it } from 'vitest';
-import { captures, ruleBlockBody, styleBlock } from '$lib/testing/regex';
-import { readSource } from '$lib/testing/source';
+import { captures, ruleBlockBody, styleBlock } from '#lib/testing/regex.ts';
+import { readSource } from '#lib/testing/source.ts';
 
 const appCss = readSource(import.meta.url, '../../app.css');
 const themeToggle = readSource(import.meta.url, './ThemeToggle.svelte');

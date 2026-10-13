@@ -5,17 +5,11 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // SvelteKit 3 takes its configuration here, through the plugin; a
-  // `svelte.config.js` beside this file is refused outright.
+  // SvelteKit takes its configuration here, through the plugin.
   plugins: [
     tailwindcss(),
     sveltekit({
       preprocess: vitePreprocess(),
-      // Kit 3 replaces `$lib` with the `#lib` subpath import; this keeps `$lib`.
-      // svelte-vitals (ci/build.sh) follows component imports through Kit
-      // aliases but not through package.json `imports`, so under `#lib` it
-      // cannot see the <Seo> head tags every page renders.
-      alias: { $lib: 'src/lib' },
       adapter: adapter({
         pages: 'build',
         assets: 'build',
