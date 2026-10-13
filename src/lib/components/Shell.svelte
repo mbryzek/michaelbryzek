@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { tick } from 'svelte';
-  import { urls } from '#lib/urls.js';
-  import { SITE_NAME } from '#lib/site.js';
+  import { urls } from '#lib/urls.ts';
+  import { SITE_NAME } from '#lib/site.ts';
   import EmailIcon from '#lib/components/icons/EmailIcon.svelte';
   import XIcon from '#lib/components/icons/XIcon.svelte';
   import GithubIcon from '#lib/components/icons/GithubIcon.svelte';

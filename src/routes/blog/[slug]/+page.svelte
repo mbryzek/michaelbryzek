@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import Shell from '#lib/components/Shell.svelte';
   import Seo from '#lib/components/Seo.svelte';
-  import { postComponents } from '#lib/posts/index.js';
+  import { postComponents } from '#lib/posts/index.ts';
 
   interface Props {
     data: PageData;

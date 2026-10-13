@@ -21,7 +21,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { captures, ruleBlockBody } from '#lib/testing/regex.js';
+import { captures, ruleBlockBody } from '#lib/testing/regex.ts';
 
 const appCss = readFileSync(fileURLToPath(new URL('./app.css', import.meta.url)), 'utf8');
 

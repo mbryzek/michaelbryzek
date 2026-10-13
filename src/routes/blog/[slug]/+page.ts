@@ -1,5 +1,5 @@
 import type { EntryGenerator, PageLoad } from './$types';
-import { blogPosts, findPost } from '#lib/data/blog.js';
+import { blogPosts, findPost } from '#lib/data/blog.ts';
 import { error } from '@sveltejs/kit';
 
 // Prerender one page per post. Without this the adapter only finds the posts

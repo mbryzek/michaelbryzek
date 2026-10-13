@@ -15,7 +15,6 @@ export default defineConfig({
       // svelte-vitals (ci/build.sh) follows component imports through Kit
       // aliases but not through package.json `imports`, so under `#lib` it
       // cannot see the <Seo> head tags every page renders.
-      alias: { $lib: 'src/lib' },
       adapter: adapter({
         pages: 'build',
         assets: 'build',

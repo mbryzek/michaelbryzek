@@ -1,4 +1,4 @@
-import type { Talk } from '#lib/types.js';
+import type { Talk } from '#lib/types.ts';
 
 export const talks: Talk[] = [
   {

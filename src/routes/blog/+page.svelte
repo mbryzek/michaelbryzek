@@ -1,8 +1,8 @@
 <script lang="ts">
   import Shell from '#lib/components/Shell.svelte';
   import Seo from '#lib/components/Seo.svelte';
-  import { blogPosts } from '#lib/data/blog.js';
-  import { urls } from '#lib/urls.js';
+  import { blogPosts } from '#lib/data/blog.ts';
+  import { urls } from '#lib/urls.ts';
 </script>
 
 <Seo title="Blog" description="Blog posts by Michael Bryzek on software engineering, Elm, and building products." />

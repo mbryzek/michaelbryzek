@@ -15,9 +15,9 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SITE_NAME } from '#lib/site.js';
-import { captures } from '#lib/testing/regex.js';
-import { svelteSources } from '#lib/testing/walk.js';
+import { SITE_NAME } from '#lib/site.ts';
+import { captures } from '#lib/testing/regex.ts';
+import { svelteSources } from '#lib/testing/walk.ts';
 
 vi.mock('$app/state', () => ({
   page: { url: new URL('http://localhost/projects') }

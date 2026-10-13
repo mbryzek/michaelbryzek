@@ -1,4 +1,3 @@
-import { json } from '@sveltejs/kit';
 import { PUBLIC_VERSION, PUBLIC_RELEASED_AT } from '$app/env/public';
 import type { RequestHandler } from './$types';
 
@@ -9,7 +8,7 @@ export const prerender = true;
 
 export const GET: RequestHandler = async () => {
   // dry-copy: sveltekit/version-endpoint-payload — every copy of this region must match; `dev repo copies` checks it (ISS-3894)
-  return json({
+  return Response.json({
     version: PUBLIC_VERSION || null,
     released_at: PUBLIC_RELEASED_AT || null
   });

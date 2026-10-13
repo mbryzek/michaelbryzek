@@ -1,4 +1,4 @@
-import type { BlogPost } from '#lib/types.js';
+import type { BlogPost } from '#lib/types.ts';
 
 export const blogPosts = [
   {

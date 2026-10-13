@@ -8,7 +8,7 @@
  */
 import { flushSync, mount, unmount } from 'svelte';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SITE_NAME } from '#lib/site.js';
+import { SITE_NAME } from '#lib/site.ts';
 
 const state = vi.hoisted(() => ({
   page: { url: new URL('http://localhost/nope'), status: 404, error: { message: 'Not Found' } as { message: string } | null }

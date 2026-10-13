@@ -1,5 +1,5 @@
-import type { Project } from '#lib/types.js';
-import { urls } from '#lib/urls.js';
+import type { Project } from '#lib/types.ts';
+import { urls } from '#lib/urls.ts';
 
 export const projects: Project[] = [
   {

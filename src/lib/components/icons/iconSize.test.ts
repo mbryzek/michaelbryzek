@@ -17,8 +17,8 @@
  * of the dependency, not the pixels.
  */
 import { describe, expect, it } from 'vitest';
-import { ruleBlockBody } from '#lib/testing/regex.js';
-import { readSource, readSourceDir } from '#lib/testing/source.js';
+import { ruleBlockBody } from '#lib/testing/regex.ts';
+import { readSource, readSourceDir } from '#lib/testing/source.ts';
 
 const appCss = readSource(import.meta.url, '../../../app.css');
 const iconComponents = readSourceDir(import.meta.url, '.', '.svelte');

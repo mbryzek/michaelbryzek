@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Project } from '#lib/types.js';
+  import type { Project } from '#lib/types.ts';
   import Card from './Card.svelte';
   import Link from '#lib/components/ui/Link.svelte';
   import WebsiteIcon from '#lib/components/icons/WebsiteIcon.svelte';

@@ -2,7 +2,7 @@
   import Shell from '#lib/components/Shell.svelte';
   import Seo from '#lib/components/Seo.svelte';
   import ProjectCard from '#lib/components/cards/ProjectCard.svelte';
-  import { projects } from '#lib/data/projects.js';
+  import { projects } from '#lib/data/projects.ts';
 </script>
 
 <Seo
