@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Shell from '$lib/components/Shell.svelte';
-  import Seo from '$lib/components/Seo.svelte';
-  import Link from '$lib/components/ui/Link.svelte';
-  import { SITE_NAME } from '$lib/site';
+  import Shell from '#lib/components/Shell.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
+  import { SITE_NAME } from '#lib/site.js';
 </script>
 
 <Seo

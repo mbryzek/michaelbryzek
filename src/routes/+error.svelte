@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import NoindexHead from '$lib/components/NoindexHead.svelte';
-  import Shell from '$lib/components/Shell.svelte';
-  import { urls } from '$lib/urls';
+  import NoindexHead from '#lib/components/NoindexHead.svelte';
+  import Shell from '#lib/components/Shell.svelte';
+  import { urls } from '#lib/urls.js';
 
   const message = $derived(page.error?.message ?? "The page you're looking for doesn't exist.");
 </script>

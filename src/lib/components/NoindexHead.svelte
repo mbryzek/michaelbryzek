@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { documentTitle } from '$lib/site';
+  import { documentTitle } from '#lib/site.js';
 
   /**
    * The head for a page that is not a real address on this site — the error

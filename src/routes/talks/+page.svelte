@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Shell from '$lib/components/Shell.svelte';
-  import Seo from '$lib/components/Seo.svelte';
-  import TalkCard from '$lib/components/cards/TalkCard.svelte';
-  import { talks } from '$lib/data/talks';
+  import Shell from '#lib/components/Shell.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import TalkCard from '#lib/components/cards/TalkCard.svelte';
+  import { talks } from '#lib/data/talks.js';
 </script>
 
 <Seo

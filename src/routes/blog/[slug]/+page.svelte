@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import Shell from '$lib/components/Shell.svelte';
-  import Seo from '$lib/components/Seo.svelte';
-  import { postComponents } from '$lib/posts';
+  import Shell from '#lib/components/Shell.svelte';
+  import Seo from '#lib/components/Seo.svelte';
+  import { postComponents } from '#lib/posts/index.js';
 
   interface Props {
     data: PageData;

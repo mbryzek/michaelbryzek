@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Talk } from '$lib/types';
+  import type { Talk } from '#lib/types.js';
   import Card from './Card.svelte';
 
   interface Props {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { isExternal } from '$lib/site';
+  import { isExternal } from '#lib/site.js';
 
   /**
    * Every anchor in the app goes through here so that "off this origin" is

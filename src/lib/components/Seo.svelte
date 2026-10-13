@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { absoluteUrl, documentTitle, SITE_NAME } from '$lib/site';
+  import { absoluteUrl, documentTitle, SITE_NAME } from '#lib/site.js';
 
   interface Props {
     /**

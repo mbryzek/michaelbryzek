@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Project } from '$lib/types';
+  import type { Project } from '#lib/types.js';
   import Card from './Card.svelte';
-  import Link from '$lib/components/ui/Link.svelte';
-  import WebsiteIcon from '$lib/components/icons/WebsiteIcon.svelte';
-  import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-  import BlogIcon from '$lib/components/icons/BlogIcon.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
+  import WebsiteIcon from '#lib/components/icons/WebsiteIcon.svelte';
+  import GithubIcon from '#lib/components/icons/GithubIcon.svelte';
+  import BlogIcon from '#lib/components/icons/BlogIcon.svelte';
 
   interface Props {
     project: Project;

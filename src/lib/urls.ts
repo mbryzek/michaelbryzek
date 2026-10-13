@@ -1,4 +1,4 @@
-import type { BlogSlug } from '$lib/data/blog';
+import type { BlogSlug } from '#lib/data/blog.js';
 
 export const urls = {
   index: '/',

@@ -2,39 +2,16 @@
   "extends": "$app/tsconfig",
   "include": ["src", "vite.config.ts"],
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "allowJs": true,
-    "checkJs": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "sourceMap": true,
-    "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-
-    // ===== STRICT TYPE CHECKING =====
-    // Master strict flag (enables: strictNullChecks, strictFunctionTypes,
-    // strictBindCallApply, strictPropertyInitialization, noImplicitAny,
-    // noImplicitThis, alwaysStrict, useUnknownInCatchVariables)
     "strict": true,
-
-    // Additional strict null/undefined checks
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
-
-    // Control flow and exhaustiveness
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-
-    // Class and inheritance
     "noImplicitOverride": true,
-
-    // Unused code detection
     "noUnusedLocals": true,
     "noUnusedParameters": true
   }

@@ -1,14 +1,14 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { tick } from 'svelte';
-  import { urls } from '$lib/urls';
-  import { SITE_NAME } from '$lib/site';
-  import EmailIcon from '$lib/components/icons/EmailIcon.svelte';
-  import XIcon from '$lib/components/icons/XIcon.svelte';
-  import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-  import LinkedInIcon from '$lib/components/icons/LinkedInIcon.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-  import Link from '$lib/components/ui/Link.svelte';
+  import { urls } from '#lib/urls.js';
+  import { SITE_NAME } from '#lib/site.js';
+  import EmailIcon from '#lib/components/icons/EmailIcon.svelte';
+  import XIcon from '#lib/components/icons/XIcon.svelte';
+  import GithubIcon from '#lib/components/icons/GithubIcon.svelte';
+  import LinkedInIcon from '#lib/components/icons/LinkedInIcon.svelte';
+  import ThemeToggle from '#lib/components/ThemeToggle.svelte';
+  import Link from '#lib/components/ui/Link.svelte';
   import type { Snippet } from 'svelte';
 
   interface Props {
