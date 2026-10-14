@@ -88,9 +88,10 @@ rm -f "$vitals_err"
 echo "ci-covered: svelte-vitals (new correctness/security/a11y/seo findings vs ${vitals_base:0:12})"
 
 # THE BUILD IS A VERDICT `npm run check` CANNOT GIVE (ISS-868). SvelteKit's
-# "$lib/server imported into browser code" guard is a vite BUILD plugin, so
-# svelte-check is blind to it — as it is to a bad adapter config and every other
-# build-only vite failure. Without this step the release is the first thing that
+# server-only module guard — browser code importing a module named `server.ts`,
+# or anything under a `server/` directory outside `src/routes` — is a vite BUILD
+# plugin, so svelte-check is blind to it, as it is to a bad adapter config and
+# every other build-only vite failure. Without this step the release is the first thing that
 # ever builds the repo, and the leak is found by a `dev deploy` that has already
 # tagged and pushed. That is exactly how playbook-admin 0.4.42 shipped a tag and
 # deployed nothing.
