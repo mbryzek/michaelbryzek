@@ -33,10 +33,20 @@ echo "building ${CI_REPO:-michaelbryzek} @ ${CI_SHA:-working tree} (${CI_EVENT:-
 # survives every clean.
 npm ci
 
-# svelte-check + eslint --max-warnings 0 + prettier --check + vitest. `npm run check`
+# svelte-check + eslint --max-warnings 0 + vitest. `npm run check`
 # is the whole gate in every SvelteKit repo in this fleet (ISS-3885), so there is
 # deliberately no second test step below. There is no Playwright suite here at all.
 npm run check
+
+# FORMATTING NEVER FAILS THIS BUILD (ISS-19427): a build fails only for a
+# functional problem, and an unformatted file behaves exactly as its formatted
+# copy does, so `npm run check` carries no `prettier --check`. `scripts/check-format`
+# (a copy of devops templates/ci/check-format, which runs `dev fmt report` — this
+# repo's own `node_modules/.bin/prettier --list-different .`) prints every
+# unformatted file and exits 0. The hygiene sweep runs it over `main` and fixes
+# what it finds; `npm run format` is the fix.
+# ci-advisory: scripts/check-format
+scripts/check-format || echo "check-format: could not measure this tree — advisory, nothing fails on it"
 
 # A NEW CORRECTNESS, SECURITY, A11Y OR SEO FINDING FAILS THIS BUILD (ISS-15600).
 # svelte-vitals reads the routes and components statically: an `{#each}` with no
