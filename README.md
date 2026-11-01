@@ -4,7 +4,7 @@ Personal website for Michael Bryzek, built with SvelteKit and Tailwind CSS.
 
 ## Tech Stack
 
-- **Framework**: SvelteKit 2.x with TypeScript and Svelte 5 runes
+- **Framework**: SvelteKit 3.x with TypeScript and Svelte 5 runes
 - **Styling**: Tailwind CSS 4.x
 - **Deployment**: Static site generation with @sveltejs/adapter-static
 - **Type Safety**: Strict TypeScript configuration
@@ -17,19 +17,22 @@ src/
 ├── lib/
 │   ├── components/
 │   │   ├── Shell.svelte              # Main layout with navigation and footer
+│   │   ├── Seo.svelte                # Title, description, canonical and Open Graph tags
+│   │   ├── NoindexHead.svelte        # Head for the error page: title and robots noindex
 │   │   ├── icons/                    # SVG icon components
 │   │   ├── cards/                    # ProjectCard, TalkCard, LinkCard
-│   │   ├── ui/                       # ExternalLink
+│   │   ├── ui/                       # Link: every anchor, external ones open in a new tab
 │   │   ├── blog/                     # Blog styling components
 │   │   └── ThemeToggle.svelte        # Light/dark theme switch
 │   ├── data/
-│   │   ├── projects.ts               # 7 projects
+│   │   ├── projects.ts               # 8 projects
 │   │   ├── talks.ts                  # 4 talks
 │   │   ├── links.ts                  # 2 links
 │   │   └── blog.ts                   # Blog metadata
 │   ├── posts/
 │   │   ├── MotivationBehindTrueAcumen.svelte
 │   │   └── ManagingStateInElmSinglePageApps.svelte
+│   ├── site.ts                       # Site name, origin and document title
 │   ├── types.ts                      # TypeScript interfaces
 │   └── urls.ts                       # URL constants
 ├── routes/
@@ -38,6 +41,7 @@ src/
 │   ├── +page.svelte                  # Home/About page
 │   ├── +error.svelte                 # 404 page
 │   ├── _internal_/version/+server.ts  # Build version endpoint
+│   ├── sitemap.xml/+server.ts        # Sitemap generated from the route and post data
 │   ├── projects/+page.svelte
 │   ├── talks/+page.svelte
 │   ├── links/+page.svelte
@@ -53,23 +57,27 @@ src/
 
 ```bash
 # Install dependencies
-npm install
+npm ci
 
 # Start development server
 ./run.sh
 # or
 npm run dev
 
-# Type check, lint and format check (the full gate)
+# Type check, lint and unit tests (the full gate)
 npm run check
 
-# Run tests
-npm test
+# Unit tests on their own
+npm run test:unit
+
+# Everything CI runs
+./ci/build.sh
 
 # Lint / format on their own
 npm run lint
 npm run lint:fix
 npm run format
+npm run format:check
 
 # Build for production
 npm run build
@@ -81,7 +89,7 @@ npm run preview
 ## Pages
 
 - **/** - Home/About page
-- **/projects** - Project showcase (7 projects)
+- **/projects** - Project showcase (8 projects)
 - **/talks** - Speaking engagements (4 talks)
 - **/links** - External links (2 links)
 - **/blog** - Blog index
@@ -112,7 +120,7 @@ Static HTML pages generated in `/build`:
 
 ## Migration Notes
 
-This site was migrated from Elm 0.19.1 to SvelteKit 2.x, preserving:
+This site was migrated from Elm 0.19.1 to SvelteKit (now 3.x), preserving:
 
 - Exact dark theme color palette
 - All content (projects, talks, links, blog posts)
