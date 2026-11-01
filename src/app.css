@@ -345,7 +345,7 @@ html.theme-transitioning *::after {
   color: var(--text);
   background: var(--surface-2);
 }
-.topnav a[aria-current='page'] {
+.topnav a[aria-current] {
   color: var(--accent-text);
 }
 

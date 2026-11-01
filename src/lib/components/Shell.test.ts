@@ -19,9 +19,10 @@ import { captures, ruleBlockBody } from '#lib/testing/regex.ts';
 import { readSource } from '#lib/testing/source.ts';
 import { SITE_NAME } from '#lib/site.ts';
 
-vi.mock('$app/state', () => ({
-  page: { url: new URL('http://localhost/projects') }
-}));
+// Mutable, so a test can put the shell on another route before mounting it.
+const currentPage = vi.hoisted(() => ({ url: new URL('http://localhost/projects') }));
+
+vi.mock('$app/state', () => ({ page: currentPage }));
 
 const Shell = (await import('./Shell.svelte')).default;
 
@@ -50,6 +51,7 @@ function openMenu() {
 afterEach(() => {
   document.body.innerHTML = '';
   document.documentElement.style.overflow = '';
+  currentPage.url = new URL('http://localhost/projects');
 });
 
 describe('Shell mobile menu scroll lock', () => {
@@ -194,5 +196,56 @@ describe('the site name has one source of truth', () => {
     const titles = (homeSource.match(/<Shell\b[^>]*>/gs) ?? []).flatMap((tag) => captures(tag, /\btitle=("[^"]*"|\{[^}]*\})/g));
 
     expect(titles).toEqual(['{SITE_NAME}']);
+  });
+});
+
+/**
+ * A blog post is under /blog, so the nav says so: Blog is current while one is
+ * read. Only an exact match is the page itself; the home link, which every path
+ * starts with, is current on the home page alone.
+ */
+describe('nav marks the current section', () => {
+  const mounted: ReturnType<typeof mountShell>[] = [];
+
+  afterEach(async () => {
+    await Promise.all(mounted.splice(0).map((component) => unmount(component)));
+  });
+
+  /** `aria-current` of each desktop nav link, keyed by its label. */
+  function navCurrent(pathname: string): Record<string, string | null> {
+    document.body.innerHTML = '';
+    currentPage.url = new URL(`http://localhost${pathname}`);
+    mounted.push(mountShell());
+    return Object.fromEntries(
+      [...document.querySelectorAll<HTMLAnchorElement>('nav.topnav a')].map((a) => [a.textContent.trim(), a.getAttribute('aria-current')])
+    );
+  }
+
+  it('marks the exact page as the page', () => {
+    expect(navCurrent('/blog')).toEqual({ About: null, Blog: 'page', Projects: null, Talks: null, Links: null });
+  });
+
+  it('marks the section of a page inside it', () => {
+    expect(navCurrent('/blog/motivation-behind-true-acumen')).toEqual({
+      About: null,
+      Blog: 'true',
+      Projects: null,
+      Talks: null,
+      Links: null
+    });
+  });
+
+  it('marks About on the home page only', () => {
+    expect(navCurrent('/')['About']).toBe('page');
+    expect(navCurrent('/talks')['About']).toBeNull();
+  });
+
+  it('does not treat a shared prefix as the section', () => {
+    expect(navCurrent('/blogroll')['Blog']).toBeNull();
+  });
+
+  it('styles every current link, not only the exact page', () => {
+    expect(appCss).toContain('.topnav a[aria-current] {');
+    expect(shellSource).toContain('.mobile-link[aria-current] {');
   });
 });

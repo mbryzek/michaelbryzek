@@ -32,8 +32,16 @@
   let mobileMenuEl: HTMLElement | undefined = $state();
   let mobileMenuButtonEl: HTMLButtonElement | undefined = $state();
 
-  function isSectionActive(sectionHref: string): boolean {
-    return page.url.pathname === sectionHref;
+  // The section a page belongs to is marked current, not only the page whose
+  // address the nav link is: a blog post lives under /blog, so Blog stays lit
+  // while reading one. `page` is the exact match; `true` is a page inside the
+  // section, which is what ARIA asks for when the link is not this very page.
+  // The home link matches exactly, since every path starts with '/'.
+  function sectionCurrent(sectionHref: string): 'page' | 'true' | undefined {
+    const path = page.url.pathname;
+    if (path === sectionHref) return 'page';
+    if (sectionHref !== urls.index && path.startsWith(`${sectionHref}/`)) return 'true';
+    return undefined;
   }
 
   // Lock the ROOT element, not <body>. app.css sets `html { overflow-y: scroll }`
@@ -137,7 +145,7 @@
       <div class="hidden items-center gap-4 md:flex">
         <nav class="topnav">
           {#each sections as section}
-            <a href={section.href} class="focus-ring" aria-current={isSectionActive(section.href) ? 'page' : undefined}>
+            <a href={section.href} class="focus-ring" aria-current={sectionCurrent(section.href)}>
               {section.name}
             </a>
           {/each}
@@ -193,12 +201,7 @@
   >
     <div class="flex flex-col p-4">
       {#each sections as section}
-        <a
-          href={section.href}
-          onclick={closeMobileMenu}
-          aria-current={isSectionActive(section.href) ? 'page' : undefined}
-          class="mobile-link focus-ring"
-        >
+        <a href={section.href} onclick={closeMobileMenu} aria-current={sectionCurrent(section.href)} class="mobile-link focus-ring">
           {section.name}
         </a>
       {/each}
@@ -318,7 +321,7 @@
     color: var(--text);
     background: var(--surface-2);
   }
-  .mobile-link[aria-current='page'] {
+  .mobile-link[aria-current] {
     color: var(--accent-text);
     background: var(--surface-2);
   }
