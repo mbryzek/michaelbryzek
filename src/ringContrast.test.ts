@@ -18,12 +18,11 @@
  * happens to hold, so retuning --accent or a surface is caught, and so is a
  * future ring with a different number of layers.
  */
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { captures, ruleBlockBody } from '#lib/testing/regex.ts';
+import { readSource } from '#lib/testing/source.ts';
 
-const appCss = readFileSync(fileURLToPath(new URL('./app.css', import.meta.url)), 'utf8');
+const appCss = readSource(import.meta.url, './app.css');
 
 /** SC 2.4.13 asks for a band at least as thick as a 2 CSS pixel perimeter. */
 const MIN_BAND_PX = 2;

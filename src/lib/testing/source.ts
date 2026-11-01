@@ -27,9 +27,27 @@ export function readSource(from: string, relative: string): string {
  * asserts a rule holds across a folder.
  */
 export function readSourceDir(from: string, relative: string, suffix: string): [string, string][] {
-  const dir = new URL(relative.endsWith('/') ? relative : `${relative}/`, from);
-  return readdirSync(fileURLToPath(dir))
-    .filter((name) => name.endsWith(suffix))
+  const dir = directory(from, relative);
+  return readNamed(dir, readdirSync(fileURLToPath(dir)), [suffix]);
+}
+
+/**
+ * Every file at any depth under `relative` whose name ends in one of `suffixes`,
+ * as `[path relative to that directory, text]`: `readSourceDir` for a rule that
+ * holds across a whole tree.
+ */
+export function readSourceTree(from: string, relative: string, suffixes: readonly string[]): [string, string][] {
+  const dir = directory(from, relative);
+  return readNamed(dir, readdirSync(fileURLToPath(dir), { recursive: true, encoding: 'utf8' }), suffixes);
+}
+
+function directory(from: string, relative: string): URL {
+  return new URL(relative.endsWith('/') ? relative : `${relative}/`, from);
+}
+
+function readNamed(dir: URL, names: readonly string[], suffixes: readonly string[]): [string, string][] {
+  return names
+    .filter((name) => suffixes.some((suffix) => name.endsWith(suffix)))
     .sort()
     .map((name) => [name, readSource(dir.href, name)]);
 }

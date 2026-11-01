@@ -17,19 +17,11 @@
  * milliseconds, and not only the file that had the bug — the next component
  * writing its own `0.3s` is the same defect one file over.
  */
-import { readFileSync, readdirSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-
-const src = new URL('./', import.meta.url);
+import { readSource, readSourceTree } from '#lib/testing/source.ts';
 
 /** Every `.css` and `.svelte` file under `src/`, as `[path relative to src, text]`. */
-function stylesheets(): [string, string][] {
-  return readdirSync(fileURLToPath(src), { recursive: true, encoding: 'utf8' })
-    .filter((name) => name.endsWith('.css') || name.endsWith('.svelte'))
-    .sort()
-    .map((name) => [name, readFileSync(fileURLToPath(new URL(name, src)), 'utf8')]);
-}
+const stylesheets = (): [string, string][] => readSourceTree(import.meta.url, '.', ['.css', '.svelte']);
 
 /**
  * `css` with every `@media (prefers-reduced-motion: reduce)` block removed.
@@ -99,7 +91,7 @@ describe('motion has one source of truth', () => {
   it('reads only motion tokens that app.css defines', () => {
     // A `var(--duraton)` resolves to nothing and the transition falls back to 0s,
     // which is a typo that renders as "the animation is gone" and type checks.
-    const appCss = readFileSync(fileURLToPath(new URL('./app.css', src)), 'utf8');
+    const appCss = readSource(import.meta.url, './app.css');
     const defined = new Set([...appCss.matchAll(/^\s*(--[\w-]+):/gm)].map((match) => match[1]!));
 
     const referenced = new Set(

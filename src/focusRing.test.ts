@@ -20,10 +20,9 @@
  * ring, and anything else that writes `outline: none` or reads `var(--ring)` is
  * a second copy by definition.
  */
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ruleBlockBody } from '#lib/testing/regex.ts';
+import { readSource } from '#lib/testing/source.ts';
 
 const APPLIER = '.focus-ring:focus-visible';
 const APP_CSS = 'src/app.css';
@@ -33,7 +32,7 @@ const APP_CSS = 'src/app.css';
  * the source tree, so this needs no directory walk of its own and picks up a
  * component added later without anyone touching this test. The stylesheet is
  * read directly because the tailwind plugin owns `.css` and hands back nothing
- * for one globbed `?raw`; vitest runs from the repo root.
+ * for one globbed `?raw`.
  */
 const COMPONENTS = import.meta.glob('./**/*.svelte', {
   query: '?raw',
@@ -48,7 +47,7 @@ const COMPONENTS = import.meta.glob('./**/*.svelte', {
  */
 const SOURCES: Record<string, string> = Object.fromEntries(
   [
-    [APP_CSS, readFileSync(join(process.cwd(), APP_CSS), 'utf8')] as const,
+    [APP_CSS, readSource(import.meta.url, './app.css')] as const,
     ...Object.entries(COMPONENTS).map(([path, text]) => [path.replace('./', 'src/'), text] as const)
   ].map(([path, text]) => [path, text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/<!--[\s\S]*?-->/g, '')])
 );
