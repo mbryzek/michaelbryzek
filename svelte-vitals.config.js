@@ -1,4 +1,4 @@
-// svelte-vitals (ci/build.sh gates on it, ISS-15600). This is a public site, so
+// svelte-vitals (ci/build.slow.sh gates on it, ISS-15600). This is a public site, so
 // the seo rules apply alongside correctness, security and a11y; performance and
 // architecture are not gated.
 // The config file has no category key, so every rule outside the gated

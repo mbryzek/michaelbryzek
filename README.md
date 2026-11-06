@@ -71,7 +71,7 @@ npm run check
 npm run test:unit
 
 # Everything CI runs
-./ci/build.sh
+./ci/build.slow.sh
 
 # Lint / format on their own
 npm run lint

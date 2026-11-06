@@ -48,7 +48,7 @@ const sharedTsRules = {
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   // Global ignores. scripts/ci-test.mjs and ci/test/ci-test-test.mjs are devops' bytes
-  // (templates/npm), which ci/build.sh diffs against devops main, so they are not linted here.
+  // (templates/npm), which ci/build.slow.sh diffs against devops main, so they are not linted here.
   {
     ignores: ['.svelte-kit/**', 'build/**', 'node_modules/**', 'ci-test-reports/**', 'scripts/ci-test.mjs', 'ci/test/ci-test-test.mjs']
   },
