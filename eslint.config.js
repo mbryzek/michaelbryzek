@@ -16,7 +16,13 @@ import { pathToFileURL } from 'node:url';
 const p10Path = execFileSync('dev', ['ci', 'template', 'eslint/eslint.p10.js'], {
   encoding: 'utf8'
 }).trim();
-const { typed: p10Typed, untyped: p10Untyped, svelte: p10Svelte, tests: p10Tests, testFiles: p10TestFiles } = await import(pathToFileURL(p10Path).href);
+const {
+  typed: p10Typed,
+  untyped: p10Untyped,
+  svelte: p10Svelte,
+  tests: p10Tests,
+  testFiles: p10TestFiles
+} = await import(pathToFileURL(p10Path).href);
 
 const RUNE_GLOBALS = {
   $state: 'readonly',
