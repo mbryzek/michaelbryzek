@@ -14,5 +14,10 @@ export const variables = defineEnvVars({
     public: true,
     static: true,
     description: 'Release timestamp, stamped by release-sveltekit; empty outside a release build.'
+  },
+  PUBLIC_SOURCE_HOST: {
+    public: true,
+    static: true,
+    description: 'Git host of the released commit, stamped by release-sveltekit; empty outside a release build.'
   }
 });
